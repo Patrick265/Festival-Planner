@@ -6,8 +6,10 @@ public class Main
 {
     public static void main(String[] args)
     {
-        public void superCooleMethode() {
-            System.out.println("Dit is echt cool");
-        }
+        superCooleMethode();
+    }
+    
+    public void superCooleMethode() {
+        System.out.println("Dit is echt cool");
     }
 }
