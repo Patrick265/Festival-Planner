@@ -6,7 +6,8 @@ public class Main
 {
     public static void main(String[] args)
     {
-        // hoi patrick
-
+        public void superCooleMethode() {
+            System.out.println("Dit is echt cool");
+        }
     }
 }
