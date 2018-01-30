@@ -62,6 +62,10 @@ public class GUI
         menu.add(info);
     }
 
+    /**
+     * creates the content of the GUI
+     * @param frame the frame wherein the content is added to.
+     */
     private void makeContent(JFrame frame)
     {
         JPanel content = new JPanel();
