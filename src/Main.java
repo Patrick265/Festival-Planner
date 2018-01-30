@@ -4,10 +4,7 @@
  */
 public class Main {
     public static void main(String[] args) {
-        deWaarHeidDoetPijn();
+        GUI gui = new GUI();
     }
-    
-    public static void deWaarHeidDoetPijn() {
-        System.out.println("brackets horen niet op hun eigen lijn");
-    }
+
 }
