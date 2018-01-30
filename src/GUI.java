@@ -6,7 +6,8 @@ import java.awt.image.*;
 import javax.imageio.*;
 import java.io.*;
 
-public class GUI {
+public class GUI
+{
     private JFrame frame;
 
     public GUI(){
@@ -17,7 +18,8 @@ public class GUI {
     /**
      * creates Swing frame and its contents.
      */
-    private void makeFrame(){
+    private void makeFrame()
+    {
         frame = new JFrame("Festival Planner");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -32,7 +34,8 @@ public class GUI {
      * creates the menu bar and its contents.
      * @param frame the frame wherein the menu bar is added to.
      */
-    private void makeMenuBar(JFrame frame){
+    private void makeMenuBar(JFrame frame)
+    {
 
         JMenuBar menu = new JMenuBar();
         frame.setJMenuBar(menu);
@@ -59,7 +62,8 @@ public class GUI {
         menu.add(info);
     }
 
-    private void makeContent(JFrame frame) {
+    private void makeContent(JFrame frame)
+    {
         JPanel content = new JPanel();
         frame.add(content);
     }
