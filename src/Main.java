@@ -1,5 +1,5 @@
 /**
- * @Author Thomas Mandemaker, Patrick de Jong, Yannick .... , Sergen ..... , Anastasia .....
+ * @Author Thomas Mandemaker, Patrick de Jong, Yannick van Dolen , Sergen Peker , Anastasia Hellemons
  * @version 1.0
  */
 public class Main
