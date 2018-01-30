@@ -9,7 +9,7 @@ public class Main
         superCooleMethode();
     }
     
-    public static void superCooleMethode() {
+    private static void superCooleMethode() {
         System.out.println("Dit is echt cool");
     }
 }
