@@ -10,18 +10,6 @@ public class Main
 {
     public static void main(String[] args)
     {
-        Date date1 = new Date();
-        date1.setTime(System.currentTimeMillis());
-
-        Date date2 = new Date();
-        date2.setHours(13);
-        date2.setMinutes(46);
-        date2.setTime(System.currentTimeMillis() - 10000000);
-
-        System.out.println(date1);
-        System.out.println(date2);
-        System.out.println(date1.compareTo(date2));
-
         GUI gui = new GUI();
     }
 

@@ -24,24 +24,31 @@ public class Schedule
             Podium pd = act.getPodium();
             Date st = act.getStartTime();
             Date et = act.getEndTime();
-            if(pd.equals(npd))
+            if(st.compareTo(net) != et.compareTo(nst))
             {
-                if(st.compareTo(net) < 0  || et.compareTo(nst) > 0)
+                if(pd.equals(npd))
                 {
-
+                    isEligable = false;
+                    return;
                 }
-                if()
+
+                for(Artist artist : act.getArtists())
                 {
-
+                    for (Artist newArtist : newAct.getArtists())
+                    {
+                        if (artist.equals(newArtist))
+                        {
+                            isEligable = false;
+                            return;
+                        }
+                    }
                 }
-            }
-
-            if ((act.getStartTime() != newAct.getStartTime() || act.getEndTime() != newAct.getEndTime()) && act.getPodium() != newAct.getPodium())
-            {
-
             }
         }
 
-
+        if(isEligable)
+        {
+            acts.add(newAct);
+        }
     }
 }
