@@ -1,16 +1,16 @@
-import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import java.util.*;
-import java.awt.image.*;
-import javax.imageio.*;
-import java.io.*;
 
+/**
+ * @Author Thomas Mandemaker, Patrick de Jong, Yannick van Dolen , Sergen Peker , Anastasia Hellemons
+ * @version 1.0
+ */
 public class GUI
 {
     private JFrame frame;
 
-    public GUI(){
+    public GUI()
+    {
         makeFrame();
 
     }
@@ -23,10 +23,10 @@ public class GUI
         frame = new JFrame("Festival Planner");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-       makeMenuBar(frame);
-       makeContent(frame);
+        makeMenuBar(frame);
+        makeContent(frame);
 
-        frame.setSize(640, 480);
+        frame.setSize(1280, 720);
         frame.setVisible(true);
     }
 
@@ -48,16 +48,39 @@ public class GUI
 
         //making agenda menu
         JMenu agenda = new JMenu("Agenda");
+
         menu.add(agenda);
+        agenda.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                AgendaTableGUI agendaTableGUI = new AgendaTableGUI();
+            }
+        });
+
+
 
         //making info menu
         JMenu info = new JMenu("Info");
 
+
+        /**
+         * Dit is voor de INFO kop
+         */
         JMenuItem about = new JMenuItem("About");
         info.add(about);
-        JMenuItem help = new JMenuItem("Help");
-        info.add(help);
+        about.addActionListener(e ->
+        {
+            JOptionPane.showMessageDialog(frame,"Dit is een simulatie van een festival. \n" +
+                                                        "Dit project is gemaakt door: B5", "Informatie", JOptionPane.INFORMATION_MESSAGE);
+        });
         JMenuItem version = new JMenuItem("Version");
+        version.addActionListener(e ->
+        {
+            JOptionPane.showMessageDialog(frame,"Versie 1.0", "Versie", JOptionPane.INFORMATION_MESSAGE);
+        });
+
         info.add(version);
         menu.add(info);
     }
