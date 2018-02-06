@@ -1,5 +1,11 @@
 package logica;
 
+/**
+ * the logics behind the festival planner
+ * @author Anastasia Hellemons,
+ * @version 0.1
+ */
+
 import java.io.File;
 
 public class Artist
