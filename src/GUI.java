@@ -1,4 +1,3 @@
-import java.awt.event.*;
 import javax.swing.*;
 
 /**
@@ -40,6 +39,7 @@ public class GUI
         JMenuBar menu = new JMenuBar();
         frame.setJMenuBar(menu);
 
+
         //making file menu
         JMenu file = new JMenu("File");
         JMenuItem open = new JMenuItem("Open");
@@ -48,16 +48,12 @@ public class GUI
 
         //making agenda menu
         JMenu agenda = new JMenu("Agenda");
-
-        menu.add(agenda);
-        agenda.addActionListener(new ActionListener()
+        agenda.addActionListener(e ->
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                AgendaTableGUI agendaTableGUI = new AgendaTableGUI();
-            }
+            AgendaTableGUI agendaTableGUI = new AgendaTableGUI();
         });
+        menu.add(agenda);
+
 
 
 
