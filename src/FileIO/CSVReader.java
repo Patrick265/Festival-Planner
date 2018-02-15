@@ -1,48 +1,42 @@
 package FileIO;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class CSVReader
 {
     public static void main(String[] args)
     {
         List<Star> stars = readStarFromCSV("C:\\Users\\Patrick de Jong\\Documents\\JavaProjects\\School\\FestivalPlanner\\Festival-Planner\\src\\FileIO\\26BrightestStars.csv");
-
-        for(int i = 0; i < stars.size(); i++)
+        for(Star star : stars)
         {
-            System.out.println(stars.toString());
+            System.out.println(star);
         }
     }
 
     public static List<Star> readStarFromCSV(String filename)
     {
+        File file = new File(filename);
         List<Star> stars = new ArrayList<>();
-        Path pathToFile = Paths.get(filename);
 
-        try(BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filename),"Cp1252")))
+        try(Scanner input = new Scanner(file))
         {
-            String line = br.readLine();
-
-            while(line != null)
+            String line = input.nextLine();
+            while(input.hasNext())
             {
                 String[] attributes = line.split(",");
                 Star star = addStar(attributes);
                 stars.add(star);
-                line = br.readLine();
+                line = input.nextLine();
             }
-
-        } catch (IOException e)
+        } catch (FileNotFoundException e)
         {
             e.printStackTrace();
         }
-
         return stars;
     }
 
