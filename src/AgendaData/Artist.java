@@ -1,3 +1,4 @@
+
 package AgendaData;
 
 /**
@@ -39,3 +40,4 @@ public class Artist
         this.photo = newPhotoPath;
     }
 }
+

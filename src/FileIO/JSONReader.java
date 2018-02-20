@@ -10,7 +10,8 @@ import jdk.nashorn.internal.parser.JSONParser;
 
 
 public class JSONReader {
-    public static void main(String[] args) throws Exception{
+    //<<<<<<< Updated upstream
+    public static void main(String[] args) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
         Artist[] a = objectMapper.readValue(new File("Festival-Planner/src/FileIO/artists.json"), Artist[].class);
         //System.out.println(objectMapper.readValue(new File("Festival-Planner/src/FileIO/artists.json"), Artiest.class));
@@ -22,4 +23,3 @@ public class JSONReader {
             System.out.println(b.getGenre()+ "\n");
         }
     }
-}
