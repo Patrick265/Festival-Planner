@@ -51,4 +51,9 @@ public class Schedule
             acts.add(newAct);
         }
     }
+
+    public List<Act> getActs()
+    {
+        return acts;
+    }
 }
