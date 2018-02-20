@@ -11,7 +11,7 @@ public class CSVReader
 {
     public static void main(String[] args)
     {
-        List<Star> stars = readStarFromCSV("C:\\Users\\Patrick de Jong\\Documents\\JavaProjects\\School\\FestivalPlanner\\Festival-Planner\\src\\FileIO\\26BrightestStars.csv");
+        List<Star> stars = readStarFromCSV("Festival-Planner/src/FileIO/26BrightestStars.csv");
         for(Star star : stars)
         {
             System.out.println(star);

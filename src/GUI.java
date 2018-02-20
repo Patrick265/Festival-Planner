@@ -1,5 +1,5 @@
 import javax.swing.*;
-
+import FileIO.*;
 /**
  * @Author Thomas Mandemaker, Patrick de Jong, Yannick van Dolen , Sergen Peker , Anastasia Hellemons
  * @version 1.0
@@ -43,7 +43,9 @@ public class GUI
         //making file menu
         JMenu file = new JMenu("File");
         JMenuItem open = new JMenuItem("Open");
-        file.add(open);
+        file.add(open).addActionListener(e -> {
+            new FileExplorer();
+        });
         menu.add(file);
 
         //making agenda menu
