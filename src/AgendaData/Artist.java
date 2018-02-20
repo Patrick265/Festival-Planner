@@ -19,6 +19,7 @@ public class Artist
         this.genre = genre;
     }
 
+
     public String getName()
     {
         return name;

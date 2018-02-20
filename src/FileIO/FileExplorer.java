@@ -1,5 +1,6 @@
 package FileIO;
 
+import AgendaData.Artist;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.swing.*;
@@ -9,10 +10,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.nio.file.Path;
+import java.util.ArrayList;
 
 public class FileExplorer extends JPanel implements ActionListener{
     //JTextArea log;
     JFileChooser fc;
+
 
     public FileExplorer(){
 //        log = new JTextArea(5, 20);
@@ -21,8 +24,12 @@ public class FileExplorer extends JPanel implements ActionListener{
 //        JScrollPane logScrollPane = new JScrollPane(log);
 
         fc = new JFileChooser();
-        fc.showOpenDialog(FileExplorer.this);
-        fc.addActionListener(this);
+        int reValue = fc.showOpenDialog(this);
+        if(reValue == JFileChooser.APPROVE_OPTION){
+            File file = fc.getSelectedFile();
+            ObjectMapper objectMapper = new ObjectMapper();
+
+        }
        // fc.setFileFilter(new FileNameExtensionFilter("JSON file", ".json"));
 
 
