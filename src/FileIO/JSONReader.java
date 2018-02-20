@@ -24,8 +24,6 @@ public class JSONReader {
         ObjectMapper objectMapper = new ObjectMapper();
         File file = new File("data/artists.json");
         Artiest artist = objectMapper.readValue(file, Artiest.class);
-        System.out.println(artist.getName());
-        System.out.println(artist.getGenre());
-        System.out.println(artist.getPhoto());
+
     }
 }

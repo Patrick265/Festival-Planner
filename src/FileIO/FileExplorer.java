@@ -3,7 +3,7 @@ package FileIO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
+//import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,7 +23,7 @@ public class FileExplorer extends JPanel implements ActionListener{
         fc = new JFileChooser();
         fc.showOpenDialog(FileExplorer.this);
         fc.addActionListener(this);
-        fc.setFileFilter(new FileNameExtensionFilter("JSON file", ".json"));
+       // fc.setFileFilter(new FileNameExtensionFilter("JSON file", ".json"));
 
 
         //this.add(fc);
