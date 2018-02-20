@@ -1,5 +1,14 @@
-{
-  "name" : "The Beatles",
-  "genre" : "Rock/Pop",
-  "photo" : "..."
-}
+[
+  {
+    "name" : "Artist1",
+    "photo" : "...",
+    "genre" : "Pop"
+
+  },
+  {
+    "name" : "Artist2",
+    "photo" : "...dfdf",
+    "genre" : "Rock"
+  }
+
+]
