@@ -4,8 +4,6 @@ import AgendaData.Podium;
 import AgendaData.Schedule;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -14,30 +12,23 @@ public class AgendaPopUpGUI extends JFrame
 
     Schedule schedule;
     Act act;
+    JTable table;
 
-    public static void main(String[]args)
-    {
-        new AgendaPopUpGUI();
-    }
 
     public AgendaPopUpGUI()
     {
-    super("");
-
-    schedule = new Schedule();
-    //act = new Act;
+        super("Agenda");
+        //act = new Act;
         setSize(800,600);
         JPanel panel = new JPanel();
-        JTable table = makeContent(panel);
-       // panel.add(table);
+        table = makeContent(panel);
         setContentPane(table);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-       // makeContent(panel);
+        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
 
     public JTable makeContent(JPanel panel) {
-        JTable tabel= new JTable();
+         table = new JTable();
         Object[] name = {"Artist", "Podium", "Start time", "EndTime"};
         schedule = testData();
 
@@ -78,16 +69,27 @@ public class AgendaPopUpGUI extends JFrame
             allInfo[x+1][2] = info[2];
             allInfo[x+1][3] = info[3];
 
-            if (amoutOfTimes == 0)
-            {
-                tabel = new JTable(allInfo, name);
-            }
-            amoutOfTimes ++;
+
+
 
         }
-        panel.add(tabel);
+        table = new JTable(allInfo, name);
+        panel.add(table);
 
-        return tabel;
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                int row = table.rowAtPoint(evt.getPoint());
+                int col = table.columnAtPoint(evt.getPoint());
+                if (row >= 1 && col >= 0) {
+                    int index = row - 1;
+                    AgendaInfoPopUpGUI popup = new AgendaInfoPopUpGUI(index, acts);
+                }
+            }
+        } );
+
+        return table;
+
 
     }
 
