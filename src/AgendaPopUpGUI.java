@@ -34,6 +34,8 @@ public class AgendaPopUpGUI extends JFrame
 
         Date start;
         Date end;
+        String startTime;
+        String endTime;
         String nameArtist;
         Artist artist;
         java.util.List<Artist> artists;
@@ -55,6 +57,8 @@ public class AgendaPopUpGUI extends JFrame
             act = acts.get(x);
             start = act.getStartTime();
             end = act.getEndTime();
+            startTime = "" + start.getHours() + ":"+ start.getMinutes();
+            endTime = end.getHours() + ":"+ end.getMinutes();
 
             artists = act.getArtists();
             artist = artists.get(0);
@@ -63,7 +67,7 @@ public class AgendaPopUpGUI extends JFrame
             podium = act.getPodium();
             namePodium = podium.getName();
 
-            Object[] info = {nameArtist, namePodium, start.toString(), end.toString()};
+            Object[] info = {nameArtist, namePodium, startTime, endTime};
             allInfo[x+1][0] = info[0];
             allInfo[x+1][1] = info[1];
             allInfo[x+1][2] = info[2];

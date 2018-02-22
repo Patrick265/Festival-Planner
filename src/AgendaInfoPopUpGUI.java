@@ -62,11 +62,11 @@ public class AgendaInfoPopUpGUI extends JFrame
         panel.add(info);
 
         Date time = act.getStartTime();
-        info = new JLabel( "Starting time:   " + time.toString());
+        info = new JLabel( "Starting time:   " + time.getHours() + ":"+ time.getMinutes());
         panel.add(info);
 
         time = act.getEndTime();
-        info = new JLabel( "Ending time:   " + time.toString());
+        info = new JLabel( "Ending time:   " + time.getHours() + ":"+ time.getMinutes());
         panel.add(info);
     }
 }
