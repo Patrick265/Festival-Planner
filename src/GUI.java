@@ -58,9 +58,12 @@ public class GUI
 
         //making agenda menu
         JMenu agenda = new JMenu("Agenda");
-        agenda.addActionListener(e ->
+        JMenuItem viewAgenda = new JMenuItem("View agenda");
+        agenda.add(viewAgenda);
+        viewAgenda.addActionListener(e ->
         {
-            AgendaTableGUI agendaTableGUI = new AgendaTableGUI();
+            //AgendaTableGUI agendaTableGUI = new AgendaTableGUI();
+            AgendaPopUpGUI agendaPopUpGUI = new AgendaPopUpGUI();
         });
         menu.add(agenda);
 
