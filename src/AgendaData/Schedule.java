@@ -1,5 +1,6 @@
 package AgendaData;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -72,6 +73,7 @@ public class Schedule
         }
     }
 
+    public void setActs(List<Act> acts){this.acts = acts;}
     public List<Act> getActs()
     {
         return acts;

@@ -17,7 +17,7 @@ public class GUI
 
     public GUI()
     {
-        //makeFrame();
+        makeFrame();
         schedule = new Schedule();
         testAgenda();
     }
@@ -52,7 +52,13 @@ public class GUI
         JMenu file = new JMenu("File");
         JMenuItem open = new JMenuItem("Open");
         file.add(open).addActionListener(e -> {
-            new FileExplorer();
+            try
+            {
+                new FileExplorer(0);
+            } catch (Exception ex)
+            {
+                ex.printStackTrace();
+            }
         });
         menu.add(file);
 

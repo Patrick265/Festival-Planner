@@ -1,0 +1,38 @@
+{
+  "acts": [
+    {
+      "popularity": 10,
+      "startTime": 1519348464035,
+      "endTime": 1519348464035,
+      "artists": [
+        {
+          "name": "Artist",
+          "photo": "",
+          "genre": "afdsaf"
+        },{
+          "name": "henk",
+          "photo": "Werkt dit?",
+          "genre": "test"
+        }
+      ],
+      "podium": {
+        "name": "Podium1"
+      }
+    },
+    {
+      "popularity": 21,
+      "startTime": 1519348464036,
+      "endTime": 1519348464036,
+      "artists": [
+        {
+          "name": "bob",
+          "photo": "adfads",
+          "genre": "afdsaf"
+        }
+      ],
+      "podium": {
+        "name": "Podium3"
+      }
+    }
+  ]
+}

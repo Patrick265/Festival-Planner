@@ -26,14 +26,16 @@ public class Act
      * @param artists    the artists who will be on stage during the activity.
      * @param podium     the podium on which the activity wil be held.
      */
+
     public Act(int popularity, Date startTime, Date endTime, ArrayList artists, Podium podium)
     {
-        this.artists = artists;
         this.popularity = popularity;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.artists = artists;
         this.podium = podium;
     }
+    public Act(){}
 
     public int getPopularity()
     {

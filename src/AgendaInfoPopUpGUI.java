@@ -7,33 +7,34 @@ import javax.swing.*;
 import javax.tools.JavaCompiler;
 import java.awt.*;
 import java.util.Date;
+import java.util.List;
 
-public class AgendaInfoPopUpGUI extends JFrame
+public class AgendaInfoPopUpGUI extends JPanel
 {
     Act act;
     int index;
 
     public AgendaInfoPopUpGUI(int index, java.util.List<Act> acts)
     {
-        super("Info");
-
-       act = acts.get(index);
-        //act = new Act;
-        setSize(400,200);
-        JPanel panel = new JPanel(new GridLayout(0,1));
-        makeContent(panel);
-        setContentPane(panel);
-       // setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setVisible(true);
+        act = acts.get(index);
+        JFrame frame = new JFrame();
+        frame.setSize(400, 300);
+        frame.setContentPane(this);
+        makeContent(this);
+        frame.setVisible(true);
     }
 
+
+    public void showInfo()
+    {
+
+    }
     public void makeContent(JPanel panel)
     {
-        java.util.List<Artist> artists;
+        List<Artist> artists;
         artists = act.getArtists();
         JLabel info = new JLabel("Artists: " + "\n");
-        panel.add(info);
-        info = new JLabel("");
+        JTextField textField = new JTextField();
         panel.add(info);
 
         String photoArtist;
@@ -45,8 +46,9 @@ public class AgendaInfoPopUpGUI extends JFrame
 
 
             content = content + "     Genre: " + artist.getGenre() + "\n";
-            info = new JLabel(content);
-            panel.add(info);
+            textField = new JTextField();
+            textField.setText(content);
+            panel.add(textField);
 
             photoArtist = artist.getPhoto();
             info = new JLabel(photoArtist);

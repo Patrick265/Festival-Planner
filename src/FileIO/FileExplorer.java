@@ -1,6 +1,7 @@
 package FileIO;
 
 import AgendaData.Artist;
+import AgendaData.Schedule;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.swing.*;
@@ -12,40 +13,34 @@ import java.io.File;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
-public class FileExplorer extends JPanel implements ActionListener{
-    //JTextArea log;
-    JFileChooser fc;
+public class FileExplorer extends JPanel
+{
+    private ObjectMapper objectMapper = new ObjectMapper();
+    private JFileChooser fc;
+    private static String path = "Festival-Planner/src/FileIO/schedule.json";
 
-
-    public FileExplorer(){
-//        log = new JTextArea(5, 20);
-//        log.setMargin(new Insets(5, 5, 5, 5));
-//        log.setEditable(false);
-//        JScrollPane logScrollPane = new JScrollPane(log);
-
+    public FileExplorer(int saveOrOpen) throws Exception
+    {
         fc = new JFileChooser();
-        int reValue = fc.showOpenDialog(this);
-        if(reValue == JFileChooser.APPROVE_OPTION){
-            File file = fc.getSelectedFile();
-            ObjectMapper objectMapper = new ObjectMapper();
-
+        if (saveOrOpen == 0)
+        {
+            int reValue = fc.showSaveDialog(this);
+            if (reValue == JFileChooser.APPROVE_OPTION)
+                path = fc.getSelectedFile().getPath();
         }
-       // fc.setFileFilter(new FileNameExtensionFilter("JSON file", ".json"));
-
-
-        //this.add(fc);
-        createAndShowGui();
+        else
+        {
+            int reValue = fc.showSaveDialog(this);
+            if(reValue == JFileChooser.APPROVE_OPTION)
+            {
+                path = fc.getSelectedFile().getPath();
+                File file = new File(path);
+            }
+        }
     }
 
-    public void createAndShowGui(){
-        JFrame frame = new JFrame();
-        frame.setContentPane(this);
-        frame.pack();
-        frame.setVisible(true);
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
+    public static String getPath()
+    {
+        return path;
     }
 }
