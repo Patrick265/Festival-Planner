@@ -26,7 +26,9 @@ public class FileExplorer extends JPanel
         {
             int reValue = fc.showSaveDialog(this);
             if (reValue == JFileChooser.APPROVE_OPTION)
+            {
                 path = fc.getSelectedFile().getPath();
+            }
         }
         else
         {

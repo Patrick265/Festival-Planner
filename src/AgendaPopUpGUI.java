@@ -6,9 +6,11 @@ import FileIO.JSONManager;
 import com.sun.org.apache.bcel.internal.generic.SWITCH;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.nio.file.Path;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -28,8 +30,9 @@ public class AgendaPopUpGUI extends JFrame
         JPanel mainPanel = new JPanel(new BorderLayout());
         table = makeContent(panel);
         mainPanel.add(table, BorderLayout.CENTER);
+        mainPanel.add(buttonPanel(), BorderLayout.SOUTH);
 
-        setContentPane(table);
+        setContentPane(mainPanel);
         //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
@@ -38,10 +41,20 @@ public class AgendaPopUpGUI extends JFrame
     {
         JPanel panel = new JPanel(new FlowLayout());
 
-        JButton saveButton = new JButton("save");
-        saveButton.addActionListener(e -> {
-
+        JButton addButton = new JButton("Add");
+        addButton.addActionListener(e ->
+        {
+            new MakeAct();
         });
+
+        JButton deleteButton = new JButton("Delete");
+        deleteButton.addActionListener(e ->
+        {
+            new deleteAct(table.getSelectedRow());
+        });
+
+        panel.add(addButton);
+        panel.add(deleteButton);
 
         return panel;
     }
@@ -128,26 +141,47 @@ public class AgendaPopUpGUI extends JFrame
         {
             public void actionPerformed(ActionEvent e)
             {
-                TableCellListener tcl = (TableCellListener)e.getSource();
-                Act changedAct = acts.get(tcl.getRow()-1);
+                TableCellListener tcl = (TableCellListener) e.getSource();
+                Act changedAct = acts.get(tcl.getRow() - 1);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
                 switch (tcl.getColumn())
                 {
-                    case 0: changedAct.getArtists().get(0).setName((String)tcl.getNewValue());
-//                        String a = (String)tcl.getNewValue();
-//                            String[] artistList = a.
-//                            for(int i = 0; i < changedAct.getArtists().size(); i++)
-//                                changedAct.getArtists().get(i).setName(artistList[i]);
-                    break;
-                    case 1: changedAct.getPodium().setName((String)tcl.getNewValue());
-                    break;
+                    case 0: String artistString = (String)tcl.getNewValue();
+                            if(artistString.contains(","))
+                            {
+                                String[] artistsChanged = artistString.split(", ");
+                                for(int i = 0; i < artistsChanged.length; i++)
+                                {
+                                    changedAct.getArtists().get(i).setName(artistsChanged[i]);
+                                }
+                            }
+                            else
+                            {
+                                changedAct.getArtists().get(0).setName(artistString);
+                            }
+                        break;
+                    case 1:
+                        changedAct.getPodium().setName((String) tcl.getNewValue());
+                        break;
+                    case 2:
+                        try
+                        {
+                            changedAct.setStartTime(simpleDateFormat.parse((String) tcl.getNewValue()));
+                        } catch (Exception ex) {}
+                        break;
+                    case 3:
+                        try
+                        {
+                            changedAct.setStartTime(simpleDateFormat.parse((String) tcl.getNewValue()));
+                        } catch (Exception ex) {}
+                        break;
                 }
-                acts.set(tcl.getRow()-1, changedAct);
+                acts.set(tcl.getRow() - 1, changedAct);
                 schedule.setActs(acts);
                 try
                 {
                     JSONManager.writeToFile(schedule);
-                }
-                catch (Exception ex)
+                } catch (Exception ex)
                 {
 
                 }
