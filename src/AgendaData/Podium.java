@@ -1,3 +1,4 @@
+
 package AgendaData;
 
 /**
@@ -13,8 +14,10 @@ public class Podium
     {
        this.name = name;
     }
+    public Podium(){}
 
     public String getName() {return name;}
 
     public void setName(String name){this.name = name;}
 }
+

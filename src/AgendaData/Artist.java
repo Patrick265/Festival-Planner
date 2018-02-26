@@ -1,3 +1,4 @@
+
 package AgendaData;
 
 /**
@@ -18,12 +19,13 @@ public class Artist
         this.photo = photo;
         this.genre = genre;
     }
+    public Artist(){}
 
     public String getName()
     {
         return name;
     }
-
+    public void setName(String name){this.name = name;}
     public String getGenre()
     {
         return genre;
@@ -39,3 +41,4 @@ public class Artist
         this.photo = newPhotoPath;
     }
 }
+

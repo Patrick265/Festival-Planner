@@ -1,5 +1,6 @@
 package AgendaData;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,20 +16,25 @@ public class Schedule
 
     public void addAct(Act newAct)
     {
-        boolean isEligable = true;
-        Date nst = newAct.getStartTime();
-        Date net = newAct.getEndTime();
-        Podium npd = newAct.getPodium();
-        for(Act act : acts)
+        boolean isEligable;
+        Date startTime, endTime, newStartTime, newEndTime;
+        Podium podium, newPodium;
+
+        isEligable = true;
+        newStartTime = newAct.getStartTime();
+        newEndTime = newAct.getEndTime();
+        newPodium = newAct.getPodium();
+        for(Act act : this.acts)
         {
-            Podium pd = act.getPodium();
-            Date st = act.getStartTime();
-            Date et = act.getEndTime();
-            if(st.compareTo(net) != et.compareTo(nst))
+            podium = act.getPodium();
+            startTime = act.getStartTime();
+            endTime = act.getEndTime();
+            if(startTime.compareTo(newEndTime) != endTime.compareTo(newStartTime))
             {
-                if(pd.equals(npd))
+                if(podium.equals(newPodium))
                 {
                     isEligable = false;
+                    System.out.println("Something with time is wrong");
                     return;
                 }
 
@@ -39,6 +45,20 @@ public class Schedule
                         if (artist.equals(newArtist))
                         {
                             isEligable = false;
+                            System.out.print("Something with artist is wrong: ");
+                            System.out.println(newArtist.getName() + " is already busy. ");
+
+                            System.out.print("Conflicting act - Start: " + act.getStartTime().toString());
+                            System.out.print(" End: " + act.getEndTime().toString());
+                            System.out.print(" Current Artist: " + artist.getName());
+                            System.out.println(" Stage: " + act.getPodium().getName());
+
+                            System.out.print("New act - Start: " + newAct.getStartTime().toString());
+                            System.out.print(" End: " + newAct.getEndTime().toString());
+                            System.out.print(" Current Artist: " + newArtist.getName());
+                            System.out.println(" Stage: " + newAct.getPodium().getName());
+
+                            System.out.println(act.getStartTime().equals(newAct.getStartTime()));
                             return;
                         }
                     }
@@ -49,9 +69,11 @@ public class Schedule
         if(isEligable)
         {
             acts.add(newAct);
+            System.out.println("Act added!");
         }
     }
 
+    public void setActs(List<Act> acts){this.acts = acts;}
     public List<Act> getActs()
     {
         return acts;
