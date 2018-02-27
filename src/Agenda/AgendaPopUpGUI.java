@@ -68,7 +68,7 @@ public class AgendaPopUpGUI extends JFrame
     public JTable makeContent(JPanel panel)
     {
         table = new JTable();
-        Object[] name = {"Artist(s)", "Podium", "Start time", "End time"/*, "Popularity", "Genre"*/};
+        Object[] name = {"Artist(s)", "Genre", "Popularity", "Podium", "Start time", "End time" };
         try
         {
             schedule = JSONManager.readFile();
@@ -81,15 +81,15 @@ public class AgendaPopUpGUI extends JFrame
         Date end;
         String startTime = "";
         String endTime = "";
-        String nameArtist = "";
-        Artist artist;
-        List<Artist> artists;
+        String artistName = "";
         Podium podium;
+        String genre;
+        String popularity;
         String namePodium;
 
 
         List<Act> acts = schedule.getActs();
-        Object[][] allInfo = new Object[acts.size()][4];
+        Object[][] allInfo = new Object[acts.size()][6];
 
         int index = acts.size();
         for (int i = 0; i < index; i++)
@@ -114,24 +114,35 @@ public class AgendaPopUpGUI extends JFrame
             {
                 if(j < act.getArtists().size() - 1)
                 {
-                    nameArtist += act.getArtists().get(j).getName() + ", ";
+                    artistName += act.getArtists().get(j).getName() + ", ";
                 }
                 else
                 {
-                    nameArtist += act.getArtists().get(j).getName();
+                    artistName += act.getArtists().get(j).getName();
                 }
             }
 
+            genre = "";
+
+            for(int j = 0; j < act.getArtists().size(); j++)
+            {
+                if(j > 0)
+                {
+                    genre += ", ";
+                }
+                genre += act.getArtists().get(j).getGenre();
+            }
+
+            popularity = "" + act.getPopularity();
             podium = act.getPodium();
             namePodium = podium.getName();
 
-            Object[] info = {nameArtist, namePodium, startTime, endTime};
-            allInfo[i][0] = info[0];
-            allInfo[i][1] = info[1];
-            allInfo[i][2] = info[2];
-            allInfo[i][3] = info[3];
+            Object[] info = {artistName, genre, popularity, namePodium, startTime, endTime};
 
-            nameArtist = "";
+            for (int j = 0; j < info.length; j++)
+                allInfo[i][j] = info[j];
+
+            artistName = "";
         }
 
         table = new JTable(allInfo, name);
@@ -210,32 +221,6 @@ public class AgendaPopUpGUI extends JFrame
         };
 
         TableCellListener tcl = new TableCellListener(table, action);
-
-//        Path myDir = Paths.get("Festival-Planner/src/FileIO/");
-//
-//        try {
-//            WatchService watcher = myDir.getFileSystem().newWatchService();
-//            myDir.register(watcher, StandardWatchEventKinds.ENTRY_CREATE,
-//                    StandardWatchEventKinds.ENTRY_DELETE, StandardWatchEventKinds.ENTRY_MODIFY);
-//
-//            WatchKey watckKey = watcher.take();
-//
-//            List<WatchEvent<?>> events = watckKey.pollEvents();
-//            for (WatchEvent event : events) {
-//                if (event.kind() == StandardWatchEventKinds.ENTRY_CREATE) {
-//                    System.out.println("Created: " + event.context().toString());
-//                }
-//                if (event.kind() == StandardWatchEventKinds.ENTRY_DELETE) {
-//                    System.out.println("Delete: " + event.context().toString());
-//                }
-//                if (event.kind() == StandardWatchEventKinds.ENTRY_MODIFY) {
-//                    System.out.println("Modify: " + event.context().toString());
-//                }
-//            }
-//
-//        } catch (Exception e) {
-//            System.out.println("Error: " + e.toString());
-//        }
 
         return table;
     }
