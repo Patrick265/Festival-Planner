@@ -81,4 +81,17 @@ public class Act
     {
         this.podium = podium;
     }
+
+    public String toString()
+    {
+        for(int i = 0; i < artists.size(); i++)
+        {
+            return  "Popularity: "  +   popularity                  + "\n"  +
+                    "StartTime: " +     startTime.getHours()        + ":"   + startTime.getMinutes() + "\n"    +
+                    "EndTime: "   +     endTime.getHours()          + ":"   + endTime.getMinutes()   + "\n"    +
+                    "Name: "       +    artists.get(i).getName()    + "\n"  +
+                    "Podium name: "+    podium.getName()            + "\n"   +
+                    "----------------------------------"                        + "\n";
+        }
+    }
 }
