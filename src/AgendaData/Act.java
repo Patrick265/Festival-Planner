@@ -82,16 +82,26 @@ public class Act
         this.podium = podium;
     }
 
-    public String toString()
+
+    public String printDetails(int size)
     {
-        for(int i = 0; i < artists.size(); i++)
+        String details = "";
+        for(int i = 0; i < size; i++ )
         {
-            return  "Popularity: "  +   popularity                  + "\n"  +
-                    "StartTime: " +     startTime.getHours()        + ":"   + startTime.getMinutes() + "\n"    +
-                    "EndTime: "   +     endTime.getHours()          + ":"   + endTime.getMinutes()   + "\n"    +
-                    "Name: "       +    artists.get(i).getName()    + "\n"  +
-                    "Podium name: "+    podium.getName()            + "\n"   +
-                    "----------------------------------"                        + "\n";
+            details +=  "Popularity: "  + popularity            + "\n"  +
+                        "StartTime: "   + startTime.getHours()  + ":"   + startTime.getMinutes()    + "\n" +
+                        "EndTime: "     + endTime.getHours()    + ":"   + endTime.getMinutes();
+            details +=  "Name: ";
+
+            for (int artistindex = 0; artistindex < artists.size(); artistindex++)
+            {
+                details += artists.get(artistindex).getName() + ", ";
+            }
+
+            details +=  "\n" + "Podium name: " + podium.getName() + "\n" +
+                        "----------------------------------" + "\n";
         }
+
+        return  details;
     }
 }

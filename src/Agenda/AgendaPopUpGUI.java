@@ -4,29 +4,38 @@ import AgendaData.Act;
 import AgendaData.Artist;
 import AgendaData.Podium;
 import AgendaData.Schedule;
+import FileIO.FileExplorer;
 import FileIO.JSONManager;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.nio.file.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.EventListener;
 import java.util.List;
 
 public class AgendaPopUpGUI extends JFrame
 {
-    Schedule schedule;
-    Act act;
-    JTable table;
-
+    private Schedule schedule;
+    private Act act;
+    private JTable table;
+    private JPanel mainPanel;
 
     public AgendaPopUpGUI()
     {
         super("Agenda");
+        //JFrame frame = new JFrame("Agenda");
         //act = new Act;
         setSize(800, 600);
+        mainPanel = new JPanel(new BorderLayout());
         JPanel panel = new JPanel();
-        JPanel mainPanel = new JPanel(new BorderLayout());
         table = makeContent(panel);
         mainPanel.add(new JScrollPane(table), BorderLayout.CENTER);
         mainPanel.add(buttonPanel(), BorderLayout.SOUTH);
@@ -44,7 +53,11 @@ public class AgendaPopUpGUI extends JFrame
         addButton.addActionListener( e -> new MakeAct() );
 
         JButton deleteButton = new JButton("Delete");
-        deleteButton.addActionListener( e -> new DeleteAct(table.getSelectedRow()) );
+        deleteButton.addActionListener(e ->
+        {
+            new DeleteAct(table.getSelectedRow(), mainPanel);
+
+        });
 
         panel.add(addButton);
         panel.add(deleteButton);
@@ -59,7 +72,8 @@ public class AgendaPopUpGUI extends JFrame
         try
         {
             schedule = JSONManager.readFile();
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
         }
@@ -123,12 +137,12 @@ public class AgendaPopUpGUI extends JFrame
         table = new JTable(allInfo, name);
         panel.add(table);
 
-        table.addMouseListener(new java.awt.event.MouseAdapter()
+        table.addMouseListener(new MouseAdapter()
         {
             @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt)
+            public void mouseClicked(MouseEvent evt)
             {
-                if (evt.getClickCount() == 2)
+                if (evt.getButton() == 3)
                 {
                     int row = table.rowAtPoint(evt.getPoint());
                     int col = table.columnAtPoint(evt.getPoint());
@@ -171,13 +185,15 @@ public class AgendaPopUpGUI extends JFrame
                         try
                         {
                             changedAct.setStartTime(simpleDateFormat.parse((String) tcl.getNewValue()));
-                        } catch (Exception ex) {}
+                        }
+                        catch (Exception ex) {}
                         break;
                     case 3:
                         try
                         {
                             changedAct.setStartTime(simpleDateFormat.parse((String) tcl.getNewValue()));
-                        } catch (Exception ex) {}
+                        }
+                        catch (Exception ex) {}
                         break;
                 }
                 acts.set(tcl.getRow() - 1, changedAct);
@@ -185,7 +201,8 @@ public class AgendaPopUpGUI extends JFrame
                 try
                 {
                     JSONManager.writeToFile(schedule);
-                } catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
 
                 }
@@ -193,8 +210,33 @@ public class AgendaPopUpGUI extends JFrame
         };
 
         TableCellListener tcl = new TableCellListener(table, action);
+
+//        Path myDir = Paths.get("Festival-Planner/src/FileIO/");
+//
+//        try {
+//            WatchService watcher = myDir.getFileSystem().newWatchService();
+//            myDir.register(watcher, StandardWatchEventKinds.ENTRY_CREATE,
+//                    StandardWatchEventKinds.ENTRY_DELETE, StandardWatchEventKinds.ENTRY_MODIFY);
+//
+//            WatchKey watckKey = watcher.take();
+//
+//            List<WatchEvent<?>> events = watckKey.pollEvents();
+//            for (WatchEvent event : events) {
+//                if (event.kind() == StandardWatchEventKinds.ENTRY_CREATE) {
+//                    System.out.println("Created: " + event.context().toString());
+//                }
+//                if (event.kind() == StandardWatchEventKinds.ENTRY_DELETE) {
+//                    System.out.println("Delete: " + event.context().toString());
+//                }
+//                if (event.kind() == StandardWatchEventKinds.ENTRY_MODIFY) {
+//                    System.out.println("Modify: " + event.context().toString());
+//                }
+//            }
+//
+//        } catch (Exception e) {
+//            System.out.println("Error: " + e.toString());
+//        }
+
         return table;
-
-
     }
 }

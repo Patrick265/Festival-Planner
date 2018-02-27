@@ -70,6 +70,10 @@ public class Schedule
             acts.add(newAct);
             System.out.println("Act added!");
         }
+        else
+        {
+            throw new Error("Test");
+        }
     }
 
     public void setActs(List<Act> acts){this.acts = acts;}
