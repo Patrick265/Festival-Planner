@@ -11,6 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class AgendaPopUpGUI extends JFrame
 {
@@ -54,7 +55,7 @@ public class AgendaPopUpGUI extends JFrame
     public JTable makeContent(JPanel panel)
     {
         table = new JTable();
-        Object[] name = {"a", "p", "st", "et"};
+        Object[] name = {"Artist(s)", "Podium", "Start time", "End time"/*, "Popularity", "Genre"*/};
         try
         {
             schedule = JSONManager.readFile();
@@ -64,50 +65,49 @@ public class AgendaPopUpGUI extends JFrame
         }
         Date start;
         Date end;
-        String startTime;
-        String endTime;
+        String startTime = "";
+        String endTime = "";
         String nameArtist = "";
         Artist artist;
-        java.util.List<Artist> artists;
+        List<Artist> artists;
         Podium podium;
         String namePodium;
 
 
-        int amoutOfTimes = 0;
+        List<Act> acts = schedule.getActs();
+        Object[][] allInfo = new Object[acts.size()][4];
 
-        java.util.List<Act> acts = schedule.getActs();
-        Object[][] allInfo = new Object[acts.size() + 1][4];
-        allInfo[0][0] = name[0];
-        allInfo[0][1] = name[1];
-        allInfo[0][2] = name[2];
-        allInfo[0][3] = name[3];
         int index = acts.size();
-        for (int x = 0; x < index; x++)
+        for (int i = 0; i < index; i++)
         {
-            act = acts.get(x);
+            act = acts.get(i);
             start = act.getStartTime();
             end = act.getEndTime();
             startTime = "" + start.getHours() + ":" + start.getMinutes();
             endTime = end.getHours() + ":" + end.getMinutes();
 
-            for (Artist a : act.getArtists())
-                nameArtist += a.getName() + " ";
-
-//            artists = act.getArtists();
-//            nameArtist = artists.getName();
+            for(int j = 0; j < act.getArtists().size(); j++)
+            {
+                if(j < act.getArtists().size() - 1)
+                {
+                    nameArtist += act.getArtists().get(j).getName() + ", ";
+                }
+                else
+                {
+                    nameArtist += act.getArtists().get(j).getName();
+                }
+            }
 
             podium = act.getPodium();
             namePodium = podium.getName();
 
             Object[] info = {nameArtist, namePodium, startTime, endTime};
-            allInfo[x + 1][0] = info[0];
-            allInfo[x + 1][1] = info[1];
-            allInfo[x + 1][2] = info[2];
-            allInfo[x + 1][3] = info[3];
+            allInfo[i][0] = info[0];
+            allInfo[i][1] = info[1];
+            allInfo[i][2] = info[2];
+            allInfo[i][3] = info[3];
 
             nameArtist = "";
-
-
         }
 
         table = new JTable(allInfo, name);
@@ -122,9 +122,9 @@ public class AgendaPopUpGUI extends JFrame
                 {
                     int row = table.rowAtPoint(evt.getPoint());
                     int col = table.columnAtPoint(evt.getPoint());
-                    if (row >= 1 && col >= 0)
+                    if (row >= 0 && col >= 0)
                     {
-                        int index = row - 1;
+                        int index = row;
                         Agenda.AgendaInfoPopUpGUI popup = new Agenda.AgendaInfoPopUpGUI(index, acts);
                     }
                 }
