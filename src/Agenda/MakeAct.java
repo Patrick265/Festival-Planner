@@ -1,3 +1,5 @@
+package Agenda;
+
 import AgendaData.Act;
 import AgendaData.Artist;
 import AgendaData.Podium;
@@ -93,10 +95,10 @@ public class MakeAct extends JPanel
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
         Date startTime = simpleDateFormat.parse(startTimeInput);
         Date endTime = simpleDateFormat.parse(endTimeInput);
-        try
-        {
+        //try
+        //{
             Act act = new Act(Integer.parseInt(popularityInput), startTime, endTime, artists, podium);
-        }catch(Exception e){}
+        //}catch(Exception e){}
         schedule.addAct(act);
         JSONManager.writeToFile(schedule);
     }
