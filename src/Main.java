@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -10,6 +11,15 @@ public class Main
 {
     public static void main(String[] args)
     {
+        JFrame.setDefaultLookAndFeelDecorated(true);
+        try
+        {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        }
+        catch(Exception ex)
+        {
+
+        }
         GUI gui = new GUI();
     }
 

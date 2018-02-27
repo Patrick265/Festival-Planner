@@ -27,7 +27,7 @@ public class AgendaPopUpGUI extends JFrame
         JPanel panel = new JPanel();
         JPanel mainPanel = new JPanel(new BorderLayout());
         table = makeContent(panel);
-        mainPanel.add(table, BorderLayout.CENTER);
+        mainPanel.add(new JScrollPane(table), BorderLayout.CENTER);
         mainPanel.add(buttonPanel(), BorderLayout.SOUTH);
 
         setContentPane(mainPanel);
@@ -40,16 +40,10 @@ public class AgendaPopUpGUI extends JFrame
         JPanel panel = new JPanel(new FlowLayout());
 
         JButton addButton = new JButton("Add");
-        addButton.addActionListener(e ->
-        {
-            new MakeAct();
-        });
+        addButton.addActionListener( e -> new MakeAct() );
 
         JButton deleteButton = new JButton("Delete");
-        deleteButton.addActionListener(e ->
-        {
-            new DeleteAct(table.getSelectedRow());
-        });
+        deleteButton.addActionListener( e -> new DeleteAct(table.getSelectedRow()) );
 
         panel.add(addButton);
         panel.add(deleteButton);
@@ -60,7 +54,7 @@ public class AgendaPopUpGUI extends JFrame
     public JTable makeContent(JPanel panel)
     {
         table = new JTable();
-        Object[] name = {"Artist", "Podium", "Start time", "EndTime"};
+        Object[] name = {"a", "p", "st", "et"};
         try
         {
             schedule = JSONManager.readFile();
@@ -115,6 +109,7 @@ public class AgendaPopUpGUI extends JFrame
 
 
         }
+
         table = new JTable(allInfo, name);
         panel.add(table);
 
@@ -135,6 +130,7 @@ public class AgendaPopUpGUI extends JFrame
                 }
             }
         });
+
         Action action = new AbstractAction()
         {
             public void actionPerformed(ActionEvent e)
