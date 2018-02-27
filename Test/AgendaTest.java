@@ -9,6 +9,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * a Test class for the logic of the agenda
+ */
 public class AgendaTest
 {
     private List<Act> acts;
@@ -19,8 +22,16 @@ public class AgendaTest
     private Podium podiumMain;
     private Podium podiumSec;
     private Podium podiumThird;
+
     @Test
-    public void testAddingAndDeleting()
+    public void addingAct()
+    {
+        makeTestScenario();
+        acts.add(new Act())
+    }
+
+    @Test
+    public void testingPrintDetails()
     {
         makeTestScenario();
         String expected ="\n" + "Popularity: 75\n" +
@@ -45,8 +56,6 @@ public class AgendaTest
         System.out.println(printDetails());
         assertEquals(printDetails(), expected);
     }
-
-
 
     public void makeTestScenario()
     {

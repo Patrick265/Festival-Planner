@@ -17,8 +17,6 @@ public class Act
     private List<Artist> artists;
     private Podium podium;
 
-
-
     /**
      * @param popularity the popularity of the activity in int.
      * @param startTime  the starting time of the activity in Double.
@@ -26,7 +24,6 @@ public class Act
      * @param artists    the artists who will be on stage during the activity.
      * @param podium     the podium on which the activity wil be held.
      */
-
     public Act(int popularity, Date startTime, Date endTime, ArrayList artists, Podium podium)
     {
         this.popularity = popularity;
@@ -35,7 +32,6 @@ public class Act
         this.artists = artists;
         this.podium = podium;
     }
-    public Act(){}
 
     public int getPopularity()
     {
