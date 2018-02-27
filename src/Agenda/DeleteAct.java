@@ -19,7 +19,7 @@ public class DeleteAct extends JPanel
     public DeleteAct(int index, JPanel mainPanel)
     {
         super(new BorderLayout());
-        this.index = index-1;
+        this.index = index;
         frame = new JFrame();
         this.mainPanel = mainPanel;
         affirmation();
@@ -35,25 +35,12 @@ public class DeleteAct extends JPanel
         yesButton = new JButton("Yes");
         yesButton.addActionListener(e ->
         {
-            try
-            {
-                Schedule schedule = JSONManager.readFile();
-                schedule.getActs().remove(index);
-                JSONManager.writeToFile(schedule);
-                //AgendaPopUpGUI.update();
-                frame.dispose();
 
-                JOptionPane.showMessageDialog(frame, "Act deleted.");
-            }
-            catch (Exception e1)
-            {
-                e1.printStackTrace();
-            }
         });
         noButton = new JButton("No");
         noButton.addActionListener(e ->
         {
-            frame.dispose();
+
         });
         add(warningLabel, BorderLayout.CENTER);
         panel.add(yesButton);

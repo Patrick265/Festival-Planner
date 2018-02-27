@@ -4,21 +4,15 @@ import AgendaData.Act;
 import AgendaData.Artist;
 import AgendaData.Podium;
 import AgendaData.Schedule;
-import FileIO.FileExplorer;
 import FileIO.JSONManager;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
-import java.nio.file.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.EventListener;
 import java.util.List;
 
 public class AgendaPopUpGUI extends JFrame
@@ -27,21 +21,19 @@ public class AgendaPopUpGUI extends JFrame
     private Act act;
     private JTable table;
     private JPanel mainPanel;
+    private JPanel bodyPanel;
 
     public AgendaPopUpGUI()
     {
         super("Agenda");
-        //JFrame frame = new JFrame("Agenda");
-        //act = new Act;
         setSize(800, 600);
         mainPanel = new JPanel(new BorderLayout());
-        JPanel panel = new JPanel();
-        table = makeContent(panel);
+        bodyPanel = new JPanel();
+        table = makeContent(bodyPanel);
         mainPanel.add(new JScrollPane(table), BorderLayout.CENTER);
         mainPanel.add(buttonPanel(), BorderLayout.SOUTH);
 
         setContentPane(mainPanel);
-        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
 
@@ -50,13 +42,28 @@ public class AgendaPopUpGUI extends JFrame
         JPanel panel = new JPanel(new FlowLayout());
 
         JButton addButton = new JButton("Add");
-        addButton.addActionListener( e -> new MakeAct() );
+        addButton.addActionListener( e -> new NewActGUI() );
 
         JButton deleteButton = new JButton("Delete");
         deleteButton.addActionListener(e ->
         {
-            new DeleteAct(table.getSelectedRow(), mainPanel);
-
+            int dialogResult =
+                    JOptionPane.showOptionDialog
+                            (mainPanel, "Are you sure you want to delete this act?", "WARNING", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE,null, null, null);
+            if (dialogResult == JOptionPane.YES_OPTION)
+            {
+                try
+                {
+                    Schedule schedule = JSONManager.readFile();
+                    schedule.getActs().remove(table.getSelectedRow());
+                    JSONManager.writeToFile(schedule);
+                    JOptionPane.showMessageDialog(mainPanel, "Act deleted.");
+                }
+                catch (Exception e1)
+                {
+                    e1.printStackTrace();
+                }
+            }
         });
 
         panel.add(addButton);
