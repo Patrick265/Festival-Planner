@@ -83,8 +83,18 @@ public class AgendaPopUpGUI extends JFrame
             act = acts.get(i);
             start = act.getStartTime();
             end = act.getEndTime();
-            startTime = "" + start.getHours() + ":" + start.getMinutes();
-            endTime = end.getHours() + ":" + end.getMinutes();
+
+            startTime = "";
+            if(start.getHours() < 10) { startTime += 0; }
+            startTime += start.getHours() + ":";
+            if(start.getMinutes() < 10) { startTime += 0; }
+            startTime += start.getMinutes();
+
+            endTime = "";
+            if(end.getHours() < 10) { endTime += 0; }
+            endTime += end.getHours() + ":";
+            if(end.getMinutes() < 10) { endTime += 0; }
+            endTime += end.getMinutes();
 
             for(int j = 0; j < act.getArtists().size(); j++)
             {
