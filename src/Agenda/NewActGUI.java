@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class MakeAct extends JPanel
+public class NewActGUI extends JPanel
 {
     private JTextField artistField = new JTextField();
     private JTextField genreField = new JTextField();
@@ -23,7 +23,7 @@ public class MakeAct extends JPanel
     private JTextField endTimeField = new JTextField();
     private JFrame frame;
 
-    public MakeAct()
+    public NewActGUI()
     {
         super(new BorderLayout());
         frame = new JFrame();

@@ -1,7 +1,4 @@
 import javax.swing.*;
-import java.util.Date;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 /**
  * @Author Thomas Mandemaker, Patrick de Jong, Yannick van Dolen , Sergen Peker , Anastasia Hellemons
