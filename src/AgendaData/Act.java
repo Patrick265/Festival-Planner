@@ -32,7 +32,10 @@ public class Act
         this.artists = artists;
         this.podium = podium;
     }
+    public Act()
+    {
 
+    }
     public int getPopularity()
     {
         return popularity;
