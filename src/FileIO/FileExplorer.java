@@ -1,17 +1,10 @@
 package FileIO;
 
-import AgendaData.Artist;
-import AgendaData.Schedule;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.swing.*;
 //import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
-import java.nio.file.Path;
-import java.util.ArrayList;
 
 public class FileExplorer extends JPanel
 {

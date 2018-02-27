@@ -1,11 +1,10 @@
+package Agenda;
+
 import AgendaData.Act;
 import AgendaData.Artist;
 import AgendaData.Podium;
-import AgendaData.Schedule;
 
 import javax.swing.*;
-import javax.tools.JavaCompiler;
-import java.awt.*;
 import java.util.Date;
 import java.util.List;
 

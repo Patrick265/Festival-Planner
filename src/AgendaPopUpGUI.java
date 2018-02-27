@@ -1,17 +1,15 @@
+package Agenda;
+
 import AgendaData.Act;
 import AgendaData.Artist;
 import AgendaData.Podium;
 import AgendaData.Schedule;
 import FileIO.JSONManager;
-import com.sun.org.apache.bcel.internal.generic.SWITCH;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.nio.file.Path;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class AgendaPopUpGUI extends JFrame
@@ -50,7 +48,7 @@ public class AgendaPopUpGUI extends JFrame
         JButton deleteButton = new JButton("Delete");
         deleteButton.addActionListener(e ->
         {
-            new deleteAct(table.getSelectedRow());
+            new Agenda.deleteAct(table.getSelectedRow());
         });
 
         panel.add(addButton);
@@ -132,7 +130,7 @@ public class AgendaPopUpGUI extends JFrame
                     if (row >= 1 && col >= 0)
                     {
                         int index = row - 1;
-                        AgendaInfoPopUpGUI popup = new AgendaInfoPopUpGUI(index, acts);
+                        Agenda.AgendaInfoPopUpGUI popup = new Agenda.AgendaInfoPopUpGUI(index, acts);
                     }
                 }
             }

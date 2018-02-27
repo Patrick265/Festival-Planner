@@ -1,6 +1,10 @@
 import javax.swing.*;
 
-import AgendaData.*;
+import AgendaData.Act;
+import AgendaData.Artist;
+import AgendaData.Podium;
+import AgendaData.Schedule;
+import Agenda.AgendaPopUpGUI;
 import FileIO.*;
 
 import java.util.ArrayList;

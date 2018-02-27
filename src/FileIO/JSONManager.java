@@ -1,14 +1,9 @@
 package FileIO;
 
-import AgendaData.Act;
 import AgendaData.Schedule;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import javax.swing.*;
 import java.io.File;
-import java.io.IOException;
-import java.util.List;
 
 
 public class JSONManager
