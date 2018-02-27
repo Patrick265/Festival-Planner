@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static org.junit.jupiter.api.AssertEquals.assertEquals;
+
 public class AgendaTest
 {
     @Test
@@ -18,6 +20,7 @@ public class AgendaTest
         ArrayList<Artist> artistsThird = new ArrayList <>();
 
         Artist vsArtist = new Artist("Vince Staples", "path","Hip-Hop");
+        Artist abArtist = new Artist("Ali - B", "path", "Hip-Hop");
         Artist stygArtist = new Artist("Stick To Your Guns", "path", "HardRock");
         Artist llArtist = new Artist("Letlive.", "path", "Rock");
 
@@ -28,6 +31,7 @@ public class AgendaTest
         Date endTime = new Date();
 
         artistsMain.add(vsArtist);
+        artistsMain.add(abArtist);
         artistsSec.add(stygArtist);
         artistsThird.add(llArtist);
 
@@ -40,16 +44,10 @@ public class AgendaTest
         acts.add(stygAct);
         acts.add(llAct);
 
-        System.out.println(acts.toString());
-//        for(int i = 0; i < acts.size(); i++)
-//        {
-//            System.out.print(   "Popularity: "  + acts.get(i).getPopularity()               + "\n"    +
-//                                "StartTime: " + acts.get(i).getStartTime().getHours()      + ":" + acts.get(i).getStartTime().getMinutes() + "\n"    +
-//                                "EndTime: "   + acts.get(i).getEndTime().getHours()        + ":" + acts.get(i).getEndTime().getMinutes()   + "\n"    +
-//                                "Name: "       + acts.get(i).getArtists().get(0).getName() + "\n"    +
-//                                "Podium name: "+ acts.get(i).getPodium().getName()         + "\n"    +
-//                                "----------------------------------"                        + "\n");
-//        }
+        for(int index = 0; index < acts.size(); index++)
+        {
+            acts.get(index).printDetails(index);
+        }
 
     }
 }
