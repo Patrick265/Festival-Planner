@@ -8,41 +8,33 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class deleteAct extends JPanel implements ActionListener
+public class DeleteAct extends JPanel implements ActionListener
 {
     private int index;
     private JButton yesButton;
     private JButton noButton;
     private JFrame frame;
-    public deleteAct(int index)
+    public DeleteAct(int index)
     {
         super(new BorderLayout());
         this.index = index;
         frame = new JFrame();
         affirmation();
         frame.setContentPane(this);
-//        frame.addWindowListener(new WindowAdapter()
-//        {
-//            @Override
-//            public void windowClosing(WindowEvent e)
-//            {
-//                super.windowClosing(e);
-//
-//            }
-//        });
         frame.pack();
         frame.setVisible(true);
     }
 
     public void affirmation()
     {
-        //JPanel panel = new J
+        JPanel panel = new JPanel();
         JLabel warningLabel = new JLabel("Are you sure you want to delete this act?");
         yesButton = new JButton("Yes");
         noButton = new JButton("No");
         add(warningLabel, BorderLayout.CENTER);
-        add(yesButton, BorderLayout.SOUTH);
-        add(noButton, BorderLayout.SOUTH);
+        panel.add(yesButton);
+        panel.add(noButton);
+        add(panel, BorderLayout.SOUTH);
     }
 
     @Override

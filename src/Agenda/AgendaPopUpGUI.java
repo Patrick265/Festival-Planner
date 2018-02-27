@@ -48,7 +48,7 @@ public class AgendaPopUpGUI extends JFrame
         JButton deleteButton = new JButton("Delete");
         deleteButton.addActionListener(e ->
         {
-            new Agenda.deleteAct(table.getSelectedRow());
+            new DeleteAct(table.getSelectedRow());
         });
 
         panel.add(addButton);
