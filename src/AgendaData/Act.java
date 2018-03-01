@@ -9,7 +9,7 @@ import java.util.List;
  * @author Anastasia Hellemons,
  * @version 0.1
  */
-public class Act
+public class Act implements Comparable<Act>
 {
     private int popularity;
     private Date startTime;
@@ -103,5 +103,16 @@ public class Act
         }
 
         return  details;
+    }
+
+    @Override
+    public int compareTo(Act o)
+    {
+        int podiumComaprison = this.getPodium().getName().compareTo(o.getPodium().getName());
+
+        if(podiumComaprison != 0)
+            return podiumComaprison;
+        else
+            return this.getStartTime().compareTo(o.getStartTime());
     }
 }

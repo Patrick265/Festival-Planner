@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -97,6 +98,8 @@ public class AgendaPopUpGUI extends JFrame
 
         List<Act> acts = schedule.getActs();
         Object[][] allInfo = new Object[acts.size()][6];
+
+        Collections.sort(acts);
 
         int index = acts.size();
         for (int i = 0; i < index; i++)
