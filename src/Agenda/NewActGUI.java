@@ -35,13 +35,13 @@ public class NewActGUI extends JPanel
 
     public void headPanel()
     {
-        JPanel panel = new JPanel(new GridLayout(6, 2, 0, 5));
-        JLabel artistLabel = new JLabel("Artist(s):");
-        JLabel genreLabel = new JLabel("Genre:");
-        JLabel popularityLabel = new JLabel("Popularity: ");
-        JLabel podiumLabel = new JLabel("Podium:");
-        JLabel startLabel = new JLabel("StartTime:");
-        JLabel endLabel = new JLabel("EndTime: ");
+        JPanel panel = new JPanel(new GridLayout(6, 2, 0, 32));
+        JLabel artistLabel = new JLabel("        Artist(s):");
+        JLabel genreLabel = new JLabel("        Genre:");
+        JLabel popularityLabel = new JLabel("        Popularity: ");
+        JLabel podiumLabel = new JLabel("        Podium:");
+        JLabel startLabel = new JLabel("        Start Time:");
+        JLabel endLabel = new JLabel("        End Time: ");
 
         panel.add(artistLabel);
         panel.add(artistField);
