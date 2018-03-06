@@ -8,6 +8,7 @@ import FileIO.JSONManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,11 +21,12 @@ public class MakeAct extends JPanel
     private JTextField podiumField = new JTextField();
     private JTextField startTimeField = new JTextField();
     private JTextField endTimeField = new JTextField();
+    private JFrame frame;
 
     public MakeAct()
     {
         super(new BorderLayout());
-        JFrame frame = new JFrame();
+        frame = new JFrame();
         frame.setSize(400, 400);
         headPanel();
         frame.setContentPane(this);
@@ -92,14 +94,24 @@ public class MakeAct extends JPanel
             artists.add(new Artist(artistInput, "", genreInput));
         }
         Podium podium = new Podium(podiumInput);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
-        Date startTime = simpleDateFormat.parse(startTimeInput);
-        Date endTime = simpleDateFormat.parse(endTimeInput);
-        //try
-        //{
+        try
+        {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+            Date startTime = simpleDateFormat.parse(startTimeInput);
+            Date endTime = simpleDateFormat.parse(endTimeInput);
             Act act = new Act(Integer.parseInt(popularityInput), startTime, endTime, artists, podium);
-        //}catch(Exception e){}
-        schedule.addAct(act);
-        JSONManager.writeToFile(schedule);
+            schedule.addAct(act);
+            JSONManager.writeToFile(schedule);
+            frame.dispose();
+        }
+        catch(NumberFormatException e)
+        {
+            JOptionPane.showMessageDialog(frame, "Inserted popularity is too big.");
+        }
+        catch(ParseException e)
+        {
+            JOptionPane.showMessageDialog(frame, "Inserted data either invalid or empty.");
+        }
+
     }
 }
