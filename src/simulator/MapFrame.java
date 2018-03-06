@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 
 public class MapFrame extends JPanel implements MouseListener, MouseMotionListener, MouseWheelListener, KeyListener, ActionListener
 {
@@ -90,7 +91,9 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
         initY = e.getY();
         animation.update();
         repaint();
-        animation.setTargets(e);
+        int divX = g2d.getClip().getBounds().x + e.getX();
+        int divY = g2d.getClip().getBounds().y + e.getY();
+        animation.setTargets(new Point(divX, divY));
 
     }
 

@@ -74,11 +74,11 @@ public class VisitorTest extends JPanel implements ActionListener
         repaint();
     }
 
-    public void setTargets(MouseEvent e)
+    public void setTargets(Point e)
     {
         for(VistorLogic visitor : visitors)
         {
-            visitor.setTarget(e.getPoint());
+            visitor.setTarget(e);
         }
     }
 
