@@ -23,66 +23,6 @@ public class AgendaTest
     private Podium podiumThird;
 
     @Test
-    public void addingAct()
-    {
-        makeTestScenario();
-        //ADDING A NEW ACT
-        Date startTime2 = new Date();
-        Date endTime2 = new Date();
-        startTime2.setHours(16);
-        startTime2.setMinutes(0);
-        endTime2.setHours(17);
-        endTime2.setMinutes(0);
-        Artist rtsArtist = new Artist("Recode the Subliminal","path","HardRock");
-        this.artistSecondMain = new ArrayList <>();
-        this.artistSecondMain.add(rtsArtist);
-        acts.add(new Act(10, startTime2, endTime2, this.artistSecondMain,this.podiumMain));
-
-
-        //COMPARING IT TO A HARDCODED ARRAYLIST
-        ArrayList<Act> hardcodedArray = new ArrayList();
-        ArrayList<Artist> artistsMainHard = new ArrayList();
-        ArrayList<Artist> artistsMainHard2 = new ArrayList();
-        ArrayList<Artist> artistsSecHard = new ArrayList();
-        ArrayList<Artist> artistsThirdHard = new ArrayList();
-
-        Artist vsArtistHard = new Artist("Vince Staples", "path","Hip-Hop");
-        Artist abArtistHard = new Artist("Ali - B", "path", "Hip-Hop");
-        Artist stygArtistHard = new Artist("Stick To Your Guns", "path", "HardRock");
-        Artist llArtistHard = new Artist("Letlive.", "path", "Rock");
-        Artist rtsArtistHard = new Artist("Recode the Subliminal","path","HardRock");
-
-        Podium podiumMainHard = new Podium("MainStage");
-        Podium podiumSecHard = new Podium("Secondary Stage");
-        Podium podiumThirdHard = new Podium("Third Stage");
-
-
-        Date beginTime = new Date();
-        Date endingTime = new Date();
-        beginTime.setHours(13);
-        beginTime.setMinutes(35);
-        endingTime.setHours(15);
-        endingTime.setMinutes(0);
-
-        artistsMainHard.add(vsArtistHard);
-        artistsMainHard.add(abArtistHard);
-        artistsMainHard2.add(rtsArtistHard);
-        artistsSecHard.add(stygArtistHard);
-        artistsThirdHard.add(llArtistHard);
-
-        Act vsActHard = new Act(75, beginTime, endingTime, artistsMainHard ,podiumMainHard);
-        Act vsActHard2 = new Act(75, beginTime, endingTime, artistsMainHard2 ,podiumMainHard);
-        Act stygActHard = new Act(50, beginTime, endingTime, artistsSecHard ,podiumSecHard);
-        Act llActHard = new Act(35, beginTime, endingTime, artistsThirdHard,podiumThirdHard);
-        hardcodedArray.add(vsActHard);
-        hardcodedArray.add(vsActHard2);
-        hardcodedArray.add(stygActHard);
-        hardcodedArray.add(llActHard);
-
-        assertEquals(printDetailsArrayList(hardcodedArray),printDetailsArrayList(acts));
-    }
-
-    @Test
     public void testingPrintDetails()
     {
         makeTestScenario();
