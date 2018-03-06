@@ -6,6 +6,8 @@ import AgendaData.Podium;
 import AgendaData.Schedule;
 import Agenda.AgendaPopUpGUI;
 import FileIO.*;
+import simulator.MapFrame;
+import simulator.MapLoader;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,6 +38,7 @@ public class GUI
 
         makeMenuBar(frame);
         makeContent(frame);
+        makeSimulator();
 
         frame.setSize(1280, 720);
         frame.setVisible(true);
@@ -112,6 +115,11 @@ public class GUI
     {
         JPanel content = new JPanel();
         frame.add(content);
+    }
+
+    private void makeSimulator()
+    {
+        new MapFrame();
     }
 
 //    private void testAgenda()
