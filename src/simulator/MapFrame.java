@@ -7,7 +7,7 @@ import java.awt.geom.AffineTransform;
 
 public class MapFrame extends JPanel implements MouseListener, MouseMotionListener, MouseWheelListener
 {
-    private MapLoader map = new MapLoader("FesivalPlannermap.json");
+    private MapLoader map = new MapLoader("/Map/FesivalPlannermap.json");
 
     private int y = 0;
     private int initY = 0;
