@@ -8,26 +8,28 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-public class NPCDemo extends JPanel implements ActionListener
+public class VisitorTest extends JPanel implements ActionListener
 {
     public static void main(String[] args)
     {
         JFrame frame = new JFrame("NPC-Demo");
         frame.setSize(1920, 1080);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setContentPane(new NPCDemo());
+        frame.setContentPane(new VisitorTest());
         frame.setVisible(true);
     }
 
-    ArrayList<NPCLogic> npc = new ArrayList<>();
+    ArrayList<VistorLogic> visitors = new ArrayList<>();
 
-    public NPCDemo()
+    public VisitorTest()
     {
-        while(npc.size() < 10)
+        while(visitors.size() < 10)
         {
-            NPCLogic visitor = new NPCLogic();
-            if(!visitor.hasCollision(npc))
-                npc.add(visitor);
+            VistorLogic visitor = new VistorLogic();
+            if(!visitor.hasCollision(visitors))
+            {
+                visitors.add(visitor);
+            }
         }
 
 
@@ -37,7 +39,7 @@ public class NPCDemo extends JPanel implements ActionListener
             @Override
             public void mousePressed(MouseEvent e)
             {
-                for(NPCLogic visitor : npc)
+                for(VistorLogic visitor : visitors)
                 {
                     visitor.setTarget(e.getPoint());
                 }
@@ -50,15 +52,19 @@ public class NPCDemo extends JPanel implements ActionListener
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
 
-        for(NPCLogic visitor : npc)
+        for(VistorLogic visitor : visitors)
+        {
             visitor.draw(g2d);
+        }
     }
 
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        for(NPCLogic visitor : npc)
-            visitor.update(npc);
+        for(VistorLogic visitor : visitors)
+        {
+            visitor.update(visitors);
+        }
         repaint();
     }
 }
