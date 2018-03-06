@@ -17,8 +17,6 @@ public class Act
     private List<Artist> artists;
     private Podium podium;
 
-
-
     /**
      * @param popularity the popularity of the activity in int.
      * @param startTime  the starting time of the activity in Double.
@@ -26,7 +24,6 @@ public class Act
      * @param artists    the artists who will be on stage during the activity.
      * @param podium     the podium on which the activity wil be held.
      */
-
     public Act(int popularity, Date startTime, Date endTime, ArrayList artists, Podium podium)
     {
         this.popularity = popularity;
@@ -35,8 +32,10 @@ public class Act
         this.artists = artists;
         this.podium = podium;
     }
-    public Act(){}
+    public Act()
+    {
 
+    }
     public int getPopularity()
     {
         return popularity;
@@ -80,5 +79,28 @@ public class Act
     public void setPodium(Podium podium)
     {
         this.podium = podium;
+    }
+
+
+    public String printDetails(int size)
+    {
+        String details = "";
+        for(int i = 0; i < size; i++ )
+        {
+            details +=  "Popularity: "  + popularity            + "\n"  +
+                        "StartTime: "   + startTime.getHours()  + ":"   + startTime.getMinutes()    + "\n" +
+                        "EndTime: "     + endTime.getHours()    + ":"   + endTime.getMinutes();
+            details +=  "Name: ";
+
+            for (int artistindex = 0; artistindex < artists.size(); artistindex++)
+            {
+                details += artists.get(artistindex).getName() + ", ";
+            }
+
+            details +=  "\n" + "Podium name: " + podium.getName() + "\n" +
+                        "----------------------------------" + "\n";
+        }
+
+        return  details;
     }
 }
