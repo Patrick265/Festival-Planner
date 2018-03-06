@@ -4,21 +4,16 @@ import AgendaData.Act;
 import AgendaData.Artist;
 import AgendaData.Podium;
 import AgendaData.Schedule;
-import FileIO.FileExplorer;
 import FileIO.JSONManager;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
-import java.nio.file.*;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
-import java.util.EventListener;
 import java.util.List;
 
 public class AgendaPopUpGUI extends JFrame
@@ -27,21 +22,19 @@ public class AgendaPopUpGUI extends JFrame
     private Act act;
     private JTable table;
     private JPanel mainPanel;
+    private JPanel bodyPanel;
 
     public AgendaPopUpGUI()
     {
         super("Agenda");
-        //JFrame frame = new JFrame("Agenda");
-        //act = new Act;
         setSize(800, 600);
         mainPanel = new JPanel(new BorderLayout());
-        JPanel panel = new JPanel();
-        table = makeContent(panel);
-        mainPanel.add(table, BorderLayout.CENTER);
+        bodyPanel = new JPanel();
+        table = makeContent(bodyPanel);
+        mainPanel.add(new JScrollPane(table), BorderLayout.CENTER);
         mainPanel.add(buttonPanel(), BorderLayout.SOUTH);
 
         setContentPane(mainPanel);
-        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
 
@@ -50,16 +43,28 @@ public class AgendaPopUpGUI extends JFrame
         JPanel panel = new JPanel(new FlowLayout());
 
         JButton addButton = new JButton("Add");
-        addButton.addActionListener(e ->
-        {
-            new MakeAct();
-        });
+        addButton.addActionListener( e -> new NewActGUI() );
 
         JButton deleteButton = new JButton("Delete");
         deleteButton.addActionListener(e ->
         {
-            new DeleteAct(table.getSelectedRow(), mainPanel);
-
+            int dialogResult =
+                    JOptionPane.showOptionDialog
+                            (mainPanel, "Are you sure you want to delete this act?", "WARNING", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE,null, null, null);
+            if (dialogResult == JOptionPane.YES_OPTION)
+            {
+                try
+                {
+                    Schedule schedule = JSONManager.readFile();
+                    schedule.getActs().remove(table.getSelectedRow());
+                    JSONManager.writeToFile(schedule);
+                    JOptionPane.showMessageDialog(mainPanel, "Act deleted.");
+                }
+                catch (Exception e1)
+                {
+                    e1.printStackTrace();
+                }
+            }
         });
 
         panel.add(addButton);
@@ -71,7 +76,7 @@ public class AgendaPopUpGUI extends JFrame
     public JTable makeContent(JPanel panel)
     {
         table = new JTable();
-        Object[] name = {"Artist", "Podium", "Start time", "EndTime"};
+        Object[] name = {"Artist(s)", "Genre", "Popularity", "Podium", "Start time", "End time" };
         try
         {
             schedule = JSONManager.readFile();
@@ -82,51 +87,74 @@ public class AgendaPopUpGUI extends JFrame
         }
         Date start;
         Date end;
-        String startTime;
-        String endTime;
-        String nameArtist = "";
-        Artist artist;
-        java.util.List<Artist> artists;
+        String startTime = "";
+        String endTime = "";
+        String artistName = "";
         Podium podium;
+        String genre;
+        String popularity;
         String namePodium;
 
 
-        int amoutOfTimes = 0;
+        List<Act> acts = schedule.getActs();
+        Object[][] allInfo = new Object[acts.size()][6];
 
-        java.util.List<Act> acts = schedule.getActs();
-        Object[][] allInfo = new Object[acts.size() + 1][4];
-        allInfo[0][0] = name[0];
-        allInfo[0][1] = name[1];
-        allInfo[0][2] = name[2];
-        allInfo[0][3] = name[3];
+        Collections.sort(acts);
+
         int index = acts.size();
-        for (int x = 0; x < index; x++)
+        for (int i = 0; i < index; i++)
         {
-            act = acts.get(x);
+            act = acts.get(i);
             start = act.getStartTime();
             end = act.getEndTime();
-            startTime = "" + start.getHours() + ":" + start.getMinutes();
-            endTime = end.getHours() + ":" + end.getMinutes();
 
-            for (Artist a : act.getArtists())
-                nameArtist += a.getName() + " ";
+            startTime = "";
+            if(start.getHours() < 10) { startTime += 0; }
+            startTime += start.getHours() + ":";
+            if(start.getMinutes() < 10) { startTime += 0; }
+            startTime += start.getMinutes();
 
-//            artists = act.getArtists();
-//            nameArtist = artists.getName();
+            endTime = "";
+            if(end.getHours() < 10) { endTime += 0; }
+            endTime += end.getHours() + ":";
+            if(end.getMinutes() < 10) { endTime += 0; }
+            endTime += end.getMinutes();
 
+            for(int j = 0; j < act.getArtists().size(); j++)
+            {
+                if(j < act.getArtists().size() - 1)
+                {
+                    artistName += act.getArtists().get(j).getName() + ", ";
+                }
+                else
+                {
+                    artistName += act.getArtists().get(j).getName();
+                }
+            }
+
+            genre = "";
+
+            for(int j = 0; j < act.getArtists().size(); j++)
+            {
+                if(j > 0)
+                {
+                    genre += ", ";
+                }
+                genre += act.getArtists().get(j).getGenre();
+            }
+
+            popularity = "" + act.getPopularity();
             podium = act.getPodium();
             namePodium = podium.getName();
 
-            Object[] info = {nameArtist, namePodium, startTime, endTime};
-            allInfo[x + 1][0] = info[0];
-            allInfo[x + 1][1] = info[1];
-            allInfo[x + 1][2] = info[2];
-            allInfo[x + 1][3] = info[3];
+            Object[] info = {artistName, genre, popularity, namePodium, startTime, endTime};
 
-            nameArtist = "";
+            for (int j = 0; j < info.length; j++)
+                allInfo[i][j] = info[j];
 
-
+            artistName = "";
         }
+
         table = new JTable(allInfo, name);
         panel.add(table);
 
@@ -139,14 +167,15 @@ public class AgendaPopUpGUI extends JFrame
                 {
                     int row = table.rowAtPoint(evt.getPoint());
                     int col = table.columnAtPoint(evt.getPoint());
-                    if (row >= 1 && col >= 0)
+                    if (row >= 0 && col >= 0)
                     {
-                        int index = row - 1;
+                        int index = row;
                         Agenda.AgendaInfoPopUpGUI popup = new Agenda.AgendaInfoPopUpGUI(index, acts);
                     }
                 }
             }
         });
+
         Action action = new AbstractAction()
         {
             public void actionPerformed(ActionEvent e)
@@ -202,32 +231,6 @@ public class AgendaPopUpGUI extends JFrame
         };
 
         TableCellListener tcl = new TableCellListener(table, action);
-
-//        Path myDir = Paths.get("Festival-Planner/src/FileIO/");
-//
-//        try {
-//            WatchService watcher = myDir.getFileSystem().newWatchService();
-//            myDir.register(watcher, StandardWatchEventKinds.ENTRY_CREATE,
-//                    StandardWatchEventKinds.ENTRY_DELETE, StandardWatchEventKinds.ENTRY_MODIFY);
-//
-//            WatchKey watckKey = watcher.take();
-//
-//            List<WatchEvent<?>> events = watckKey.pollEvents();
-//            for (WatchEvent event : events) {
-//                if (event.kind() == StandardWatchEventKinds.ENTRY_CREATE) {
-//                    System.out.println("Created: " + event.context().toString());
-//                }
-//                if (event.kind() == StandardWatchEventKinds.ENTRY_DELETE) {
-//                    System.out.println("Delete: " + event.context().toString());
-//                }
-//                if (event.kind() == StandardWatchEventKinds.ENTRY_MODIFY) {
-//                    System.out.println("Modify: " + event.context().toString());
-//                }
-//            }
-//
-//        } catch (Exception e) {
-//            System.out.println("Error: " + e.toString());
-//        }
 
         return table;
     }

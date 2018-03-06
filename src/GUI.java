@@ -47,7 +47,6 @@ public class GUI
         JMenuBar menu = new JMenuBar();
         frame.setJMenuBar(menu);
 
-
         //making file menu
         JMenu file = new JMenu("File");
         JMenuItem open = new JMenuItem("Open");
