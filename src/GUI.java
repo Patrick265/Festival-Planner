@@ -4,6 +4,7 @@ import FileIO.FileExplorer;
 import simulator.MapFrame;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * @Author Thomas Mandemaker, Patrick de Jong, Yannick van Dolen , Sergen Peker , Anastasia Hellemons
@@ -27,13 +28,14 @@ public class GUI
     private void makeFrame()
     {
         frame = new JFrame("Festival Planner");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         makeMenuBar(frame);
         makeContent(frame);
-        makeSimulator();
+        makeSimulator(frame);
 
         frame.setSize(1280, 720);
+        //frame.setMaximumSize(new Dimension(1600, 1600));
         frame.setVisible(true);
     }
 
@@ -109,7 +111,7 @@ public class GUI
         frame.add(content);
     }
 
-    private void makeSimulator()
+    private void makeSimulator(JFrame frame)
     {
         new MapFrame(frame);
     }
