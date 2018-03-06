@@ -181,7 +181,7 @@ public class AgendaPopUpGUI extends JFrame
             public void actionPerformed(ActionEvent e)
             {
                 TableCellListener tcl = (TableCellListener) e.getSource();
-                Act changedAct = acts.get(tcl.getRow() - 1);
+                Act changedAct = acts.get(tcl.getRow());
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
                 switch (tcl.getColumn())
                 {
@@ -217,7 +217,7 @@ public class AgendaPopUpGUI extends JFrame
                         catch (Exception ex) {}
                         break;
                 }
-                acts.set(tcl.getRow() - 1, changedAct);
+                acts.set(tcl.getRow(), changedAct);
                 schedule.setActs(acts);
                 try
                 {

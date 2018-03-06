@@ -13,9 +13,9 @@ public class Main
         {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         }
-        catch(Exception ex)
+        catch(Exception e)
         {
-
+            e.printStackTrace();
         }
         GUI gui = new GUI();
     }
