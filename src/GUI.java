@@ -1,16 +1,9 @@
-import javax.swing.*;
-
-import AgendaData.Act;
-import AgendaData.Artist;
-import AgendaData.Podium;
-import AgendaData.Schedule;
 import Agenda.AgendaPopUpGUI;
-import FileIO.*;
+import AgendaData.Schedule;
+import FileIO.FileExplorer;
 import simulator.MapFrame;
-import simulator.MapLoader;
 
-import java.util.ArrayList;
-import java.util.Date;
+import javax.swing.*;
 
 /**
  * @Author Thomas Mandemaker, Patrick de Jong, Yannick van Dolen , Sergen Peker , Anastasia Hellemons
