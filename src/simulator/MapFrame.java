@@ -20,15 +20,15 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
     private int x = 0;
     private int initX = 0;
 
+    private double scale = 1;
+
     private boolean ctrlPressed = false;
 
     private Graphics2D g2d;
 
     public MapFrame(JFrame frame)
     {
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setContentPane(this);
-        frame.setVisible(true);
         addMouseListener(this);
         addMouseMotionListener(this);
         addMouseWheelListener(this);
@@ -43,6 +43,7 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
         g2d = (Graphics2D) g;
 
         g2d.setTransform(AffineTransform.getTranslateInstance(x, y));
+        g2d.scale(scale, scale);
         map.draw(g2d);
         animation.paintComponent(g2d);
 
@@ -118,24 +119,30 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
     @Override
     public void mouseWheelMoved(MouseWheelEvent e)
     {
-        
-        int a = e.getWheelRotation() * -100;
-        y += a;
-        if (g2d.getClip().getBounds().y - y > 0 && g2d.getClip().getBounds().y - y < 1061)
-        {
-            invalidate();
-            revalidate();
-            repaint();
-        } else
-        {
-            y -= a;
-        }
+        int c = e.getWheelRotation();
+        scale -= c*0.1;
+        //x = getWidth()/2 - e.getPoint().x;
+        //y = getWidth()/2 - e.getPoint().y;
+        repaint();
+        //setAlignmentX(0);
+        //setAlignmentY(0);
+
+//        int a = e.getWheelRotation() * -100;
+//        y += a;
+//        if (g2d.getClip().getBounds().y - y > 0 && g2d.getClip().getBounds().y - y < 1061)
+//        {
+//            invalidate();
+//            revalidate();
+//            repaint();
+//        } else
+//        {
+//            y -= a;
+//        }
     }
 
     @Override
     public void keyTyped(KeyEvent e)
     {
-        System.out.println(e.getID());
     }
 
     @Override
