@@ -111,7 +111,7 @@ public class GUI
 
     private void makeSimulator()
     {
-        new MapFrame();
+        new MapFrame(frame);
     }
 
 //    private void testAgenda()
