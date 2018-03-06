@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class NPCLogic
+public class VistorLogic
 {
     private String type;
     private String interest;
@@ -22,7 +22,7 @@ public class NPCLogic
     private int imageWidth;
 
 
-    public NPCLogic()
+    public VistorLogic()
     {
         this.position = new Point2D.Double(Math.random() * 1980, Math.random() * 1080 );
         this.angle = Math.random() * 2 * Math.PI;
@@ -48,7 +48,7 @@ public class NPCLogic
     }
 
 
-    public void update(ArrayList<NPCLogic> npcs)
+    public void update(ArrayList<VistorLogic> npcs)
     {
 
         Point2D diff = new Point2D.Double(
@@ -86,9 +86,9 @@ public class NPCLogic
             angle += 0.2;
         }
     }
-    public boolean hasCollision(ArrayList<NPCLogic> npcs) {
+    public boolean hasCollision(ArrayList<VistorLogic> npcs) {
         boolean hasCollision = false;
-        for(NPCLogic npc : npcs)
+        for(VistorLogic npc : npcs)
         {
             if(npc== this)
                 continue;
