@@ -26,7 +26,7 @@ public class VistorLogic
     {
         this.position = new Point2D.Double(Math.random() * 1980, Math.random() * 1080 );
         this.angle = Math.random() * 2 * Math.PI;
-        this.speed = 3 + 4 * Math.random();
+        this.speed = 3 ;
 
         try
         {

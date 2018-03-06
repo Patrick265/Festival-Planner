@@ -34,7 +34,7 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
         addMouseWheelListener(this);
         addKeyListener(this);
         setFocusable(true);
-        new Timer(1000/35, this).start();
+        new Timer(1000/75, this).start();
     }
 
     public void paintComponent(Graphics g)
