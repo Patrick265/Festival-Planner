@@ -61,10 +61,25 @@ public class VisitorTest extends JPanel implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e)
     {
+    }
+
+    public void update()
+    {
         for(VistorLogic visitor : visitors)
         {
             visitor.update(visitors);
+
         }
+
         repaint();
     }
+
+    public void setTargets(MouseEvent e)
+    {
+        for(VistorLogic visitor : visitors)
+        {
+            visitor.setTarget(e.getPoint());
+        }
+    }
+
 }

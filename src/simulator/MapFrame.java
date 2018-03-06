@@ -1,13 +1,17 @@
 package simulator;
 
+import simulator.NPC.VisitorTest;
+import simulator.NPC.VistorLogic;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 
-public class MapFrame extends JPanel implements MouseListener, MouseMotionListener, MouseWheelListener, KeyListener
+public class MapFrame extends JPanel implements MouseListener, MouseMotionListener, MouseWheelListener, KeyListener, ActionListener
 {
     private MapLoader map = new MapLoader("/Map/FesivalPlannermap.json");
+    private VisitorTest animation = new VisitorTest();
 
     private int y = 0;
     private int initY = 0;
@@ -29,6 +33,7 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
         addMouseWheelListener(this);
         addKeyListener(this);
         setFocusable(true);
+        new Timer(1000/35, this).start();
     }
 
     public void paintComponent(Graphics g)
@@ -38,6 +43,7 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
 
         g2d.setTransform(AffineTransform.getTranslateInstance(x, y));
         map.draw(g2d);
+        animation.paintComponent(g2d);
 
     }
 
@@ -82,6 +88,10 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
     {
         initX = e.getX();
         initY = e.getY();
+        animation.update();
+        repaint();
+        animation.setTargets(e);
+
     }
 
     @Override
@@ -137,5 +147,12 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
     {
         if(e.getKeyCode() == KeyEvent.VK_CONTROL)
             ctrlPressed = false;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e)
+    {
+        animation.update();
+        repaint();
     }
 }
