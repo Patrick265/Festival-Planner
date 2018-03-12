@@ -3,8 +3,10 @@ import AgendaData.Schedule;
 import FileIO.FileExplorer;
 import simulator.MapFrame;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 /**
  * @Author Thomas Mandemaker, Patrick de Jong, Yannick van Dolen , Sergen Peker , Anastasia Hellemons
@@ -39,6 +41,16 @@ public class GUI
         frame.setVisible(true);
     }
 
+
+
+    private void makeMenuBar2(JFrame frame)
+    {
+        String[] fileText = {"Open", "View Agenda", "About", "Version"};
+        String[] imagesPath = {"Resources\\GUI\\MenuBarIcons\\16x16_OpenFileMenuBar.png"};
+
+
+    }
+
     /**
      * creates the menu bar and its contents.
      * @param frame the frame wherein the menu bar is added to.
@@ -52,6 +64,14 @@ public class GUI
         //making file menu
         JMenu file = new JMenu("File");
         JMenuItem open = new JMenuItem("Open");
+        try
+        {
+            open.setIcon(new ImageIcon(ImageIO.read(new FileInputStream("Festival-Planner\\Resources\\GUI\\MenuBarIcons\\16x16_OpenFileMenuBar.png"))));
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
         file.add(open).addActionListener(e -> {
             try
             {
