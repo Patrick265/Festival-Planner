@@ -1,10 +1,7 @@
 package AgendaV2;
 
-import Agenda.DeleteAct;
-import Agenda.NewActGUI;
-import AgendaData.Schedule;
-import FileIO.JSONManager;
 
+import Agenda.NewActGUI;
 import javax.swing.*;
 import java.awt.*;
 
@@ -34,6 +31,7 @@ public class ButtonControl extends JPanel
         this.addAct.addActionListener(e ->
         {
             NewActGUI newActGUI = new NewActGUI();
+
         });
     }
 }

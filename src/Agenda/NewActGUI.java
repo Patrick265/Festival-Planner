@@ -36,12 +36,12 @@ public class NewActGUI extends JPanel
         frame = new JFrame();
         frame.setSize(400, 400);
         frame.setLocation((screenWidth / 2) - (frame.getWidth() / 2), (screenHeight / 2) - (frame.getHeight() / 2));
-        headPanel();
+        buildPanel();
         frame.setContentPane(this);
         frame.setVisible(true);
     }
 
-    public void headPanel()
+    public void buildPanel()
     {
         JPanel panel = new JPanel(new GridLayout(6, 2, 0, 32));
         JLabel artistLabel = new JLabel("        Artist(s):");
@@ -120,8 +120,35 @@ public class NewActGUI extends JPanel
         {
             JOptionPane.showMessageDialog(frame, "Inserted data either invalid or empty.");
         }
+    }
 
+    public JTextField getArtistField()
+    {
+        return artistField;
+    }
 
+    public JTextField getGenreField()
+    {
+        return genreField;
+    }
 
+    public JTextField getPopularityField()
+    {
+        return popularityField;
+    }
+
+    public JComboBox <String> getPodiumField()
+    {
+        return podiumField;
+    }
+
+    public JTextField getStartTimeField()
+    {
+        return startTimeField;
+    }
+
+    public JTextField getEndTimeField()
+    {
+        return endTimeField;
     }
 }

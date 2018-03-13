@@ -27,12 +27,6 @@ public class TableModel extends AbstractTableModel
         {
             e.printStackTrace();
         }
-
-        for(Act act : acts)
-        {
-            System.out.println(acts);
-        }
-
     }
 
     @Override
@@ -97,4 +91,11 @@ public class TableModel extends AbstractTableModel
         }
         return "";
     }
+
+    @Override
+    public void fireTableDataChanged()
+    {
+        super.fireTableDataChanged();
+    }
+
 }
