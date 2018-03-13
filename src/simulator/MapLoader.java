@@ -35,12 +35,14 @@ public class MapLoader
             for (int i = 0; i < tileSets.size(); i++)
             {
                 JsonObject tileSet = tileSets.getJsonObject(i);
-                String imageSource = tileSet.getString("source");
+                String imageSource = tileSet.getString("image");
 
                 BufferedImage image = ImageIO.read(getClass().getResource(imageSource));
 
                 tileHeight = root.getInt("tileheight");
                 tileWidth = root.getInt("tilewidth");
+
+                JsonArray terrains = tileSet.getJsonArray("");
 
                 for (int y = 0; y < image.getHeight(); y += tileHeight)
                 {
