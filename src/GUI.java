@@ -3,7 +3,10 @@ import AgendaData.Schedule;
 import FileIO.FileExplorer;
 import simulator.MapFrame;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 /**
  * @Author Thomas Mandemaker, Patrick de Jong, Yannick van Dolen , Sergen Peker , Anastasia Hellemons
@@ -27,14 +30,25 @@ public class GUI
     private void makeFrame()
     {
         frame = new JFrame("Festival Planner");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         makeMenuBar(frame);
         makeContent(frame);
-        makeSimulator();
+        makeSimulator(frame);
 
         frame.setSize(1280, 720);
+        //frame.setMaximumSize(new Dimension(1600, 1600));
         frame.setVisible(true);
+    }
+
+
+
+    private void makeMenuBar2(JFrame frame)
+    {
+        String[] fileText = {"Open", "View Agenda", "About", "Version"};
+        String[] imagesPath = {"Resources\\GUI\\MenuBarIcons\\16x16_OpenFileMenuBar.png"};
+
+
     }
 
     /**
@@ -50,6 +64,14 @@ public class GUI
         //making file menu
         JMenu file = new JMenu("File");
         JMenuItem open = new JMenuItem("Open");
+        try
+        {
+            open.setIcon(new ImageIcon(ImageIO.read(new FileInputStream("Festival-Planner\\Resources\\GUI\\MenuBarIcons\\16x16_OpenFileMenuBar.png"))));
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
         file.add(open).addActionListener(e -> {
             try
             {
@@ -109,7 +131,7 @@ public class GUI
         frame.add(content);
     }
 
-    private void makeSimulator()
+    private void makeSimulator(JFrame frame)
     {
         new MapFrame(frame);
     }
