@@ -74,7 +74,7 @@ public class GUI
         menu.add(file);
 
         //making agenda menu
-        JMenu agenda = new JMenu("Old Agenda Code/Agenda");
+        JMenu agenda = new JMenu("Agenda");
         JMenuItem viewAgenda = new JMenuItem("View agenda");
         agenda.add(viewAgenda);
         viewAgenda.addActionListener(e ->

@@ -5,6 +5,9 @@ import AgendaData.Schedule;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class AgendaGUI extends JFrame
@@ -25,14 +28,32 @@ public class AgendaGUI extends JFrame
     public AgendaGUI()
     {
 
-        super("Agenda Test");
+        super("Agenda");
+        super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.mainPanel = new JPanel(new BorderLayout());
         this.tablePanel = new JPanel(new BorderLayout());
         this.buttonPanel = new JPanel(new FlowLayout());
 
-        this.tableModel = new TableModel();
+        tableModel = new TableModel();
         this.table = new JTable(this.tableModel);
         this.table.setFillsViewportHeight(true);
+        this.table.addMouseListener(new MouseAdapter()
+        {
+            @Override
+            public void mousePressed(MouseEvent e)
+            {
+            if (e.getButton() == 3)
+            {
+                int row = table.rowAtPoint(e.getPoint());
+                int col = table.columnAtPoint(e.getPoint());
+                if (row >= 0 && col >= 0)
+                {
+                    int index = row;
+                    AgendaInfoPopUpGUI popup = new AgendaInfoPopUpGUI(index, tableModel.getActs());
+                }
+            }
+            }
+        });
         this.scrollPane = new JScrollPane(this.table);
 
         this.tablePanel.add(this.scrollPane);
@@ -81,6 +102,4 @@ public class AgendaGUI extends JFrame
         tableModel.fireTableDataChanged();
         tableModel.fireTableRowsInserted(0, tableModel.getRowCount());
     }
-
-
 }
