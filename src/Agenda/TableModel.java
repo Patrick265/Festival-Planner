@@ -6,6 +6,7 @@ import FileIO.JSONManager;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class TableModel extends AbstractTableModel
     private String[] headerNames = {"Artist(s)", "Genre", "Popularity", "Podum", "Start Time", "End Time"};
     private List<Act> acts;
     private Schedule schedules;
+    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 
 
     public TableModel()
@@ -39,9 +41,9 @@ public class TableModel extends AbstractTableModel
             case 3:
                 return this.acts.get(row).getPodium().getName();
             case 4:
-                return this.acts.get(row).getStartTime().toString();
+                return sdf.format(this.acts.get(row).getStartTime());
             case 5:
-                return this.acts.get(row).getEndTime().toString();
+                return sdf.format(this.acts.get(row).getEndTime());
         }
         return "";
     }
@@ -129,4 +131,8 @@ public class TableModel extends AbstractTableModel
         System.out.println("\n");
     }
 
+    public List getActs()
+    {
+        return acts;
+    }
 }

@@ -122,34 +122,4 @@ public class NewActGUI extends JPanel
             JOptionPane.showMessageDialog(frame, "Inserted data either invalid or empty.");
         }
     }
-
-    public JTextField getArtistField()
-    {
-        return artistField;
-    }
-
-    public JTextField getGenreField()
-    {
-        return genreField;
-    }
-
-    public JTextField getPopularityField()
-    {
-        return popularityField;
-    }
-
-    public JComboBox <String> getPodiumField()
-    {
-        return podiumField;
-    }
-
-    public JTextField getStartTimeField()
-    {
-        return startTimeField;
-    }
-
-    public JTextField getEndTimeField()
-    {
-        return endTimeField;
-    }
 }
