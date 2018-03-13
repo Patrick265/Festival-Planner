@@ -9,15 +9,13 @@ import java.util.List;
  * @author Anastasia Hellemons,
  * @version 0.1
  */
-public class Act
+public class Act implements Comparable<Act>
 {
     private int popularity;
     private Date startTime;
     private Date endTime;
     private List<Artist> artists;
     private Podium podium;
-
-
 
     /**
      * @param popularity the popularity of the activity in int.
@@ -26,7 +24,6 @@ public class Act
      * @param artists    the artists who will be on stage during the activity.
      * @param podium     the podium on which the activity wil be held.
      */
-
     public Act(int popularity, Date startTime, Date endTime, ArrayList artists, Podium podium)
     {
         this.popularity = popularity;
@@ -35,8 +32,10 @@ public class Act
         this.artists = artists;
         this.podium = podium;
     }
-    public Act(){}
+    public Act()
+    {
 
+    }
     public int getPopularity()
     {
         return popularity;
@@ -82,16 +81,37 @@ public class Act
         this.podium = podium;
     }
 
-    public void printDetails()
+
+    public String printDetails(int size)
     {
-        for(int i = 0; i < artists.size(); i++)
+        String details = "";
+        for(int i = 0; i < size; i++ )
         {
-            System.out.println( "Popularity: "  +   popularity                  + "\n"  +
-                                "StartTime: " +     startTime.getHours()        + ":"   + startTime.getMinutes() + "\n"    +
-                                "EndTime: "   +     endTime.getHours()          + ":"   + endTime.getMinutes()   + "\n"    +
-                                "Name: "       +    artists.get(i).getName()    + "\n"  +
-                                "Podium name: "+    podium.getName()            + "\n"  +
-                                "----------------------------------"            + "\n");
+            details +=  "Popularity: "  + popularity            + "\n"  +
+                        "StartTime: "   + startTime.getHours()  + ":"   + startTime.getMinutes()    + "\n" +
+                        "EndTime: "     + endTime.getHours()    + ":"   + endTime.getMinutes();
+            details +=  "Name: ";
+
+            for (int artistindex = 0; artistindex < artists.size(); artistindex++)
+            {
+                details += artists.get(artistindex).getName() + ", ";
+            }
+
+            details +=  "\n" + "Podium name: " + podium.getName() + "\n" +
+                        "----------------------------------" + "\n";
         }
+
+        return  details;
+    }
+
+    @Override
+    public int compareTo(Act o)
+    {
+        int podiumComaprison = this.getPodium().getName().compareTo(o.getPodium().getName());
+
+        if(podiumComaprison != 0)
+            return podiumComaprison;
+        else
+            return this.getStartTime().compareTo(o.getStartTime());
     }
 }
