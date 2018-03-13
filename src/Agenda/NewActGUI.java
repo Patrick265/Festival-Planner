@@ -18,16 +18,24 @@ public class NewActGUI extends JPanel
     private JTextField artistField = new JTextField();
     private JTextField genreField = new JTextField();
     private JTextField popularityField = new JTextField();
-    private JTextField podiumField = new JTextField();
+    private String[] podiumText = {"Podium 1", "Podium 2", "Podium 3"};
+    private JComboBox<String> podiumField = new JComboBox(podiumText);
+
+
     private JTextField startTimeField = new JTextField();
     private JTextField endTimeField = new JTextField();
+
     private JFrame frame;
+
+    private int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
+    private int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
 
     public NewActGUI()
     {
         super(new BorderLayout());
         frame = new JFrame();
         frame.setSize(400, 400);
+        frame.setLocation((screenWidth / 2) - (frame.getWidth() / 2), (screenHeight / 2) - (frame.getHeight() / 2));
         headPanel();
         frame.setContentPane(this);
         frame.setVisible(true);
@@ -79,7 +87,7 @@ public class NewActGUI extends JPanel
         String artistInput = artistField.getText();
         String genreInput = genreField.getText();
         String popularityInput = popularityField.getText();
-        String podiumInput = podiumField.getText();
+        String podiumInput = (String) podiumField.getSelectedItem();
         String startTimeInput = startTimeField.getText();
         String endTimeInput = endTimeField.getText();
 
@@ -112,6 +120,8 @@ public class NewActGUI extends JPanel
         {
             JOptionPane.showMessageDialog(frame, "Inserted data either invalid or empty.");
         }
+
+
 
     }
 }

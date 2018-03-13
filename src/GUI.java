@@ -1,5 +1,6 @@
 import Agenda.AgendaPopUpGUI;
 import AgendaData.Schedule;
+import AgendaV2.AgendaGUI;
 import FileIO.FileExplorer;
 import simulator.MapFrame;
 
@@ -37,18 +38,8 @@ public class GUI
         makeSimulator(frame);
 
         frame.setSize(1280, 720);
-        //frame.setMaximumSize(new Dimension(1600, 1600));
+        frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
         frame.setVisible(true);
-    }
-
-
-
-    private void makeMenuBar2(JFrame frame)
-    {
-        String[] fileText = {"Open", "View Agenda", "About", "Version"};
-        String[] imagesPath = {"Resources\\GUI\\MenuBarIcons\\16x16_OpenFileMenuBar.png"};
-
-
     }
 
     /**
@@ -89,8 +80,8 @@ public class GUI
         agenda.add(viewAgenda);
         viewAgenda.addActionListener(e ->
         {
-            //AgendaTableGUI agendaTableGUI = new AgendaTableGUI();
-            AgendaPopUpGUI agendaPopUpGUI = new AgendaPopUpGUI();
+            AgendaGUI agendaGUI = new AgendaGUI();
+            //AgendaPopUpGUI agendaPopUpGUI = new AgendaPopUpGUI();
         });
         menu.add(agenda);
 
