@@ -106,10 +106,59 @@
  "tiledversion":"1.1.2",
  "tileheight":32,
  "tilesets":[
-        {
-         "firstgid":1,
-         "source":"magecity.png"
-        }],
+  {
+   "columns":8,
+   "firstgid":1,
+   "image":"/Map/magecity.png",
+   "imageheight":1450,
+   "imagewidth":256,
+   "margin":0,
+   "name":"magecity",
+   "spacing":0,
+   "terrains":[
+    {
+     "name":"Podium",
+     "tile":-1
+    },
+    {
+     "name":"Path",
+     "tile":-1
+    },
+    {
+     "name":"Grass",
+     "tile":-1
+    }],
+   "tilecount":360,
+   "tileheight":32,
+   "tiles":
+   {
+    "32":
+    {
+     "terrain":[0, 0, 0, 0]
+    },
+    "33":
+    {
+     "terrain":[0, 0, 0, 0]
+    },
+    "34":
+    {
+     "terrain":[0, 0, 0, 0]
+    },
+    "35":
+    {
+     "terrain":[0, 0, 0, 0]
+    },
+    "36":
+    {
+     "terrain":[0, 0, 0, 0]
+    },
+    "37":
+    {
+     "terrain":[0, 0, 0, 0]
+    }
+   },
+   "tilewidth":32
+  }],
  "tilewidth":32,
  "type":"map",
  "version":1,

@@ -8,7 +8,7 @@ public class AgendaTableGUI extends JFrame
     public AgendaTableGUI()
     {
         super("Week 1 - 2D-Computergraphics");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         JPanel panel = new JPanel(new BorderLayout());
         setContentPane(panel);
 
