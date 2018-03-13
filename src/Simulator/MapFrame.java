@@ -1,13 +1,11 @@
-package simulator;
+package Simulator;
 
-import simulator.NPC.VisitorTest;
-import simulator.NPC.VistorLogic;
+import Simulator.NPC.VisitorTest;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
 
 public class MapFrame extends JPanel implements MouseListener, MouseMotionListener, MouseWheelListener, KeyListener, ActionListener
 {

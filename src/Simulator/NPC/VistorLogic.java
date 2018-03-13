@@ -1,4 +1,6 @@
-package simulator.NPC;
+package Simulator.NPC;
+
+import Simulator.SpriteBatch;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -15,6 +17,7 @@ public class VistorLogic
 
     private Point2D position;
     private Point2D target = new Point2D.Double(500,500);
+    private SpriteBatch spriteBatch;
     private BufferedImage imageNPC;
 
     private double angle;
@@ -22,20 +25,15 @@ public class VistorLogic
     private int imageWidth;
 
 
-    public VistorLogic()
+    public VistorLogic(SpriteBatch spriteBatch)
     {
         this.position = new Point2D.Double(Math.random() * 1980, Math.random() * 1080 );
         this.angle = Math.random() * 2 * Math.PI;
-        this.speed = 3 ;
+        this.speed = 3;
 
-        try
-        {
-            this.imageNPC = ImageIO.read(getClass().getResource("/NPC/TestNPC.png"));
-        } catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-
+        this.spriteBatch = spriteBatch;
+        this.imageNPC = this.spriteBatch.getCutImage("bandana male1.png")[18];
+//        this.imageNPC = ImageIO.read(getClass().getResource("/NPC/skeleton easteregg.png"));
         this.imageWidth = this.imageNPC.getWidth();
 
     }
