@@ -1,9 +1,10 @@
-package AgendaV2;
+package Agenda;
 
 import AgendaData.Act;
 import AgendaData.Schedule;
 import FileIO.JSONManager;
 
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,14 +20,7 @@ public class TableModel extends AbstractTableModel
     public TableModel()
     {
         this.acts = new ArrayList <>();
-        try
-        {
-            this.schedules = JSONManager.readFile();
-            this.acts = schedules.getActs();
-        } catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+        readJSON();
     }
 
     @Override
@@ -96,6 +90,43 @@ public class TableModel extends AbstractTableModel
     public void fireTableDataChanged()
     {
         super.fireTableDataChanged();
+    }
+
+    public void readJSON()
+    {
+        try
+        {
+            this.schedules = JSONManager.readFile();
+            System.out.println("Reading JSON for agenda");
+            this.acts = schedules.getActs();
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteAct(JPanel tablePanel, JTable table)
+    {
+        try
+        {
+            this.schedules = JSONManager.readFile();
+            this.schedules.getActs().remove(table.getSelectedRow());
+            JSONManager.writeToFile(schedules);
+            JOptionPane.showMessageDialog(tablePanel, "Act deleted.");
+        }
+        catch (Exception e1)
+        {
+            e1.printStackTrace();
+        }
+    }
+
+    public void printActs()
+    {
+        for(int i = 0; i < acts.size(); i++)
+        {
+            System.out.print(acts.get(i).getArtists().get(0).getName());
+        }
+        System.out.println("\n");
     }
 
 }

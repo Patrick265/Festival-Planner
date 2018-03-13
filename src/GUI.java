@@ -1,6 +1,5 @@
-import Agenda.AgendaPopUpGUI;
 import AgendaData.Schedule;
-import AgendaV2.AgendaGUI;
+import Agenda.AgendaGUI;
 import FileIO.FileExplorer;
 import simulator.MapFrame;
 
@@ -75,7 +74,7 @@ public class GUI
         menu.add(file);
 
         //making agenda menu
-        JMenu agenda = new JMenu("Agenda");
+        JMenu agenda = new JMenu("Old Agenda Code/Agenda");
         JMenuItem viewAgenda = new JMenuItem("View agenda");
         agenda.add(viewAgenda);
         viewAgenda.addActionListener(e ->

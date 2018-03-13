@@ -69,6 +69,7 @@ public class NewActGUI extends JPanel
             try
             {
                 saveInput();
+                AgendaGUI.updateTable();
             }catch (Exception ex)
             {
                 ex.printStackTrace();

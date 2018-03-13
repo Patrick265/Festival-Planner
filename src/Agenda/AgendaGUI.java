@@ -1,6 +1,6 @@
-package AgendaV2;
+package Agenda;
 
-import Agenda.NewActGUI;
+
 import AgendaData.Schedule;
 
 import javax.swing.*;
@@ -11,9 +11,8 @@ public class AgendaGUI extends JFrame
 {
     private int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
     private int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
-    private ArrayList<Schedule> schedule = new ArrayList <>();
 
-    private TableModel tableModel;
+    private static TableModel tableModel;
     private JTable table;
     private JScrollPane scrollPane;
     private JPanel mainPanel;
@@ -25,12 +24,14 @@ public class AgendaGUI extends JFrame
 
     public AgendaGUI()
     {
+
         super("Agenda Test");
         this.mainPanel = new JPanel(new BorderLayout());
         this.tablePanel = new JPanel(new BorderLayout());
         this.buttonPanel = new JPanel(new FlowLayout());
 
-        this.table = new JTable(new TableModel());
+        this.tableModel = new TableModel();
+        this.table = new JTable(this.tableModel);
         this.table.setFillsViewportHeight(true);
         this.scrollPane = new JScrollPane(this.table);
 
@@ -62,7 +63,24 @@ public class AgendaGUI extends JFrame
         this.addAct.addActionListener(e ->
         {
             NewActGUI newActGUI = new NewActGUI();
-            tableModel.fireTableRowsInserted(0, tableModel.getRowCount());
+            tableModel.printActs();
+            updateTable();
         });
+
+        this.deleteAct.addActionListener(e ->
+        {
+            tableModel.deleteAct(this.tablePanel, this.table);
+            updateTable();
+        });
+
     }
+
+    public static void updateTable()
+    {
+        tableModel.readJSON();
+        tableModel.fireTableDataChanged();
+        tableModel.fireTableRowsInserted(0, tableModel.getRowCount());
+    }
+
+
 }
