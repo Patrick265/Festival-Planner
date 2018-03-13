@@ -14,7 +14,6 @@ public class AgendaGUI extends JFrame
     private ArrayList<Schedule> schedule = new ArrayList <>();
 
     private TableModel tableModel;
-    private ButtonControl buttonControl;
     private JTable table;
     private JScrollPane scrollPane;
     private JPanel mainPanel;
@@ -27,7 +26,6 @@ public class AgendaGUI extends JFrame
     public AgendaGUI()
     {
         super("Agenda Test");
-
         this.mainPanel = new JPanel(new BorderLayout());
         this.tablePanel = new JPanel(new BorderLayout());
         this.buttonPanel = new JPanel(new FlowLayout());
@@ -35,8 +33,6 @@ public class AgendaGUI extends JFrame
         this.table = new JTable(new TableModel());
         this.table.setFillsViewportHeight(true);
         this.scrollPane = new JScrollPane(this.table);
-        this.buttonControl = new ButtonControl();
-
 
         this.tablePanel.add(this.scrollPane);
         createButtons();
@@ -67,7 +63,6 @@ public class AgendaGUI extends JFrame
         {
             NewActGUI newActGUI = new NewActGUI();
             tableModel.fireTableRowsInserted(0, tableModel.getRowCount());
-
         });
     }
 }
