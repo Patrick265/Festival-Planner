@@ -94,7 +94,7 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
         repaint();
         int divX = g2d.getClip().getBounds().x + e.getX();
         int divY = g2d.getClip().getBounds().y + e.getY();
-        animation.setTargets(new Point(divX, divY));
+        animation.setTargets(new Point((int)(divX/scale), (int)(divY/scale)));
 
     }
 
@@ -121,6 +121,7 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
     {
         int c = e.getWheelRotation();
         scale -= c*0.1;
+
         //x = getWidth()/2 - e.getPoint().x;
         //y = getWidth()/2 - e.getPoint().y;
         repaint();
