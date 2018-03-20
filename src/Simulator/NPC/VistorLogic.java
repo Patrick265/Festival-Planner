@@ -20,7 +20,6 @@ public class VistorLogic
     private Point2D target = new Point2D.Double(500,500);
     private SpriteBatch spriteBatch;
     private BufferedImage imageNPC;
-    private java.util.List<String> sprites;
 
     private int frame = 0;
     private int count = 0;
@@ -38,8 +37,7 @@ public class VistorLogic
         this.speed = 3;
 
         this.spriteBatch = spriteBatch;
-        this.sprites = spriteBatch.getImagePaths();
-        this.imageNPC = this.spriteBatch.getCutImage(sprites.get(setSprite() + 1))[frame];
+        this.imageNPC = this.spriteBatch.getCutImage("silver female2.png")[frame];
 //        this.imageNPC = ImageIO.read(getClass().getResource("/NPC/skeleton easteregg.png"));
         this.imageWidth = this.imageNPC.getWidth();
 
@@ -136,8 +134,4 @@ public class VistorLogic
         this.target = targetPosition;
     }
 
-    private int setSprite()
-    {
-        return (int)(Math.random() * 55);
-    }
 }
