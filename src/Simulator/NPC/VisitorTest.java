@@ -26,7 +26,7 @@ public class VisitorTest extends JPanel implements ActionListener
     public VisitorTest()
     {
         SpriteBatch spriteBatch = new SpriteBatch();
-        while(visitors.size() < 20)
+        while(visitors.size() < 300)
         {
             VistorLogic visitor = new VistorLogic(spriteBatch);
             if(!visitor.hasCollision(visitors))

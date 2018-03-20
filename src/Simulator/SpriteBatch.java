@@ -22,14 +22,10 @@ public class SpriteBatch
     private void cutAllImages()
     {
         cutImages = new HashMap<>();
-        int counter = 0;
-
         try
         {
             for (String pathname : getImagePaths())
             {
-                counter++;
-                System.out.println(counter);
                 BufferedImage image = ImageIO.read(new FileInputStream(pathname));
                 BufferedImage[] cutImage = new BufferedImage[66];
 
@@ -53,6 +49,7 @@ public class SpriteBatch
         for (int i = 0; files != null && i < files.length; i++)
         {
             imagePaths.add(files[i].getPath());
+            System.out.println(files[i].getPath());
         }
 
         return imagePaths;
@@ -68,5 +65,8 @@ public class SpriteBatch
         return cutImages.get(key);
     }
 
-    //public list<String>
+    public String getPath()
+    {
+        return getImagePaths().get((int)(Math.random() * 55) + 1);
+    }
 }
