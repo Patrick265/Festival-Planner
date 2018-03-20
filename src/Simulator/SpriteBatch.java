@@ -67,4 +67,6 @@ public class SpriteBatch
     {
         return cutImages.get(key);
     }
+
+    //public list<String>
 }
