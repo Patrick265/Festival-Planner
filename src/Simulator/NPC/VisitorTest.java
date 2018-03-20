@@ -1,4 +1,6 @@
-package simulator.NPC;
+package Simulator.NPC;
+
+import Simulator.SpriteBatch;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,9 +25,10 @@ public class VisitorTest extends JPanel implements ActionListener
 
     public VisitorTest()
     {
-        while(visitors.size() < 10)
+        SpriteBatch spriteBatch = new SpriteBatch();
+        while(visitors.size() < 20)
         {
-            VistorLogic visitor = new VistorLogic();
+            VistorLogic visitor = new VistorLogic(spriteBatch);
             if(!visitor.hasCollision(visitors))
             {
                 visitors.add(visitor);

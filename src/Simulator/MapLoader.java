@@ -1,4 +1,4 @@
-package simulator;
+package Simulator;
 
 import javax.imageio.ImageIO;
 import javax.json.*;

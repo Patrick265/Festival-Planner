@@ -1,7 +1,7 @@
 import AgendaData.Schedule;
 import Agenda.AgendaGUI;
 import FileIO.FileExplorer;
-import simulator.MapFrame;
+import Simulator.MapFrame;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
