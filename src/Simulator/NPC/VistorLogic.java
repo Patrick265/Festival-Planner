@@ -19,7 +19,7 @@ public class VistorLogic
     private Point2D position;
     private Point2D target = new Point2D.Double(500,500);
     private SpriteBatch spriteBatch;
-    private BufferedImage imageNPC;
+    private BufferedImage[] imageNPC;
 
     private int frame = 0;
     private int count = 0;
@@ -35,19 +35,21 @@ public class VistorLogic
         this.position = new Point2D.Double(Math.random() * 1980, Math.random() * 1080 );
         this.angle = Math.random() * 2 * Math.PI;
         this.speed = 3;
-
+        String[] paths = {"bandana male1.png", "bandana male2.png", "bandana male3.png", "skeleton easteregg.png"};
         this.spriteBatch = spriteBatch;
-        this.imageNPC = this.spriteBatch.getCutImage("silver female2.png")[frame];
-//        this.imageNPC = ImageIO.read(getClass().getResource("/NPC/skeleton easteregg.png"));
-        this.imageWidth = this.imageNPC.getWidth();
+;
+        Random random = new Random();
 
+        int x = random.nextInt(paths.length);
+        this.imageNPC = this.spriteBatch.getCutImage(paths[x]);
+        this.imageWidth = this.imageNPC[0].getWidth();
     }
 
     public void draw(Graphics2D g2d)
     {
         AffineTransform tx = new AffineTransform();
-        tx.translate(this.position.getX() - this.imageNPC.getWidth()/2, position.getY() - this.imageNPC.getHeight()/2);
-        g2d.drawImage(this.spriteBatch.getCutImage("bandana male1.png")[frame], tx, null);
+        tx.translate(this.position.getX() - this.imageNPC[0].getWidth()/2, position.getY() - this.imageNPC[0].getHeight()/2);
+        g2d.drawImage(this.imageNPC[frame], tx, null);
     }
 
 
@@ -100,7 +102,7 @@ public class VistorLogic
             if(npc== this)
                 continue;
             double distance = position.distance(npc.position);
-            if(distance < imageWidth)
+            if(distance < imageWidth / 2 + 5)
                 hasCollision = true;
         }
         return hasCollision;
