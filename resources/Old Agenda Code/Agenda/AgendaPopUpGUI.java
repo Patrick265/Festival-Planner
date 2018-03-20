@@ -1,7 +1,6 @@
 package Agenda;
 
 import AgendaData.Act;
-import AgendaData.Artist;
 import AgendaData.Podium;
 import AgendaData.Schedule;
 import FileIO.JSONManager;
@@ -26,7 +25,7 @@ public class AgendaPopUpGUI extends JFrame
 
     public AgendaPopUpGUI()
     {
-        super("Agenda");
+        super("Old Agenda Code/Agenda");
         setSize(800, 600);
         mainPanel = new JPanel(new BorderLayout());
         bodyPanel = new JPanel();
@@ -180,7 +179,7 @@ public class AgendaPopUpGUI extends JFrame
         {
             public void actionPerformed(ActionEvent e)
             {
-                TableCellListener tcl = (TableCellListener) e.getSource();
+                Agenda.TableCellListener tcl = (Agenda.TableCellListener) e.getSource();
                 Act changedAct = acts.get(tcl.getRow());
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
                 switch (tcl.getColumn())
@@ -230,7 +229,7 @@ public class AgendaPopUpGUI extends JFrame
             }
         };
 
-        TableCellListener tcl = new TableCellListener(table, action);
+        Agenda.TableCellListener tcl = new Agenda.TableCellListener(table, action);
 
         return table;
     }

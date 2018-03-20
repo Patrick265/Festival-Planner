@@ -5,6 +5,7 @@ import AgendaData.Artist;
 
 import javax.swing.*;
 import java.awt.*;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class AgendaInfoPopUpGUI extends JPanel
@@ -26,6 +27,7 @@ public class AgendaInfoPopUpGUI extends JPanel
 
     private void makeContent(JPanel panel)
     {
+        SimpleDateFormat std = new SimpleDateFormat("HH:mm");
         panel.add(new JLabel("Artists:"));
         JPanel panel1 = new JPanel(new GridLayout(act.getArtists().size(), 1));
 
@@ -43,8 +45,8 @@ public class AgendaInfoPopUpGUI extends JPanel
         panel.add(new JLabel("Popularity:"));
         panel.add(new JLabel("" + act.getPopularity()));
         panel.add(new JLabel("Starting time:"));
-        panel.add(new JLabel(act.getStartTime().getHours()+ ":"+ act.getStartTime().getMinutes()));
+        panel.add(new JLabel(std.format(act.getStartTime())));
         panel.add(new JLabel("Ending time:"));
-        panel.add(new JLabel(act.getEndTime().getHours()+ ":"+ act.getEndTime().getMinutes()));
+        panel.add(new JLabel(std.format(act.getEndTime())));
     }
 }
