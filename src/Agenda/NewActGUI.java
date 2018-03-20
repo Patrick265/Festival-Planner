@@ -8,38 +8,48 @@ import FileIO.JSONManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class MakeAct extends JPanel
+public class NewActGUI extends JPanel
 {
     private JTextField artistField = new JTextField();
     private JTextField genreField = new JTextField();
     private JTextField popularityField = new JTextField();
-    private JTextField podiumField = new JTextField();
+    private String[] podiumText = {"Podium 1", "Podium 2", "Podium 3"};
+    private JComboBox<String> podiumField = new JComboBox(podiumText);
+
+
     private JTextField startTimeField = new JTextField();
     private JTextField endTimeField = new JTextField();
 
-    public MakeAct()
+    private JFrame frame;
+
+    private int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
+    private int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
+
+    public NewActGUI()
     {
         super(new BorderLayout());
-        JFrame frame = new JFrame();
+        frame = new JFrame();
         frame.setSize(400, 400);
-        headPanel();
+        frame.setLocation((screenWidth / 2) - (frame.getWidth() / 2), (screenHeight / 2) - (frame.getHeight() / 2));
+        buildPanel();
         frame.setContentPane(this);
         frame.setVisible(true);
     }
 
-    public void headPanel()
+    public void buildPanel()
     {
-        JPanel panel = new JPanel(new GridLayout(6, 2, 0, 5));
-        JLabel artistLabel = new JLabel("Artist(s):");
-        JLabel genreLabel = new JLabel("Genre:");
-        JLabel popularityLabel = new JLabel("Popularity: ");
-        JLabel podiumLabel = new JLabel("Podium:");
-        JLabel startLabel = new JLabel("StartTime:");
-        JLabel endLabel = new JLabel("EndTime: ");
+        JPanel panel = new JPanel(new GridLayout(6, 2, 0, 32));
+        JLabel artistLabel = new JLabel("        Artist(s):");
+        JLabel genreLabel = new JLabel("        Genre:");
+        JLabel popularityLabel = new JLabel("        Popularity: ");
+        JLabel podiumLabel = new JLabel("        Podium:");
+        JLabel startLabel = new JLabel("        Start Time:");
+        JLabel endLabel = new JLabel("        End Time: ");
 
         panel.add(artistLabel);
         panel.add(artistField);
@@ -59,6 +69,7 @@ public class MakeAct extends JPanel
             try
             {
                 saveInput();
+                AgendaGUI.updateTable();
             }catch (Exception ex)
             {
                 ex.printStackTrace();
@@ -77,7 +88,7 @@ public class MakeAct extends JPanel
         String artistInput = artistField.getText();
         String genreInput = genreField.getText();
         String popularityInput = popularityField.getText();
-        String podiumInput = podiumField.getText();
+        String podiumInput = (String) podiumField.getSelectedItem();
         String startTimeInput = startTimeField.getText();
         String endTimeInput = endTimeField.getText();
 
@@ -92,14 +103,23 @@ public class MakeAct extends JPanel
             artists.add(new Artist(artistInput, "", genreInput));
         }
         Podium podium = new Podium(podiumInput);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
-        Date startTime = simpleDateFormat.parse(startTimeInput);
-        Date endTime = simpleDateFormat.parse(endTimeInput);
-        //try
-        //{
+        try
+        {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+            Date startTime = simpleDateFormat.parse(startTimeInput);
+            Date endTime = simpleDateFormat.parse(endTimeInput);
             Act act = new Act(Integer.parseInt(popularityInput), startTime, endTime, artists, podium);
-        //}catch(Exception e){}
-        schedule.addAct(act);
-        JSONManager.writeToFile(schedule);
+            schedule.addAct(act);
+            JSONManager.writeToFile(schedule);
+            frame.dispose();
+        }
+        catch(NumberFormatException e)
+        {
+            JOptionPane.showMessageDialog(frame, "Inserted popularity is too big.");
+        }
+        catch(ParseException e)
+        {
+            JOptionPane.showMessageDialog(frame, "Inserted data either invalid or empty.");
+        }
     }
 }
