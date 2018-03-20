@@ -22,14 +22,10 @@ public class SpriteBatch
     private void cutAllImages()
     {
         cutImages = new HashMap<>();
-        int counter = 0;
-
         try
         {
             for (String pathname : getImagePaths())
             {
-                counter++;
-                System.out.println(counter);
                 BufferedImage image = ImageIO.read(new FileInputStream(pathname));
                 BufferedImage[] cutImage = new BufferedImage[66];
 
