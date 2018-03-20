@@ -23,11 +23,13 @@ public class VistorLogic
 
     private int frame = 0;
     private int count = 0;
+    private String dir;
+    private boolean dancing;
+    boolean drunk;
 
     private double angle;
     private double speed;
     private int imageWidth;
-    private String action;
 
 
     public VistorLogic(SpriteBatch spriteBatch)
@@ -35,7 +37,18 @@ public class VistorLogic
         this.position = new Point2D.Double(Math.random() * 1980, Math.random() * 1080 );
         this.angle = Math.random() * 2 * Math.PI;
         this.speed = 3;
-        String[] paths = {"bandana male1.png", "bandana male2.png", "bandana male3.png", "skeleton easteregg.png"};
+        String[] paths = {"bandana male1.png", "bandana male2.png", "bandana male3.png","blonde female1.png",
+                "blonde female2.png", "blonde male1.png", "blonde male2.png", "blonde male3.png", "blonde male4.png",
+                "blue female1.png", "blue female2.png", "blue female3.png", "blue male1.png", "brown female1.png",
+                "brown female2.png", "brown male1.png", "brown male2.png", "brown male3.png", "green female1.png",
+                "green female2.png", "green male1.png", "green male2.png", "green male3.png", "green male4.png",
+                "green male5.png", "green male6.png", "pink female1.png", "pink female2.png","pink male1.png",
+                "pink male2.png", "raven female1.png", "raven female2.png", "raven male1.png", "raven male2.png",
+                "raven male3.png", "raven male4.png", "raven male5.png", "raven male6.png", "raven male7.png",
+                "raven male8.png", "red female1.png", "red female2.png", "red female3.png", "red female4.png",
+                "silver female1.png", "silver female2.png",
+                "white male1.png", "white male2.png", "white male3.png", "white male4.png", "white male5.png",
+                "white male6.png", "white male7.png", "white male8.png", "white male9.png"};
         this.spriteBatch = spriteBatch;
 ;
         Random random = new Random();
@@ -91,7 +104,11 @@ public class VistorLogic
             angle += 0.2;
         }
         this.count ++;
-        this.frame++;
+        if (dancing == true && count > 5)
+            direction();
+        if (drunk != true && count > 5)
+            this.frame++;
+
         direction();
     }
 
@@ -116,16 +133,20 @@ public class VistorLogic
             if (position.getX() > target.getX())
             {
                 this.frame = 9;
+                this.dir = "W";
                 if (position.getY() > target.getY())
                 {
                     this.frame = 0;
+                    this.dir = "N";
                 }
             } else if (position.getX() < target.getX())
             {
                 this.frame = 27;
+                this.dir = "E";
                 if (position.getY() < target.getY())
                 {
                     this.frame = 18;
+                    this.dir = "S";
                 }
             }
         }
@@ -135,5 +156,27 @@ public class VistorLogic
     {
         this.target = targetPosition;
     }
+
+    public void dance()
+    {
+        this.dancing = true;
+        if (dir == "N")
+            this.frame = 36;
+        else if (dir == "W")
+            this.frame = 45;
+        else if (dir == "S")
+            this.frame = 54;
+        else
+            this.frame = 63;
+
+    }
+
+    public void getDrunk()
+    {
+        this.drunk = true;
+        this.frame = 72;
+    }
+
+
 
 }
