@@ -1,3 +1,4 @@
+import AgendaData.Act;
 import AgendaData.Schedule;
 import Agenda.AgendaGUI;
 import FileIO.FileExplorer;
@@ -5,22 +6,34 @@ import Simulator.MapFrame;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @Author Thomas Mandemaker, Patrick de Jong, Yannick van Dolen , Sergen Peker , Anastasia Hellemons
  * @version 1.0
  */
-public class GUI
+public class GUI implements ActionListener
 {
+    private Date currenttime;
     private JFrame frame;
     private Schedule schedule;
+    private Timer timer;
+    private boolean event;
 
     public GUI()
     {
+        event = false;
+
+        currenttime = new Date(2018, 1, 1, 0,0,0);
         makeFrame();
         schedule = new Schedule();
+        timer = new Timer(1000/2, this);
+        timer.start();
         //testAgenda();
     }
 
@@ -126,4 +139,28 @@ public class GUI
         new MapFrame(frame);
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        int minutes = currenttime.getMinutes();
+        if (minutes + 1 == 60)
+            currenttime.setHours(currenttime.getHours());
+        else
+            currenttime.setMinutes(minutes + 1);
+
+        System.out.println(currenttime.toString());
+        checkAct();
+
+    }
+
+    public void checkAct()
+    {
+        System.out.println(schedule.getActs().size());
+            for (Act act : schedule.getActs()) {
+                if (act.getStartTime().compareTo(currenttime) > 0 && act.getEndTime().compareTo(currenttime) < 0) {
+                    System.out.println("EVENT!");
+                    event = true;
+                }
+                System.out.println("test");
+            }
+    }
 }

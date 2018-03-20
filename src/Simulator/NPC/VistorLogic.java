@@ -106,7 +106,6 @@ public class VistorLogic
         this.count ++;
         if (dancing == true && count > 5)
             direction();
-        if (drunk != true && count > 5)
             this.frame++;
 
         direction();
