@@ -159,6 +159,7 @@ public class VistorLogic
 
     public void dance()
     {
+        count = 0;
         this.dancing = true;
         if (dir == "N")
             this.frame = 36;
@@ -173,6 +174,7 @@ public class VistorLogic
 
     public void getDrunk()
     {
+        count = 0;
         this.drunk = true;
         this.frame = 72;
     }
