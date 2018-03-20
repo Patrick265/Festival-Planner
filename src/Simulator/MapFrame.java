@@ -18,6 +18,9 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
     private int x = 0;
     private int initX = 0;
 
+    private int mousePosX = 0;
+    private int mousePosY = 0;
+
     private double scale = 1;
 
     private boolean ctrlPressed = false;
@@ -41,10 +44,10 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
         g2d = (Graphics2D) g;
 
         g2d.setTransform(AffineTransform.getTranslateInstance(x, y));
+        g2d.translate(mousePosX, mousePosY);
         g2d.scale(scale, scale);
         map.draw(g2d);
         animation.paintComponent(g2d);
-
     }
 
     @Override
@@ -93,13 +96,13 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
         int divX = g2d.getClip().getBounds().x + e.getX();
         int divY = g2d.getClip().getBounds().y + e.getY();
         animation.setTargets(new Point((int)(divX/scale), (int)(divY/scale)));
-
     }
 
     @Override
     public void mouseReleased(MouseEvent e)
     {
-
+        initX = 0;
+        initY = 0;
     }
 
     @Override
@@ -118,6 +121,10 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
     public void mouseWheelMoved(MouseWheelEvent e)
     {
         int c = e.getWheelRotation();
+
+        //mousePosX = e.getX();
+        //mousePosY = e.getY();
+
         scale -= c*0.1;
 
         //x = getWidth()/2 - e.getPoint().x;

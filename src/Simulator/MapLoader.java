@@ -59,6 +59,8 @@ public class MapLoader
         }
         JsonArray layers2 = root.getJsonArray("layers");
 
+        ArrayList<JsonObject> targets = new ArrayList<>();
+
         for (int i = 0; i < layers2.size(); i++)
         {
             int count = 0;
