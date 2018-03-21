@@ -35,7 +35,7 @@ public class VistorLogic
         this.position = new Point2D.Double(Math.random() * 1980, Math.random() * 1080 );
         this.angle = Math.random() * 2 * Math.PI;
         this.speed = 3;
-        String[] paths = {"bandana male1.png", "bandana male2.png", "bandana male3.png", "skeleton easteregg.png"};
+        String[] paths = {"bandana male1.png", "bandana male2.png", "bandana male3.png"};
         this.spriteBatch = spriteBatch;
 ;
         Random random = new Random();

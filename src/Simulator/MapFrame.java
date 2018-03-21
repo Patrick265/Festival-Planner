@@ -1,5 +1,6 @@
 package Simulator;
 
+import Simulator.MAP.MapLogica;
 import Simulator.NPC.VisitorTest;
 
 import javax.swing.*;
@@ -10,6 +11,7 @@ import java.awt.geom.AffineTransform;
 public class MapFrame extends JPanel implements MouseListener, MouseMotionListener, MouseWheelListener, KeyListener, ActionListener
 {
     private MapLoader map = new MapLoader("/Map/FesivalPlannermap.json");
+
     private VisitorTest animation = new VisitorTest();
 
     private int y = 0;
@@ -24,9 +26,10 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
     private double scale = 1;
 
     private boolean ctrlPressed = false;
-
+    private double dist = 0;
     private Graphics2D g2d;
-
+    private MapLogica logic = new MapLogica(map.getTargets(), map.getPaths());
+    private double matrix[][] = logic.getMatrix();
     public MapFrame(JFrame frame)
     {
         frame.setContentPane(this);
@@ -48,6 +51,15 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
         g2d.scale(scale, scale);
         map.draw(g2d);
         animation.paintComponent(g2d);
+        for(int i = 0; i < 50; i++)
+        {
+            for(int j = 0; j < 50; j++)
+            {
+                dist = matrix[i][j];
+                String dist2 = ""+dist;
+                g2d.drawString(dist2, i*32, j*32);
+            }
+        }
     }
 
     @Override
