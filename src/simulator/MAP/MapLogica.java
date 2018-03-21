@@ -21,7 +21,7 @@ public class MapLogica
     private Set<Integer> settled;
     private double matrix[][];
 
-    private int paths[];
+    private int paths[][];
     private JsonArray path;
 
     private Queue<Point2D> queue;
@@ -34,6 +34,7 @@ public class MapLogica
         settled = new HashSet<>();
         queue = new LinkedList<>();
         matrix = new double[50][50];
+        paths = new int[50][50];
         posX = distanceMaps.get(0).getInt("x");
         posY = distanceMaps.get(0).getInt("y");
         width = distanceMaps.get(0).getInt("width");
@@ -50,13 +51,14 @@ public class MapLogica
     private void calcDistance()
     {
         int count = 0;
+        System.out.println(path.size());
         Point2D source = new Point2D.Double((posX + width/2) / 32, (posY + height/2) / 32);
         for (int x = 0; x < 50; x++)
         {
             for (int y = 0; y < 50; y++)
             {
                 matrix[x][y] = Integer.MAX_VALUE;
-                paths[count] = path.getInt(count);
+                paths[x][y] = path.getInt(count);
                 count++;
             }
         }
@@ -66,7 +68,8 @@ public class MapLogica
         while (!queue.isEmpty())
         {
             Point2D p = queue.poll();
-
+            if(paths[(int)p.getY()][(int)p.getX()] != 0)
+                continue;
             for (int x = -1; x <= 1; x++)
             {
                 for (int y = -1; y <= 1; y++)

@@ -30,6 +30,7 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
     private Graphics2D g2d;
     private MapLogica logic = new MapLogica(map.getTargets(), map.getPaths());
     private double matrix[][] = logic.getMatrix();
+
     public MapFrame(JFrame frame)
     {
         frame.setContentPane(this);
@@ -38,7 +39,7 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
         addMouseWheelListener(this);
         addKeyListener(this);
         setFocusable(true);
-        new Timer(1000/75, this).start();
+        new Timer(1000 / 75, this).start();
     }
 
     public void paintComponent(Graphics g)
@@ -51,13 +52,17 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
         g2d.scale(scale, scale);
         map.draw(g2d);
         animation.paintComponent(g2d);
-        for(int i = 0; i < 50; i++)
+        for (int i = 0; i < 50; i++)
         {
-            for(int j = 0; j < 50; j++)
+            for (int j = 0; j < 50; j++)
             {
                 dist = matrix[i][j];
-                String dist2 = ""+dist;
-                g2d.drawString(dist2, i*32, j*32);
+
+                if (dist < 100)
+                {
+                    String dist2 = "" + dist;
+                    g2d.drawString(dist2, i * 32, j * 32);
+                }
             }
         }
     }
@@ -107,7 +112,7 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
         repaint();
         int divX = g2d.getClip().getBounds().x + e.getX();
         int divY = g2d.getClip().getBounds().y + e.getY();
-        animation.setTargets(new Point((int)(divX/scale), (int)(divY/scale)));
+        animation.setTargets(new Point((int) (divX / scale), (int) (divY / scale)));
     }
 
     @Override
@@ -137,7 +142,7 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
         //mousePosX = e.getX();
         //mousePosY = e.getY();
 
-        scale -= c*0.1;
+        scale -= c * 0.1;
 
         //x = getWidth()/2 - e.getPoint().x;
         //y = getWidth()/2 - e.getPoint().y;
@@ -166,14 +171,14 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
     @Override
     public void keyPressed(KeyEvent e)
     {
-        if(e.getKeyCode() == 17)
+        if (e.getKeyCode() == 17)
             ctrlPressed = true;
     }
 
     @Override
     public void keyReleased(KeyEvent e)
     {
-        if(e.getKeyCode() == KeyEvent.VK_CONTROL)
+        if (e.getKeyCode() == KeyEvent.VK_CONTROL)
             ctrlPressed = false;
     }
 
