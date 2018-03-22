@@ -112,7 +112,7 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
         ArrayList<JsonObject> objects = map.getTargets();
         for(int i = 0; i < map.getTargets().size(); i++)
         {
-            Area area = new Area(new Rectangle2D.Double(objects.get(i).getInt("x")*scale, objects.get(i).getInt("y")*scale, objects.get(i).getInt("width"), objects.get(i).getInt("height")));
+            Area area = new Area(new Rectangle2D.Double(objects.get(i).getInt("x")*scale, objects.get(i).getInt("y")*scale, objects.get(i).getInt("width")*scale, objects.get(i).getInt("height")*scale));
             if(area.contains(new Point2D.Double((e.getX()-x), (e.getY()-y))))
             {
                 logic.reCalcDistance(objects.get(i));
