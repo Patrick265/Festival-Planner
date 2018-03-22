@@ -23,6 +23,7 @@ public class MapLogica
 
     private int paths[][];
     private JsonArray path;
+    private String destinationName = null;
 
     private Queue<Point2D> queue;
 
@@ -40,11 +41,16 @@ public class MapLogica
         width = distanceMaps.get(0).getInt("width");
         height = distanceMaps.get(0).getInt("height");
 
-//        for ()
-//        {
-//            //calc all distances
-//        }
+        calcDistance();
+    }
 
+    public void reCalcDistance(JsonObject object)
+    {
+        posX = object.getInt("x");
+        posY = object.getInt("y");
+        width = object.getInt("width");
+        height = object.getInt("height");
+        destinationName = object.getString("name");
         calcDistance();
     }
 
@@ -90,5 +96,10 @@ public class MapLogica
     public double[][] getMatrix()
     {
         return matrix;
+    }
+
+    public String getDestinationName()
+    {
+        return destinationName;
     }
 }

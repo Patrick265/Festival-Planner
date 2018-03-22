@@ -3,16 +3,18 @@ package Simulator;
 import Simulator.MAP.MapLogica;
 import Simulator.NPC.VisitorTest;
 
+import javax.json.JsonObject;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Area;
+import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 
 public class MapFrame extends JPanel implements MouseListener, MouseMotionListener, MouseWheelListener, KeyListener, ActionListener
 {
     private MapLoader map = new MapLoader("/Map/FesivalPlannermap.json");
-
-    private VisitorTest animation = new VisitorTest();
 
     private int y = 0;
     private int initY = 0;
@@ -30,6 +32,8 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
     private Graphics2D g2d;
     private MapLogica logic = new MapLogica(map.getTargets(), map.getPaths());
     private double matrix[][] = logic.getMatrix();
+
+    private VisitorTest animation = new VisitorTest(matrix);
 
     public MapFrame(JFrame frame)
     {
@@ -58,7 +62,11 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
             {
                 dist = matrix[i][j];
 
-                if (dist < 100)
+                if(dist == 0.0)
+                {
+                    animation.setTargets(new Point(i * 32, j * 32));
+                }
+                if (dist < 1000)
                 {
                     String dist2 = "" + dist;
                     g2d.drawString(dist2, i * 32, j * 32);
@@ -100,7 +108,16 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
     @Override
     public void mouseClicked(MouseEvent e)
     {
-
+        ArrayList<JsonObject> objects = map.getTargets();
+        for(int i = 0; i < map.getTargets().size(); i++)
+        {
+            Area area = new Area(new Rectangle2D.Double(objects.get(i).getInt("x"), objects.get(i).getInt("y"), objects.get(i).getInt("width"), objects.get(i).getInt("height")));
+            if(area.contains(new Point(e.getX()-x, e.getY()-y)))
+            {
+                logic.reCalcDistance(objects.get(i));
+                animation.setDestinationName(objects.get(i).getString("name"));
+            }
+        }
     }
 
     @Override
@@ -108,11 +125,11 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
     {
         initX = e.getX();
         initY = e.getY();
-        animation.update();
-        repaint();
+        //animation.update();
+        //repaint();
         int divX = g2d.getClip().getBounds().x + e.getX();
         int divY = g2d.getClip().getBounds().y + e.getY();
-        animation.setTargets(new Point((int) (divX / scale), (int) (divY / scale)));
+        //animation.setTargets(new Point((int) (divX / scale), (int) (divY / scale)));
     }
 
     @Override
