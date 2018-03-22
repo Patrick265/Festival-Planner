@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
@@ -111,8 +112,8 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
         ArrayList<JsonObject> objects = map.getTargets();
         for(int i = 0; i < map.getTargets().size(); i++)
         {
-            Area area = new Area(new Rectangle2D.Double(objects.get(i).getInt("x"), objects.get(i).getInt("y"), objects.get(i).getInt("width"), objects.get(i).getInt("height")));
-            if(area.contains(new Point(e.getX()-x, e.getY()-y)))
+            Area area = new Area(new Rectangle2D.Double(objects.get(i).getInt("x")*scale, objects.get(i).getInt("y")*scale, objects.get(i).getInt("width"), objects.get(i).getInt("height")));
+            if(area.contains(new Point2D.Double((e.getX()-x), (e.getY()-y))))
             {
                 logic.reCalcDistance(objects.get(i));
                 animation.setDestinationName(objects.get(i).getString("name"));
