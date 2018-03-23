@@ -103,6 +103,13 @@ public class VisitorLogic extends JPanel implements ActionListener
                     visitors.remove(i);
                     return;
                 }
+                else if ((distances[0][x + posX][y + posY] < 3 ||
+                          distances[1][x + posX][y + posY] < 3 ||
+                          distances[2][x + posX][y + posY] < 3) &&
+                          Math.random() <= .0005)                           //  TODO: Make it work with act popularity
+                {
+                    visitor.setFavouriteStage((int)Math.round(Math.random() * 3));
+                }
             }
 
             for (VisitorObject collisionCheckVisitor : visitors)
