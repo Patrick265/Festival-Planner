@@ -17,11 +17,16 @@ public class MapLoader
 
     private ArrayList<BufferedImage> tiles = new ArrayList<>();
 
+    private JsonArray layers2;
+
+    private int paths[][];
+
+    private ArrayList<JsonObject> targets = new ArrayList<>();
+
     private ArrayList<int[]> mapList = new ArrayList<>();
 
     public MapLoader(String fileName)
     {
-        //System.out.println("test");
         JsonReader reader = Json.createReader(getClass().getResourceAsStream(fileName));
         JsonObject root = (JsonObject) reader.read();
 
@@ -57,16 +62,23 @@ public class MapLoader
         {
             e.printStackTrace();
         }
-        JsonArray layers2 = root.getJsonArray("layers");
+        layers2 = root.getJsonArray("layers");
 
-        for (int i = 0; i < layers2.size(); i++)
+        for(int i = 0; i < 5; i++)
+        {
+            targets.add(layers2.getJsonObject(0).getJsonArray("objects").getJsonObject(i));
+        }
+
+        for (int i = 1; i < layers2.size(); i++)
         {
             int count = 0;
             int[] map = new int[height * width];
+            paths = new int[50][50];
             for (int y = 0; y < height; y++)
             {
                 for (int x = 0; x < width; x++)
                 {
+                    paths[x][y] = layers2.getJsonObject(1).getJsonArray("data").getInt(count);
                     map[count] = layers2.getJsonObject(i).getJsonArray("data").getInt(count);
                     count++;
                 }
@@ -75,6 +87,14 @@ public class MapLoader
         }
     }
 
+    public ArrayList getTargets()
+    {
+        return targets;
+    }
+    public int[][] getPaths()
+    {
+        return paths;
+    }
     void draw(Graphics2D g2)
     {
         AffineTransform tx = new AffineTransform();
