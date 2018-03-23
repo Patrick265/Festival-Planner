@@ -3,14 +3,11 @@ package Simulator.NPC;
 import Simulator.SpriteBatch;
 
 import javax.swing.*;
-import java.util.List;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
@@ -25,7 +22,7 @@ import java.util.ArrayList;
 //    }
 //}
 
-public class VisitorTest extends JPanel implements ActionListener
+public class VisitorLogic extends JPanel implements ActionListener
 {
     //List<Visitor> sims = new ArrayList<>();
 
@@ -33,15 +30,15 @@ public class VisitorTest extends JPanel implements ActionListener
     private SpriteBatch spriteBatch;
     private String destinationName = null;
 
-    private ArrayList<VistorLogic> visitors = new ArrayList<>();
+    private ArrayList<VisitorObject> visitors = new ArrayList<>();
 
-    public VisitorTest(double directions[][])
+    public VisitorLogic(double directions[][], int path[][])
     {
         this.directions = directions;
         spriteBatch = new SpriteBatch();
         while (visitors.size() < 100)
         {
-            VistorLogic visitor = new VistorLogic(spriteBatch);
+            VisitorObject visitor = new VisitorObject(spriteBatch, path);
             if (!visitor.hasCollision(visitors))
             {
                 visitors.add(visitor);
@@ -51,17 +48,6 @@ public class VisitorTest extends JPanel implements ActionListener
         update();
 
         new Timer(1000 / 60, this).start();
-
-//        addMouseListener(new MouseAdapter() {
-//            @Override
-//            public void mousePressed(MouseEvent e)
-//            {
-//                for(VistorLogic visitor : visitors)
-//                {
-//                    visitor.setTarget(e.getPoint());
-//                }
-//            }
-//        });
     }
 
     public void paintComponent(Graphics g)
@@ -69,7 +55,7 @@ public class VisitorTest extends JPanel implements ActionListener
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
 
-        for (VistorLogic visitor : visitors)
+        for (VisitorObject visitor : visitors)
         {
             visitor.draw(g2d);
         }
@@ -85,7 +71,7 @@ public class VisitorTest extends JPanel implements ActionListener
     {
         for (int i = 0; i < visitors.size(); i++)
         {
-            VistorLogic npc = visitors.get(i);
+            VisitorObject npc = visitors.get(i);
             int posX = (int) npc.getPosition().getX() / 32;
             int posY = (int) npc.getPosition().getY() / 32;
 
@@ -124,7 +110,7 @@ public class VisitorTest extends JPanel implements ActionListener
                 }
             }
 
-            for (VistorLogic npc2 : visitors)
+            for (VisitorObject npc2 : visitors)
             {
                 double dist = npc2.getPosition().distance(npc.getPosition());
                 if (npc2 != npc && dist < 20)
@@ -143,7 +129,7 @@ public class VisitorTest extends JPanel implements ActionListener
 
     public void setTargets(Point e)
     {
-        for (VistorLogic visitor : visitors)
+        for (VisitorObject visitor : visitors)
         {
             visitor.setTarget(e);
         }

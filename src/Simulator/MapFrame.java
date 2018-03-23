@@ -1,7 +1,7 @@
 package Simulator;
 
 import Simulator.MAP.MapLogica;
-import Simulator.NPC.VisitorTest;
+import Simulator.NPC.VisitorLogic;
 
 import javax.json.JsonObject;
 import javax.swing.*;
@@ -34,7 +34,7 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
     private MapLogica logic = new MapLogica(map.getTargets(), map.getPaths());
     private double matrix[][] = logic.getMatrix();
 
-    private VisitorTest animation = new VisitorTest(matrix);
+    private VisitorLogic animation = new VisitorLogic(matrix, map.getPaths());
 
     public MapFrame(JFrame frame)
     {

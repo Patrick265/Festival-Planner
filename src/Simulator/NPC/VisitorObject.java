@@ -2,16 +2,14 @@ package Simulator.NPC;
 
 import Simulator.SpriteBatch;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class VistorLogic
+public class VisitorObject
 {
     private String type;
     private String interest;
@@ -30,9 +28,12 @@ public class VistorLogic
     private String action;
 
 
-    public VistorLogic(SpriteBatch spriteBatch)
+    public VisitorObject(SpriteBatch spriteBatch, int path[][])
     {
-        this.position = new Point2D.Double(Math.random() * 1280, Math.random() * 720 );
+        do
+        {
+            this.position = new Point2D.Double(Math.random() * 1280, Math.random() * 720 );
+        }while(path[(int)this.getPosition().getX()/32][(int)this.getPosition().getY()/32] != 0);
         this.angle = Math.random() * 2 * Math.PI;
         this.speed = 3;
         String[] paths = {"bandana male1.png", "bandana male2.png", "bandana male3.png"};
@@ -53,50 +54,50 @@ public class VistorLogic
     }
 
 
-    public void update(ArrayList<VistorLogic> npcs)
-    {
-        Point2D diff = new Point2D.Double(
-                target.getX() - position.getX(),
-                target.getY() - position.getY()
-        );
+//    public void update(ArrayList<VisitorObject> npcs)
+//    {
+//        Point2D diff = new Point2D.Double(
+//                target.getX() - position.getX(),
+//                target.getY() - position.getY()
+//        );
+//
+//
+//
+//        double targetAngle = Math.atan2(diff.getY(), diff.getX());
+//
+//        double angleDiff = angle - targetAngle;
+//        while(angleDiff < -Math.PI)
+//            angleDiff += 2*Math.PI;
+//        while(angleDiff > Math.PI)
+//            angleDiff -= 2*Math.PI;
+//
+//        if(angleDiff < 0)
+//            angle += 0.1;
+//        else if(angleDiff > 0)
+//            angle -= 0.1;
+//
+//
+////        Point2D lastPosition = position;
+//////        position = new Point2D.Double(
+//////                position.getX() + speed * Math.cos(angle),
+//////                position.getY() + speed * Math.sin(angle));
+//
+//        System.out.println(position.getX());
+//        boolean hasCollision = hasCollision(npcs);
+//
+//        if(hasCollision)
+//        {
+////            position = lastPosition;
+////            angle += 0.2;
+//        }
+//        this.count ++;
+//        this.frame++;
+//        direction();
+//    }
 
-
-
-        double targetAngle = Math.atan2(diff.getY(), diff.getX());
-
-        double angleDiff = angle - targetAngle;
-        while(angleDiff < -Math.PI)
-            angleDiff += 2*Math.PI;
-        while(angleDiff > Math.PI)
-            angleDiff -= 2*Math.PI;
-
-        if(angleDiff < 0)
-            angle += 0.1;
-        else if(angleDiff > 0)
-            angle -= 0.1;
-
-
-//        Point2D lastPosition = position;
-////        position = new Point2D.Double(
-////                position.getX() + speed * Math.cos(angle),
-////                position.getY() + speed * Math.sin(angle));
-
-        System.out.println(position.getX());
-        boolean hasCollision = hasCollision(npcs);
-
-        if(hasCollision)
-        {
-//            position = lastPosition;
-//            angle += 0.2;
-        }
-        this.count ++;
-        this.frame++;
-        direction();
-    }
-
-    public boolean hasCollision(ArrayList<VistorLogic> npcs) {
+    public boolean hasCollision(ArrayList<VisitorObject> npcs) {
         boolean hasCollision = false;
-        for(VistorLogic npc : npcs)
+        for(VisitorObject npc : npcs)
         {
             if(npc== this)
                 continue;

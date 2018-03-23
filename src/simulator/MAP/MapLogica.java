@@ -22,16 +22,16 @@ public class MapLogica
     private double matrix[][];
 
     private int paths[][];
-    private JsonArray path;
+    private int path[][];
     private String destinationName = null;
 
     private Queue<Point2D> queue;
 
-    public MapLogica(ArrayList objects, JsonArray path)
+    public MapLogica(ArrayList objects, int path[][])
     {
         this.path = path;
         this.distanceMaps = objects;
-        distances = new int[path.size() + 1];
+        distances = new int[2501];
         settled = new HashSet<>();
         queue = new LinkedList<>();
         matrix = new double[50][50];
@@ -57,14 +57,13 @@ public class MapLogica
     private void calcDistance()
     {
         int count = 0;
-        System.out.println(path.size());
         Point2D source = new Point2D.Double((posX + width/2) / 32, (posY + height/2) / 32);
         for (int x = 0; x < 50; x++)
         {
             for (int y = 0; y < 50; y++)
             {
                 matrix[x][y] = Integer.MAX_VALUE;
-                paths[x][y] = path.getInt(count);
+                paths[x][y] = path[y][x];
                 count++;
             }
         }
@@ -96,6 +95,11 @@ public class MapLogica
     public double[][] getMatrix()
     {
         return matrix;
+    }
+
+    public int[][] getPaths()
+    {
+        return paths;
     }
 
     public String getDestinationName()
