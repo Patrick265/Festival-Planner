@@ -22,6 +22,7 @@ public class SpriteBatch
     private void cutAllImages()
     {
         cutImages = new HashMap<>();
+
         try
         {
             for (String pathname : getImagePaths())
