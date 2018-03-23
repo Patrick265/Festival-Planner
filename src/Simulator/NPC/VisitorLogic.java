@@ -11,30 +11,18 @@ import java.awt.event.ActionListener;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
-//class Visitor
-//{
-//    public Point2D position;
-//    public double direction;
-//    public Visitor(Point2D position, double direction)
-//    {
-//        this.position = position;
-//        this.direction = direction;
-//    }
-//}
-
 public class VisitorLogic extends JPanel implements ActionListener
 {
-    //List<Visitor> sims = new ArrayList<>();
 
-    private double directions[][];
+    private double distances[][][];
     private SpriteBatch spriteBatch;
     private String destinationName = null;
 
     private ArrayList<VisitorObject> visitors = new ArrayList<>();
 
-    public VisitorLogic(double directions[][], int path[][])
+    public VisitorLogic(double distances[][][], int path[][])
     {
-        this.directions = directions;
+        this.distances = distances;
         spriteBatch = new SpriteBatch();
         while (visitors.size() < 100)
         {
@@ -71,9 +59,9 @@ public class VisitorLogic extends JPanel implements ActionListener
     {
         for (int i = 0; i < visitors.size(); i++)
         {
-            VisitorObject npc = visitors.get(i);
-            int posX = (int) npc.getPosition().getX() / 32;
-            int posY = (int) npc.getPosition().getY() / 32;
+            VisitorObject visitor = visitors.get(i);
+            int posX = (int) visitor.getPosition().getX() / 32;
+            int posY = (int) visitor.getPosition().getY() / 32;
 
             int x = 0;
             int y = 0;
@@ -84,44 +72,51 @@ public class VisitorLogic extends JPanel implements ActionListener
                 {
                     if (posX + xx < 0 || posX + xx >= 50 || posY + yy < 0 || posY + yy >= 50 || y + posX < 0 || x + posX < 0)
                         continue;
-                    System.out.println(posX + xx);
-                    if (directions[posX + xx][posY + yy] > 1000)
+//                    System.out.println(posX + xx);
+                    if (distances[visitor.getFavouriteStage()][posX + xx][posY + yy] > 1000)
                         continue;
 
-                    if (directions[xx + posX][yy + posY] < directions[x + posX][y + posY])
+                    if (distances[visitor.getFavouriteStage()][xx + posX][yy + posY] < distances[visitor.getFavouriteStage()][x + posX][y + posY])
                     {
-                        x = xx;
-                        y = yy;
+//                        if(Math.random() > .1)
+                        {
+                            x = xx;
+                            y = yy;
+                        }
+//                        else                // Dit was een poging voor random paden te lopen, maar dit werkt niet
+//                        {
+//                            x = xx+1;
+//                            y = yy+1;
+//                        }
                         continue;
                     }
                 }
             }
-            Point2D olddir = npc.getPosition();
-            npc.setPosition(new Point2D.Double(npc.getPosition().getX() + x, npc.getPosition().getY() + y));
-            npc.direction();
-//            if(npc.hasCollision(visitors))
-//                npc.setPosition(new Point2D.Double(olddir.getX()-32, olddir.getY()-32));
-            if (destinationName != null)
+            Point2D olddir = visitor.getPosition();
+            visitor.setPosition(new Point2D.Double(visitor.getPosition().getX() + x, visitor.getPosition().getY() + y));
+            visitor.direction();
+
+            //if (destinationName != null)
             {
-                if (destinationName.equals("ingang") && directions[x + posX][y + posY] < 1)
+                if (/*destinationName.equals("ingang") && */distances[4][x + posX][y + posY] < 1 || distances[3][x + posX][y + posY] < 1)
                 {
                     visitors.remove(i);
                     return;
                 }
             }
 
-            for (VisitorObject npc2 : visitors)
+            for (VisitorObject collisionCheckVisitor : visitors)
             {
-                double dist = npc2.getPosition().distance(npc.getPosition());
-                if (npc2 != npc && dist < 20)
+                double dist = collisionCheckVisitor.getPosition().distance(visitor.getPosition());
+                if (collisionCheckVisitor != visitor && dist < 20)
                 {
-                    Point2D oldPos = npc.getPosition();
-                    Point2D diff = new Point2D.Double((npc2.getPosition().getX() - npc.getPosition().getX()) / dist, (npc2.getPosition().getY() - npc.getPosition().getY()) / dist);
-                    npc.setPosition(new Point2D.Double(npc.getPosition().getX() + (dist - 32) * diff.getX(), npc.getPosition().getY() + (dist - 32) * diff.getY()));
-                    posX = (int) npc.getPosition().getX() / 32;
-                    posY = (int) npc.getPosition().getY() / 32;
-                    if (directions[posX][posY] > 1000)
-                        npc.setPosition(oldPos);
+                    Point2D oldPos = visitor.getPosition();
+                    Point2D diff = new Point2D.Double((collisionCheckVisitor.getPosition().getX() - visitor.getPosition().getX()) / dist, (collisionCheckVisitor.getPosition().getY() - visitor.getPosition().getY()) / dist);
+                    visitor.setPosition(new Point2D.Double(visitor.getPosition().getX() + (dist - 32) * diff.getX(), visitor.getPosition().getY() + (dist - 32) * diff.getY()));
+                    posX = (int) visitor.getPosition().getX() / 32;
+                    posY = (int) visitor.getPosition().getY() / 32;
+                    if (distances[collisionCheckVisitor.getFavouriteStage()][posX][posY] > 1000)
+                        visitor.setPosition(oldPos);
                 }
             }
         }

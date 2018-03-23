@@ -32,7 +32,7 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
     private double dist = 0;
     private Graphics2D g2d;
     private MapLogica logic = new MapLogica(map.getTargets(), map.getPaths());
-    private double matrix[][] = logic.getMatrix();
+    private double matrix[][][] = logic.getDistances();
 
     private VisitorLogic animation = new VisitorLogic(matrix, map.getPaths());
 
@@ -44,7 +44,7 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
         addMouseWheelListener(this);
         addKeyListener(this);
         setFocusable(true);
-        new Timer(1000 / 75, this).start();
+        new Timer(1000 / 60, this).start();
     }
 
     public void paintComponent(Graphics g)
@@ -61,7 +61,7 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
         {
             for (int j = 0; j < 50; j++)
             {
-                dist = matrix[i][j];
+                dist = matrix[0][i][j];
 
                 if(dist == 0.0)
                 {
@@ -115,7 +115,7 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
             Area area = new Area(new Rectangle2D.Double(objects.get(i).getInt("x")*scale, objects.get(i).getInt("y")*scale, objects.get(i).getInt("width")*scale, objects.get(i).getInt("height")*scale));
             if(area.contains(new Point2D.Double((e.getX()-x), (e.getY()-y))))
             {
-                logic.reCalcDistance(objects.get(i));
+                logic.reCalcDistance(objects.get(i), 0);
                 animation.setDestinationName(objects.get(i).getString("name"));
             }
         }
