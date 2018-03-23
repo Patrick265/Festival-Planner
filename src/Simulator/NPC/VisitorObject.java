@@ -11,11 +11,12 @@ import java.util.Random;
 
 public class VisitorObject
 {
-    private String type;
-    private String interest;
-
-    private int favouriteStage;
-
+    private String type;            // favouriteStage values:
+    private String interest;        // 0 - Linksboven podium
+                                    // 1 - Rechtsboven podium
+    private int favouriteStage;     // 2 - Onder podium
+                                    // 3 - Onder in/uitgang
+                                    // 4 - Links uitgang
     private Point2D position;
     private Point2D target = new Point2D.Double(500,500);
     private SpriteBatch spriteBatch;
@@ -44,7 +45,7 @@ public class VisitorObject
         String[] paths = {"bandana male1.png", "red female2.png", "raven male7.png"};
         this.spriteBatch = spriteBatch;
 
-        this.favouriteStage = random.nextInt(5); // should be 0/1/2 (hopefully)
+        this.favouriteStage = random.nextInt(5); // should be 0-4 (hopefully)
 
         int x = random.nextInt(paths.length);
         this.imageNPC = this.spriteBatch.getCutImage(paths[x]);
