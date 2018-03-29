@@ -19,23 +19,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 
-public class MapFrame extends JPanel implements MouseListener, MouseMotionListener, MouseWheelListener, KeyListener, ActionListener
+public class MapFrame extends JPanel implements MouseListener, MouseMotionListener, ActionListener
 {
     private MapLoader map = new MapLoader("/Map/FesivalPlannermap.json");
 
-    private int y = 0;
-    private int initY = 0;
 
-    private int x = 0;
-    private int initX = 0;
-
-    private int mousePosX = 0;
-    private int mousePosY = 0;
 
     private double scale = 1;
     int timer;
 
-    private boolean ctrlPressed = false;
     private double dist = 0;
     private Graphics2D g2d;
     private MapLogica logic = new MapLogica(map.getTargets(), map.getPaths());
@@ -47,10 +39,12 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
     private Schedule schedule;
     private Date currentTime;
     private VisitorLogic animation = new VisitorLogic(matrix, map.getPaths());
+    private Camera camera;
 
     public MapFrame(JFrame frame)
     {
         currentTime = new Date(2018, 1, 1, 9,50,0);
+        this.camera = new Camera(this,g2d);
         try
         {
             schedule = JSONManager.readFile(); //new Schedule();
@@ -59,14 +53,12 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
         {
             e.printStackTrace();
         }
-
         timer = 0;
 
         frame.setContentPane(this);
-        addMouseListener(this);
-        addMouseMotionListener(this);
-        addMouseWheelListener(this);
-        addKeyListener(this);
+        addMouseListener(new Camera(this,g2d));
+        addMouseMotionListener(new Camera(this,g2d));
+        addMouseWheelListener(new Camera(this,g2d));
         setFocusable(true);
         new Timer(1000/60, this).start();
     }
@@ -74,13 +66,15 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
-        g2d = (Graphics2D) g;
+        this.g2d = (Graphics2D) g;
+        this.camera.getTransform(map, this);
+        this.g2d.setTransform(AffineTransform.getTranslateInstance(camera.x, camera.y));
 
-        g2d.setTransform(AffineTransform.getTranslateInstance(x, y));
-        g2d.translate(mousePosX, mousePosY);
-        g2d.scale(scale, scale);
-        map.draw(g2d);
-        animation.paintComponent(g2d);
+        this.g2d.scale(camera.scale, camera.scale);
+        this.map.draw(g2d, this);
+
+        this.animation.paintComponent(g2d);
+
         for (int i = 0; i < 50; i++)
         {
             for (int j = 0; j < 50; j++)
@@ -103,25 +97,7 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
     @Override
     public void mouseDragged(MouseEvent e)
     {
-        //if (ctrlPressed)
-        {
-            int a = (initY - e.getY()) * -1;
-            int b = (initX - e.getX()) * -1;
-            y += a;
-            x += b;
-            int divY = g2d.getClip().getBounds().y - y;
-            int divX = g2d.getClip().getBounds().x - x;
-            if (divY > 0 && divY < 1061 && divX > 0 && divX < 539)
-            {
-                repaint();
-            } else
-            {
-                x -= b;
-                y -= a;
-            }
-            initY = e.getY();
-            initX = e.getX();
-        }
+
     }
 
     @Override
@@ -137,7 +113,7 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
         for(int i = 0; i < map.getTargets().size(); i++)
         {
             Area area = new Area(new Rectangle2D.Double(objects.get(i).getInt("x")*scale, objects.get(i).getInt("y")*scale, objects.get(i).getInt("width")*scale, objects.get(i).getInt("height")*scale));
-            if(area.contains(new Point2D.Double((e.getX()-x), (e.getY()-y))))
+            if(area.contains(new Point2D.Double((e.getX()-camera.x), (e.getY()-camera.y))))
             {
                 clickTarget = i;
                 //logic.reCalcDistance(objects.get(i), 0);
@@ -149,20 +125,13 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
     @Override
     public void mousePressed(MouseEvent e)
     {
-        initX = e.getX();
-        initY = e.getY();
-        //animation.update();
-        //repaint();
-        int divX = g2d.getClip().getBounds().x + e.getX();
-        int divY = g2d.getClip().getBounds().y + e.getY();
-        //animation.setTargets(new Point((int) (divX / scale), (int) (divY / scale)));
+
     }
 
     @Override
     public void mouseReleased(MouseEvent e)
     {
-        initX = 0;
-        initY = 0;
+
     }
 
     @Override
@@ -175,54 +144,6 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
     public void mouseExited(MouseEvent e)
     {
 
-    }
-
-    @Override
-    public void mouseWheelMoved(MouseWheelEvent e)
-    {
-        int c = e.getWheelRotation();
-
-        //mousePosX = e.getX();
-        //mousePosY = e.getY();
-
-        scale -= c * 0.1;
-
-        //x = getWidth()/2 - e.getPoint().x;
-        //y = getWidth()/2 - e.getPoint().y;
-        repaint();
-        //setAlignmentX(0);
-        //setAlignmentY(0);
-
-//        int a = e.getWheelRotation() * -100;
-//        y += a;
-//        if (g2d.getClip().getBounds().y - y > 0 && g2d.getClip().getBounds().y - y < 1061)
-//        {
-//            invalidate();
-//            revalidate();
-//            repaint();
-//        } else
-//        {
-//            y -= a;
-//        }
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e)
-    {
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e)
-    {
-        if (e.getKeyCode() == 17)
-            ctrlPressed = true;
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e)
-    {
-        if (e.getKeyCode() == KeyEvent.VK_CONTROL)
-            ctrlPressed = false;
     }
 
     @Override
