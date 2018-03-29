@@ -78,16 +78,8 @@ public class VisitorLogic extends JPanel implements ActionListener
 
                     if (distances[visitor.getFavouriteStage()][xx + posX][yy + posY] < distances[visitor.getFavouriteStage()][x + posX][y + posY])
                     {
-//                        if(Math.random() > .1)
-                        {
-                            x = xx;
-                            y = yy;
-                        }
-//                        else                // Dit was een poging voor random paden te lopen, maar dit werkt niet
-//                        {
-//                            x = xx+1;
-//                            y = yy+1;
-//                        }
+                        x = xx;
+                        y = yy;
                         continue;
                     }
                 }
