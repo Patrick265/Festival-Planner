@@ -11,9 +11,12 @@ import java.util.Random;
 
 public class VisitorObject
 {
-    private String type;
-    private String interest;
-
+    private String type;            // favouriteStage values:
+    private String interest;        // 0 - Linksboven podium
+                                    // 1 - Rechtsboven podium
+    private int favouriteStage;     // 2 - Onder podium
+                                    // 3 - Onder in/uitgang
+                                    // 4 - Links uitgang
     private Point2D position;
     private Point2D target = new Point2D.Double(500,500);
     private SpriteBatch spriteBatch;
@@ -30,16 +33,19 @@ public class VisitorObject
 
     public VisitorObject(SpriteBatch spriteBatch, int path[][])
     {
+        Random random = new Random();
+
         do
         {
             this.position = new Point2D.Double(Math.random() * 1280, Math.random() * 720 );
         }while(path[(int)this.getPosition().getX()/32][(int)this.getPosition().getY()/32] != 0);
+
         this.angle = Math.random() * 2 * Math.PI;
         this.speed = 3;
-        String[] paths = {"bandana male1.png", "bandana male2.png", "bandana male3.png"};
+        String[] paths = {"bandana male1.png", "red female2.png", "raven male7.png"};
         this.spriteBatch = spriteBatch;
 
-        Random random = new Random();
+        this.favouriteStage = random.nextInt(5); // should be 0-4 (hopefully)
 
         int x = random.nextInt(paths.length);
         this.imageNPC = this.spriteBatch.getCutImage(paths[x]);
@@ -110,26 +116,21 @@ public class VisitorObject
 
     public void direction()
     {
-
-        //if (count > 8)
-        //{
-        //    count = 0;
-            if (position.getX() > target.getX())
+        if (position.getX() > target.getX())
+        {
+            this.frame = 9;
+            if (position.getY() > target.getY())
             {
-                this.frame = 9;
-                if (position.getY() > target.getY())
-                {
-                    this.frame = 0;
-                }
-            } else if (position.getX() < target.getX())
-            {
-                this.frame = 27;
-                if (position.getY() < target.getY())
-                {
-                    this.frame = 18;
-                }
+                this.frame = 0;
             }
-        //}
+        } else if (position.getX() < target.getX())
+        {
+            this.frame = 27;
+            if (position.getY() < target.getY())
+            {
+                this.frame = 18;
+            }
+        }
     }
 
     public void setTarget(Point2D targetPosition)
@@ -145,5 +146,15 @@ public class VisitorObject
     public void setPosition(Point2D position)
     {
         this.position = position;
+    }
+
+    public int getFavouriteStage()
+    {
+        return favouriteStage;
+    }
+
+    public void setFavouriteStage(int favouriteStage)
+    {
+        this.favouriteStage = favouriteStage;
     }
 }

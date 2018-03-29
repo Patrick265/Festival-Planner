@@ -1,10 +1,6 @@
 package Simulator.MAP;
 
-import Simulator.MapLoader;
-
-import javax.json.JsonArray;
 import javax.json.JsonObject;
-import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.*;
 
@@ -17,9 +13,7 @@ public class MapLogica
     private int width;
     private int height;
 
-    private int[] distances;
-    private Set<Integer> settled;
-    private double matrix[][];
+    private double distances[][][];
 
     private int paths[][];
     private int path[][];
@@ -31,44 +25,51 @@ public class MapLogica
     {
         this.path = path;
         this.distanceMaps = objects;
-        distances = new int[2501];
-        settled = new HashSet<>();
         queue = new LinkedList<>();
-        matrix = new double[50][50];
+        distances = new double[5][50][50];
         paths = new int[50][50];
-        posX = distanceMaps.get(0).getInt("x");
-        posY = distanceMaps.get(0).getInt("y");
-        width = distanceMaps.get(0).getInt("width");
-        height = distanceMaps.get(0).getInt("height");
+//        posX = distanceMaps.get(0).getInt("x");
+//        posY = distanceMaps.get(0).getInt("y");
+//        width = distanceMaps.get(0).getInt("width");
+//        height = distanceMaps.get(0).getInt("height");
 
-        calcDistance();
+
+        for (int i = 0; i < 5; i++)
+        {
+
+            reCalcDistance(distanceMaps.get(i), i);
+        }
     }
 
-    public void reCalcDistance(JsonObject object)
+    public void reCalcDistance(JsonObject object, int target)
     {
+        System.out.println("reCalcDistance is called");
+
         posX = object.getInt("x");
         posY = object.getInt("y");
         width = object.getInt("width");
         height = object.getInt("height");
         destinationName = object.getString("name");
-        calcDistance();
+        calcDistance(target);
     }
 
-    private void calcDistance()
+    private void calcDistance(int target)
     {
+        System.out.println("calcDistance is called");
+
         int count = 0;
         Point2D source = new Point2D.Double((posX + width/2) / 32, (posY + height/2) / 32);
         for (int x = 0; x < 50; x++)
         {
             for (int y = 0; y < 50; y++)
             {
-                matrix[x][y] = Integer.MAX_VALUE;
+                distances[target][x][y] = Integer.MAX_VALUE;
                 paths[x][y] = path[y][x];
                 count++;
             }
         }
         queue.offer(source);
-        matrix[(posX + width/2) / 32][(posY + height/2) / 32] = 0;
+        distances[target][(posX + width/2) / 32][(posY + height/2) / 32] = 0;
 
         while (!queue.isEmpty())
         {
@@ -81,10 +82,10 @@ public class MapLogica
                 {
                     if ( p.getX() + x < 0 || p.getX() + x >= 50 || p.getY() + y < 0 || p.getY() + y >= 50 || Math.abs(x) == Math.abs(y))
                         continue;
-                    double d = matrix[(int) p.getX()][(int) p.getY()] + Math.sqrt(x*x+y*y);
-                    if (d < matrix[(int) p.getX()+x][(int) p.getY()+y])
+                    double d = distances[target][(int) p.getX()][(int) p.getY()] + Math.sqrt(x*x+y*y);
+                    if (d < distances[target][(int) p.getX()+x][(int) p.getY()+y])
                     {
-                        matrix[(int) p.getX()+x][(int) p.getY()+y] = d;
+                        distances[target][(int) p.getX()+x][(int) p.getY()+y] = d;
                         queue.offer(new Point2D.Double(p.getX()+x, p.getY()+y));
                     }
                 }
@@ -92,9 +93,9 @@ public class MapLogica
         }
     }
 
-    public double[][] getMatrix()
+    public double[][][] getDistances()
     {
-        return matrix;
+        return distances;
     }
 
     public int[][] getPaths()
