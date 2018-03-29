@@ -34,6 +34,8 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
     private MapLogica logic = new MapLogica(map.getTargets(), map.getPaths());
     private double matrix[][][] = logic.getDistances();
 
+    private int clickTarget = 0;
+
     private VisitorLogic animation = new VisitorLogic(matrix, map.getPaths());
 
     public MapFrame(JFrame frame)
@@ -61,7 +63,7 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
         {
             for (int j = 0; j < 50; j++)
             {
-                dist = matrix[0][i][j];
+                dist = matrix[clickTarget][i][j];
 
                 if(dist == 0.0)
                 {
@@ -115,7 +117,8 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
             Area area = new Area(new Rectangle2D.Double(objects.get(i).getInt("x")*scale, objects.get(i).getInt("y")*scale, objects.get(i).getInt("width")*scale, objects.get(i).getInt("height")*scale));
             if(area.contains(new Point2D.Double((e.getX()-x), (e.getY()-y))))
             {
-                logic.reCalcDistance(objects.get(i), 0);
+                clickTarget = i;
+                //logic.reCalcDistance(objects.get(i), 0);
                 animation.setDestinationName(objects.get(i).getString("name"));
             }
         }
