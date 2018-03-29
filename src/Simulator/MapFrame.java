@@ -1,7 +1,11 @@
 package Simulator;
 
+import AgendaData.Act;
+import AgendaData.Schedule;
+import FileIO.JSONManager;
 import Simulator.MAP.MapLogica;
 import Simulator.NPC.VisitorLogic;
+import Simulator.NPC.VisitorObject;
 
 import javax.json.JsonObject;
 import javax.swing.*;
@@ -12,6 +16,8 @@ import java.awt.geom.Area;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Random;
 
 public class MapFrame extends JPanel implements MouseListener, MouseMotionListener, MouseWheelListener, KeyListener, ActionListener
 {
@@ -27,6 +33,7 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
     private int mousePosY = 0;
 
     private double scale = 1;
+    int timer;
 
     private boolean ctrlPressed = false;
     private double dist = 0;
@@ -36,10 +43,25 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
 
     private int clickTarget = 0;
 
+    private int lastTotalPopularity = 0;
+    private Schedule schedule;
+    private Date currentTime;
     private VisitorLogic animation = new VisitorLogic(matrix, map.getPaths());
 
     public MapFrame(JFrame frame)
     {
+        currentTime = new Date(2018, 1, 1, 9,50,0);
+        try
+        {
+            schedule = JSONManager.readFile(); //new Schedule();
+            //todo: update when schedule changes
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        timer = 0;
+
         frame.setContentPane(this);
         addMouseListener(this);
         addMouseMotionListener(this);
@@ -81,7 +103,7 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
     @Override
     public void mouseDragged(MouseEvent e)
     {
-        if (ctrlPressed)
+        //if (ctrlPressed)
         {
             int a = (initY - e.getY()) * -1;
             int b = (initX - e.getX()) * -1;
@@ -206,7 +228,88 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
     @Override
     public void actionPerformed(ActionEvent e)
     {
+        timer++;
         animation.update();
         repaint();
+
+        if(timer % 30 != 0)
+            return;
+
+        int minutes = currentTime.getMinutes();
+        if (minutes + 1 == 60)
+        {
+            currentTime.setHours(currentTime.getHours()+1);
+            currentTime.setMinutes(0);
+        }
+        else
+            currentTime.setMinutes(minutes + 1);
+
+        double curTime = currentTime.getHours() + (currentTime.getMinutes() / 100.0d);
+        System.out.println(curTime);
+
+        if (currentTime.getMinutes() % 15 == 0)
+        {
+            System.out.println("ding");
+            checkAct(curTime);
+        }
+    }
+
+    public void checkAct(double curTime)
+    {
+        java.util.List<Act> activeActs = new ArrayList<>();
+
+        for (Act act : schedule.getActs())
+        {
+            double startTime = act.getStartTime().getHours() + (act.getStartTime().getMinutes() / 100.0d);
+            double endTime = act.getEndTime().getHours() + (act.getEndTime().getMinutes() / 100.0d);
+
+            if (startTime <= curTime && endTime >= curTime)
+            {
+                activeActs.add(act);
+            }
+        }
+
+        int p1Pop = 0;
+        int p2Pop = 0;
+        int p3Pop = 0;
+
+        for(Act act : activeActs)
+        {
+            switch(act.getPodium().getName())
+            {
+                case "Podium 1":
+                    p1Pop = act.getPopularity();
+                    break;
+                case "Podium 2":
+                    p2Pop = act.getPopularity();
+                    break;
+                case "Podium 3":
+                    p3Pop = act.getPopularity();
+                    break;
+            }
+        }
+
+
+        int rndSize = 10 + p1Pop + p2Pop + p3Pop; // +5 per uitgang
+        Random rnd = new Random();
+        if(rndSize - 10 != lastTotalPopularity)
+            for(VisitorObject visitor : animation.getVisitors())
+            {
+                System.out.println("Nieuwe podia aangewezen");
+
+                int rndNum = rnd.nextInt(rndSize);
+                if(rndNum <= p1Pop)
+                    visitor.setFavouriteStage(0);
+                else if (rndNum <= p1Pop + p2Pop)
+                    visitor.setFavouriteStage(1);
+                else if (rndNum <= p1Pop + p2Pop + p3Pop)
+                    visitor.setFavouriteStage(2);
+                else if (rndNum <= rndSize - 5)
+                    visitor.setFavouriteStage(3);
+                else
+                    visitor.setFavouriteStage(4);
+            }
+
+        lastTotalPopularity = p1Pop + p2Pop + p3Pop;
     }
 }

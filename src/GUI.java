@@ -2,6 +2,7 @@ import AgendaData.Act;
 import AgendaData.Schedule;
 import Agenda.AgendaGUI;
 import FileIO.FileExplorer;
+import FileIO.JSONManager;
 import Simulator.MapFrame;
 
 import javax.imageio.ImageIO;
@@ -10,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,9 +21,9 @@ import java.util.List;
  */
 public class GUI implements ActionListener
 {
-    private Date currenttime;
+//    private Date currentTime;
     private JFrame frame;
-    private Schedule schedule;
+//    private Schedule schedule;
     private Timer timer;
     private boolean event;
 
@@ -29,9 +31,16 @@ public class GUI implements ActionListener
     {
         event = false;
 
-        currenttime = new Date(2018, 1, 1, 0,0,0);
+//        currentTime = new Date(2018, 1, 1, 9,50,0);
         makeFrame();
-        schedule = new Schedule();
+//        try
+//        {
+//            schedule = JSONManager.readFile(); //new Schedule();
+//            //todo: update when schedule changes
+//        } catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
         timer = new Timer(1000/2, this);
         timer.start();
         //testAgenda();
@@ -140,27 +149,43 @@ public class GUI implements ActionListener
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        int minutes = currenttime.getMinutes();
-        if (minutes + 1 == 60)
-            currenttime.setHours(currenttime.getHours());
-        else
-            currenttime.setMinutes(minutes + 1);
-
-        System.out.println(currenttime.toString());
-        checkAct();
-
-    }
-
-    public void checkAct()
+    public void actionPerformed(ActionEvent e)
     {
-        System.out.println(schedule.getActs().size());
-            for (Act act : schedule.getActs()) {
-                if (act.getStartTime().compareTo(currenttime) > 0 && act.getEndTime().compareTo(currenttime) < 0) {
-                    System.out.println("EVENT!");
-                    event = true;
-                }
-                System.out.println("test");
-            }
+//        int minutes = currentTime.getMinutes();
+//        if (minutes + 1 == 60)
+//        {
+//            currentTime.setHours(currentTime.getHours()+1);
+//            currentTime.setMinutes(0);
+//        }
+//        else
+//            currentTime.setMinutes(minutes + 1);
+//
+//        double curTime = currentTime.getHours() + (currentTime.getMinutes() / 100.0d);
+//        System.out.println(curTime);
+//
+//        if (curTime % 0.15 == 0)
+//        {
+//            checkAct(curTime);
+//        }
+//
+//    }
+//
+//    public void checkAct(double curTime)
+//    {
+//        List<Act> activeActs = new ArrayList<>();
+//
+//        for (Act act : schedule.getActs())
+//        {
+//            double startTime = act.getStartTime().getHours() + (act.getStartTime().getMinutes() / 100.0d);
+//            double endTime = act.getEndTime().getHours() + (act.getEndTime().getMinutes() / 100.0d);
+//
+//            if (startTime <= curTime && endTime >= curTime)
+//            {
+//                activeActs.add(act);
+//            }
+//        }
+//
+////        for(int i = 0; i <)
+//    }
     }
 }
