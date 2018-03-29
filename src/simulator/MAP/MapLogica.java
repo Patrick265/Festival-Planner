@@ -28,11 +28,6 @@ public class MapLogica
         queue = new LinkedList<>();
         distances = new double[5][50][50];
         paths = new int[50][50];
-//        posX = distanceMaps.get(0).getInt("x");
-//        posY = distanceMaps.get(0).getInt("y");
-//        width = distanceMaps.get(0).getInt("width");
-//        height = distanceMaps.get(0).getInt("height");
-
 
         for (int i = 0; i < 5; i++)
         {

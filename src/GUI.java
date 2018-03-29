@@ -19,11 +19,9 @@ import java.util.List;
  * @Author Thomas Mandemaker, Patrick de Jong, Yannick van Dolen , Sergen Peker , Anastasia Hellemons
  * @version 1.0
  */
-public class GUI implements ActionListener
+public class GUI
 {
-//    private Date currentTime;
     private JFrame frame;
-//    private Schedule schedule;
     private Timer timer;
     private boolean event;
 
@@ -31,7 +29,6 @@ public class GUI implements ActionListener
     {
         event = false;
 
-//        currentTime = new Date(2018, 1, 1, 9,50,0);
         makeFrame();
 //        try
 //        {
@@ -41,9 +38,7 @@ public class GUI implements ActionListener
 //        {
 //            e.printStackTrace();
 //        }
-        timer = new Timer(1000/2, this);
-        timer.start();
-        //testAgenda();
+
     }
 
     /**
@@ -102,7 +97,6 @@ public class GUI implements ActionListener
         viewAgenda.addActionListener(e ->
         {
             AgendaGUI agendaGUI = new AgendaGUI();
-            //AgendaPopUpGUI agendaPopUpGUI = new AgendaPopUpGUI();
         });
         menu.add(agenda);
 
@@ -146,46 +140,5 @@ public class GUI implements ActionListener
     private void makeSimulator(JFrame frame)
     {
         new MapFrame(frame);
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e)
-    {
-//        int minutes = currentTime.getMinutes();
-//        if (minutes + 1 == 60)
-//        {
-//            currentTime.setHours(currentTime.getHours()+1);
-//            currentTime.setMinutes(0);
-//        }
-//        else
-//            currentTime.setMinutes(minutes + 1);
-//
-//        double curTime = currentTime.getHours() + (currentTime.getMinutes() / 100.0d);
-//        System.out.println(curTime);
-//
-//        if (curTime % 0.15 == 0)
-//        {
-//            checkAct(curTime);
-//        }
-//
-//    }
-//
-//    public void checkAct(double curTime)
-//    {
-//        List<Act> activeActs = new ArrayList<>();
-//
-//        for (Act act : schedule.getActs())
-//        {
-//            double startTime = act.getStartTime().getHours() + (act.getStartTime().getMinutes() / 100.0d);
-//            double endTime = act.getEndTime().getHours() + (act.getEndTime().getMinutes() / 100.0d);
-//
-//            if (startTime <= curTime && endTime >= curTime)
-//            {
-//                activeActs.add(act);
-//            }
-//        }
-//
-////        for(int i = 0; i <)
-//    }
     }
 }

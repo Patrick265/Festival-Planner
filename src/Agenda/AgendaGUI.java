@@ -29,7 +29,6 @@ public class AgendaGUI extends JFrame
     {
 
         super("Agenda");
-//        super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.mainPanel = new JPanel(new BorderLayout());
         this.tablePanel = new JPanel(new BorderLayout());
         this.buttonPanel = new JPanel(new FlowLayout());

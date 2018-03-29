@@ -47,7 +47,7 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
         this.camera = new Camera(this,g2d);
         try
         {
-            schedule = JSONManager.readFile(); //new Schedule();
+            schedule = JSONManager.readFile();
             //todo: update when schedule changes
         } catch (Exception e)
         {
@@ -116,7 +116,6 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
             if(area.contains(new Point2D.Double((e.getX()-camera.x), (e.getY()-camera.y))))
             {
                 clickTarget = i;
-                //logic.reCalcDistance(objects.get(i), 0);
                 animation.setDestinationName(objects.get(i).getString("name"));
             }
         }
