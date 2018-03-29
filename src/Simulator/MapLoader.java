@@ -2,6 +2,7 @@ package Simulator;
 
 import javax.imageio.ImageIO;
 import javax.json.*;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
@@ -95,9 +96,11 @@ public class MapLoader
     {
         return paths;
     }
-    void draw(Graphics2D g2)
+
+    public void draw(Graphics2D g2d, JPanel panel)
     {
         AffineTransform tx = new AffineTransform();
+        tx.translate(panel.getWidth() / 2, panel.getHeight() / 2);
         for (int[] map : mapList)
         {
             int count = -1;
@@ -108,9 +111,19 @@ public class MapLoader
                     tx.setToTranslation(x * tileWidth, y * tileHeight);
                     count++;
                     if (map[count] != 0)
-                        g2.drawImage(tiles.get(map[count]- 1), tx, null);
+                        g2d.drawImage(tiles.get(map[count]- 1), tx, null);
                 }
             }
         }
+    }
+
+    public int getWidth()
+    {
+        return width;
+    }
+
+    public int getHeight()
+    {
+        return height;
     }
 }
