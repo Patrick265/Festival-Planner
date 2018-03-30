@@ -28,6 +28,7 @@ public class MapLoader
 
     public MapLoader(String fileName)
     {
+
         JsonReader reader = Json.createReader(getClass().getResourceAsStream(fileName));
         JsonObject root = (JsonObject) reader.read();
 
@@ -100,7 +101,7 @@ public class MapLoader
     public void draw(Graphics2D g2d, JPanel panel)
     {
         AffineTransform tx = new AffineTransform();
-        tx.translate(panel.getWidth() / 2, panel.getHeight() / 2);
+        //tx.translate(panel.getWidth() / 2 - (getWidth() / 2), panel.getHeight() / 2 - (getHeight() / 2));
         for (int[] map : mapList)
         {
             int count = -1;

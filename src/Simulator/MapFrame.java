@@ -44,7 +44,7 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
     public MapFrame(JFrame frame)
     {
         currentTime = new Date(2018, 1, 1, 9,50,0);
-        this.camera = new Camera(this,g2d);
+        this.camera = new Camera(this);
         try
         {
             schedule = JSONManager.readFile();
@@ -56,9 +56,9 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
         timer = 0;
 
         frame.setContentPane(this);
-        addMouseListener(new Camera(this,g2d));
-        addMouseMotionListener(new Camera(this,g2d));
-        addMouseWheelListener(new Camera(this,g2d));
+        addMouseListener(new Camera(this));
+        addMouseMotionListener(new Camera(this));
+        addMouseWheelListener(new Camera(this));
         setFocusable(true);
         new Timer(1000/60, this).start();
     }
@@ -67,10 +67,11 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
     {
         super.paintComponent(g);
         this.g2d = (Graphics2D) g;
-        this.camera.getTransform(map, this);
-        this.g2d.setTransform(AffineTransform.getTranslateInstance(camera.x, camera.y));
 
-        this.g2d.scale(camera.scale, camera.scale);
+
+        this.g2d.setTransform(this.camera.getTransform( this, this.map));
+        //this.g2d.setTransform(AffineTransform.getTranslateInstance(camera.x, camera.y));
+
         this.map.draw(g2d, this);
 
         this.animation.paintComponent(g2d);
@@ -95,16 +96,10 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
     }
 
     @Override
-    public void mouseDragged(MouseEvent e)
-    {
-
-    }
+    public void mouseDragged(MouseEvent e) {    }
 
     @Override
-    public void mouseMoved(MouseEvent e)
-    {
-
-    }
+    public void mouseMoved(MouseEvent e) { }
 
     @Override
     public void mouseClicked(MouseEvent e)
@@ -122,26 +117,22 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
     }
 
     @Override
-    public void mousePressed(MouseEvent e)
-    {
+    public void mousePressed(MouseEvent e) {
 
     }
 
     @Override
-    public void mouseReleased(MouseEvent e)
-    {
+    public void mouseReleased(MouseEvent e) {
 
     }
 
     @Override
-    public void mouseEntered(MouseEvent e)
-    {
+    public void mouseEntered(MouseEvent e) {
 
     }
 
     @Override
-    public void mouseExited(MouseEvent e)
-    {
+    public void mouseExited(MouseEvent e) {
 
     }
 
@@ -229,7 +220,6 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
                 else
                     visitor.setFavouriteStage(4);
             }
-
         lastTotalPopularity = p1Pop + p2Pop + p3Pop;
     }
 }

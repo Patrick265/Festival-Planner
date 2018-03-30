@@ -4,26 +4,24 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
 
 public class Camera implements MouseListener, MouseMotionListener, MouseWheelListener
 {
-    double scale = 1;
-    double zoomfactor = 0.05;
-    double rotation = 0;
-    int y = 0;
-    int initY = 0;
-    int x = 0;
-    int initX = 0;
 
-    Point2D lastMousePos;
-    JPanel panel;
-    Graphics2D g2d;
+    private JPanel panel;
+    private double zoomfactor = 0.05;
 
-    Camera(JPanel panel, Graphics2D g2d)
+
+    public double zoom = 1.25;
+    public int y  = 0;
+    public int initY = 0;
+    public int x = 0;
+    public int initX = 0;
+
+    Camera(JPanel panel)
     {
         this.panel = panel;
-        this.g2d = g2d;
+
         panel.addMouseListener(this);
         panel.addMouseMotionListener(this);
         panel.addMouseWheelListener(this);
@@ -31,15 +29,26 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
 
 
 
-    public AffineTransform getTransform(MapLoader map, JPanel panel)
+    public AffineTransform getTransform(JPanel panel, MapLoader map)
     {
-        AffineTransform tx = new AffineTransform();
-        tx.scale(scale, scale);
-        tx.translate((panel.getWidth()/2) - (map.getWidth()*(scale))/2,
-                (panel.getHeight()/2) - (map.getHeight()*(scale))/2);
+        double width = panel.getWidth();
+        double height = panel.getHeight();
 
-        tx.rotate(rotation);
+        double zoomWidth = width * zoom;
+        double zoomHeight = height * zoom;
+
+        double anchorx = (width - zoomWidth) / 2;
+        double anchory = (height - zoomHeight) / 2;
+
+
+        AffineTransform tx = new AffineTransform();
+        tx.translate(anchorx, anchory);
+        tx.scale(zoom, zoom);
+        tx.translate(x, y);
+
+
         return tx;
+
     }
 
 
@@ -50,10 +59,11 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
     @Override
     public void mousePressed(MouseEvent e)
     {
-        lastMousePos = e.getPoint();
         if(SwingUtilities.isMiddleMouseButton(e))
         {
-            this.scale = 1;
+            this.zoom = 1.25;
+            this.x = 0;
+            this.y = 0;
         }
         initX = e.getX();
         initY = e.getY();
@@ -66,38 +76,41 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
     public void mouseEntered(MouseEvent e) {    }
 
     @Override
-    public void mouseExited(MouseEvent e)
-    {
-
-    }
+    public void mouseExited(MouseEvent e) {    }
 
     @Override
     public void mouseDragged(MouseEvent e)
     {
-        int a = (initY - e.getY()) * -1;
-        int b = (initX - e.getX()) * -1;
-        y += a;
-        x += b;
-        initY = e.getY();
-        initX = e.getX();
+        if(SwingUtilities.isLeftMouseButton(e))
+        {
+            int a = (initY - e.getY()) * -1;
+            int b = (initX - e.getX()) * -1;
+            y += a;
+            x += b;
+            initY = e.getY();
+            initX = e.getX();
+        }
     }
 
     @Override
-    public void mouseMoved(MouseEvent e)
-    {
-
-    }
+    public void mouseMoved(MouseEvent e) { }
 
     @Override
     public void mouseWheelMoved(MouseWheelEvent e)
     {
         if (e.getWheelRotation() < 0)
         {
-            this.scale += zoomfactor;
+            if (this.zoom < 2)
+            {
+                this.zoom += zoomfactor;
+            }
         }
         if(e.getWheelRotation() > 0)
         {
-            this.scale -= zoomfactor;
+            if(this.zoom > 0.5)
+            {
+                this.zoom -= zoomfactor;
+            }
         }
         this.panel.repaint();
     }
