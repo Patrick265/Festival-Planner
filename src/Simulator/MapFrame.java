@@ -11,7 +11,6 @@ import javax.json.JsonObject;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -22,9 +21,6 @@ import java.util.Random;
 public class MapFrame extends JPanel implements MouseListener, MouseMotionListener, ActionListener
 {
     private MapLoader map = new MapLoader("/Map/FesivalPlannermap.json");
-
-
-
     private double scale = 1;
     int timer;
 
@@ -41,10 +37,11 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
     private VisitorLogic animation = new VisitorLogic(matrix, map.getPaths());
     private Camera camera;
 
+
     public MapFrame(JFrame frame)
     {
-        currentTime = new Date(2018, 1, 1, 9,50,0);
-        this.camera = new Camera(this);
+        this.currentTime = new Date(2018, 1, 1, 9,50,0);
+        this.camera = new Camera(this, this.map);
         try
         {
             schedule = JSONManager.readFile();
@@ -56,9 +53,9 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
         timer = 0;
 
         frame.setContentPane(this);
-        addMouseListener(new Camera(this));
-        addMouseMotionListener(new Camera(this));
-        addMouseWheelListener(new Camera(this));
+        addMouseListener(new Camera(this, this.map));
+        addMouseMotionListener(new Camera(this, this.map));
+        addMouseWheelListener(new Camera(this, this.map));
         setFocusable(true);
         new Timer(1000/60, this).start();
     }
@@ -68,11 +65,10 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
         super.paintComponent(g);
         this.g2d = (Graphics2D) g;
 
+        this.g2d.setTransform(this.camera.getTransform( this));
 
-        this.g2d.setTransform(this.camera.getTransform( this, this.map));
-        //this.g2d.setTransform(AffineTransform.getTranslateInstance(camera.x, camera.y));
+        this.map.draw(g2d);
 
-        this.map.draw(g2d, this);
 
         this.animation.paintComponent(g2d);
 
@@ -89,7 +85,7 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
                 if (dist < 1000)
                 {
                     String dist2 = "" + dist;
-                    g2d.drawString(dist2, i * 32, j * 32);
+                    //g2d.drawString(dist2, i * 32, j * 32);
                 }
             }
         }

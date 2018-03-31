@@ -42,7 +42,17 @@ public class VisitorObject
 
         this.angle = Math.random() * 2 * Math.PI;
         this.speed = 3;
-        String[] paths = {"bandana male1.png", "red female2.png", "raven male7.png"};
+        String[] paths = {"bandana male1.png","bandana male2.png","bandana male3.png","blonde female1.png","blonde female2.png",
+                "blonde male1.png","blonde male2.png","blonde male3.png","blonde male4.png","blue female1.png","blue female2.png",
+                "blue female3.png","blue male1.png","brown female1.png","brown female2.png","brown male1.png","brown male2.png",
+                "brown male3.png","green female1.png","green female2.png","green male1.png","green male2.png","green male3.png",
+                "green male4.png","green male5.png","green male6.png","pink female1.png","pink female2.png","pink male1.png",
+                "pink male2.png","raven female1.png","raven female2.png","raven male1.png","raven male2.png","raven male3.png",
+                "raven male4.png","raven male5.png","raven male6.png","raven male7.png","raven male8.png","red female1.png",
+                "red female2.png","red female3.png","red female4.png","silver female1.png","silver female2.png","silver female3.png",
+                "skeleton easteregg.png","white male1.png","white male2.png", "white male3.png","white male4.png","white male5.png",
+                "white male6.png","white male7.png","white male8.png","white male9.png"};
+
         this.spriteBatch = spriteBatch;
 
         this.favouriteStage = random.nextInt(5); // should be 0-4 (hopefully)

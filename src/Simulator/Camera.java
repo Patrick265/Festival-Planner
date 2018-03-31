@@ -1,5 +1,7 @@
 package Simulator;
 
+import Simulator.HUD.Info;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -9,6 +11,9 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
 {
 
     private JPanel panel;
+    private MapLoader map;
+    private Info infoSim;
+
     private double zoomfactor = 0.05;
 
 
@@ -18,40 +23,37 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
     public int x = 0;
     public int initX = 0;
 
-    Camera(JPanel panel)
+    Camera(JPanel panel, MapLoader map)
     {
         this.panel = panel;
-
-        panel.addMouseListener(this);
-        panel.addMouseMotionListener(this);
-        panel.addMouseWheelListener(this);
+        this.infoSim = new Info(this);
+        this.map = map;
+        this.panel.addMouseListener(this);
+        this.panel.addMouseMotionListener(this);
+        this.panel.addMouseWheelListener(this);
     }
 
 
 
-    public AffineTransform getTransform(JPanel panel, MapLoader map)
+    public AffineTransform getTransform(JPanel panel)
     {
+        AffineTransform tx = new AffineTransform();
+
         double width = panel.getWidth();
         double height = panel.getHeight();
 
-        double zoomWidth = width * zoom;
-        double zoomHeight = height * zoom;
+        double zoomWidth = width * this.zoom;
+        double zoomHeight = height * this.zoom;
 
         double anchorx = (width - zoomWidth) / 2;
         double anchory = (height - zoomHeight) / 2;
 
 
-        AffineTransform tx = new AffineTransform();
         tx.translate(anchorx, anchory);
-        tx.scale(zoom, zoom);
-        tx.translate(x, y);
-
-
+        tx.scale(this.zoom, this.zoom);
+        tx.translate(this.x, this.y);
         return tx;
-
     }
-
-
 
     @Override
     public void mouseClicked(MouseEvent e) {    }
@@ -59,14 +61,15 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
     @Override
     public void mousePressed(MouseEvent e)
     {
-        if(SwingUtilities.isMiddleMouseButton(e))
+        if (SwingUtilities.isMiddleMouseButton(e))
         {
             this.zoom = 1.25;
             this.x = 0;
             this.y = 0;
         }
-        initX = e.getX();
-        initY = e.getY();
+
+            this.initX = e.getX();
+            this.initY = e.getY();
     }
 
     @Override
@@ -83,12 +86,12 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
     {
         if(SwingUtilities.isLeftMouseButton(e))
         {
-            int a = (initY - e.getY()) * -1;
-            int b = (initX - e.getX()) * -1;
-            y += a;
-            x += b;
-            initY = e.getY();
-            initX = e.getX();
+                int a = (this.initY - e.getY()) * -1;
+                int b = (this.initX - e.getX()) * -1;
+                this.y += a;
+                this.x += b;
+                this.initY = e.getY();
+                this.initX = e.getX();
         }
     }
 
@@ -113,5 +116,10 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
             }
         }
         this.panel.repaint();
+    }
+
+    public double getZoom()
+    {
+        return zoom;
     }
 }
