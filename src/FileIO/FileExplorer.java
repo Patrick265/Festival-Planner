@@ -10,7 +10,7 @@ public class FileExplorer extends JPanel
 {
     private ObjectMapper objectMapper = new ObjectMapper();
     private JFileChooser fc;
-    private static String path = "Festival-Planner\\resources\\Schedules\\Schedule1.json";
+    private static String path = "Festival-Planner\\Resources\\Schedules\\Schedule1.json";
 
     public FileExplorer(int saveOrOpen) throws Exception
     {

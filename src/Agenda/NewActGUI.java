@@ -113,11 +113,11 @@ public class NewActGUI extends JPanel
         {
             String[] multipleArtists = artistInput.split(", ");
             for(int i = 0; i < multipleArtists.length; i++)
-                artists.add(new Artist(multipleArtists[i], "resources\\Schedules\\defaultpicture.png", genreInput));
+                artists.add(new Artist(multipleArtists[i], "Festival-Planner\\Resources\\Schedules\\defaultpicture.png", genreInput));
         }
         else
         {
-            artists.add(new Artist(artistInput, "resources\\Schedules\\defaultpicture.png", genreInput));
+            artists.add(new Artist(artistInput, "Festival-Planner\\Resources\\Schedules\\defaultpicture.png", genreInput));
         }
         Podium podium = new Podium(podiumInput);
 
