@@ -91,13 +91,8 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
             }
         }
 
+        //Everything after this will not be effected by the camera this will be useful for HUD
         this.g2d.setTransform(AffineTransform.getTranslateInstance(0,0));
-        g2d.setFont(new Font("Arial", Font.PLAIN, 24));
-        g2d.setColor(Color.GREEN);
-        g2d.drawString("initX: " + camera.initX, 10,10);
-        g2d.drawString("X: " + camera.x, 10,35);
-        g2d.drawString("initY: " + camera.initY, 10,60);
-        g2d.drawString("Y: " + camera.y, 10,85);
     }
 
     @Override

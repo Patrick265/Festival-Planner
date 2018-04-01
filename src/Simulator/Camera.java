@@ -35,6 +35,7 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
     {
         AffineTransform tx = new AffineTransform();
 
+        //This is for centering to the center
         double width = panel.getWidth();
         double height = panel.getHeight();
 
@@ -57,9 +58,9 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
     @Override
     public void mousePressed(MouseEvent e)
     {
+        //This will reset the map to the standard position.
         if (SwingUtilities.isMiddleMouseButton(e))
         {
-            this.zoom = 1.25;
             this.x = 0;
             this.y = 0;
         }
@@ -82,15 +83,12 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
     {
         if(SwingUtilities.isLeftMouseButton(e))
         {
-                if(x < panel.getWidth() || x < 0)
-                {
-                    int incrementX = (this.initX - e.getX()) * -1;
-                    int incrementY = (this.initY - e.getY()) * -1;
-                    this.y += incrementY;
-                    this.x += incrementX;
-                    this.initY = e.getY();
-                    this.initX = e.getX();
-                }
+            int incrementX = (this.initX - e.getX()) * -1;
+            int incrementY = (this.initY - e.getY()) * -1;
+            this.y += incrementY;
+            this.x += incrementX;
+            this.initY = e.getY();
+            this.initX = e.getX();
         }
     }
 
