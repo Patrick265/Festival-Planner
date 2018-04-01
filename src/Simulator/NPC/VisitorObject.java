@@ -23,7 +23,7 @@ public class VisitorObject
     private BufferedImage[] imageNPC;
 
     private int frame = 0;
-    private int count = 0;
+    //private int count = 0;
 
     private double angle;
     private double speed;
@@ -31,14 +31,15 @@ public class VisitorObject
     private String action;
 
 
-    public VisitorObject(SpriteBatch spriteBatch, int path[][])
+    public VisitorObject(SpriteBatch spriteBatch)
     {
         Random random = new Random();
 
         do
         {
-            this.position = new Point2D.Double(Math.random() * 1280, Math.random() * 720 );
-        }while(path[(int)this.getPosition().getX()/32][(int)this.getPosition().getY()/32] != 0);
+            this.position = new Point2D.Double(Math.random() * 720, Math.random() *  1280);
+
+        }while(!((this.getPosition().getX() <= 33) && (this.getPosition().getX() > 0) && (this.getPosition().getY() >= 547) && (this.getPosition().getY() <= 667)));
 
         this.angle = Math.random() * 2 * Math.PI;
         this.speed = 3;

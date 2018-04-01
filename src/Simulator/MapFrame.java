@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 
-public class MapFrame extends JPanel implements MouseListener, MouseMotionListener, ActionListener
+public class MapFrame extends JPanel implements MouseListener, MouseMotionListener, ActionListener, KeyListener
 {
     private MapLoader map = new MapLoader("/Map/FesivalPlannermap.json");
     private double scale = 1;
@@ -223,8 +223,26 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
                 else if (rndNum <= rndSize - 5)
                     visitor.setFavouriteStage(3);
                 else
-                    visitor.setFavouriteStage(4);
+                    visitor.setFavouriteStage(3);
             }
         lastTotalPopularity = p1Pop + p2Pop + p3Pop;
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e)
+    {
+        
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e)
+    {
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e)
+    {
+
     }
 }

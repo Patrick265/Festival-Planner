@@ -24,12 +24,15 @@ public class VisitorLogic extends JPanel implements ActionListener
     {
         this.distances = distances;
         spriteBatch = new SpriteBatch();
+        int count = 0;
         while (visitors.size() < 100)
         {
-            VisitorObject visitor = new VisitorObject(spriteBatch, path);
-            if (!visitor.hasCollision(visitors))
+            VisitorObject visitor = new VisitorObject(spriteBatch);
+            count++;
+            if (visitor.getPosition().getX() > 0 && visitor.getPosition().getY() > 0)
             {
                 visitors.add(visitor);
+                //update();
             }
         }
 
@@ -85,14 +88,22 @@ public class VisitorLogic extends JPanel implements ActionListener
                 }
             }
             Point2D olddir = visitor.getPosition();
-            visitor.setPosition(new Point2D.Double(visitor.getPosition().getX() + x*5, visitor.getPosition().getY() + y*5));
+            visitor.setPosition(new Point2D.Double(visitor.getPosition().getX() + x * 3, visitor.getPosition().getY() + y * 3));
             visitor.direction();
 
             //if (destinationName != null)
             {
-                if (/*destinationName.equals("ingang") && */distances[4][x + posX][y + posY] < 1 || distances[3][x + posX][y + posY] < 1)
+
+                try
                 {
-                    visitors.remove(i);
+                    if (/*destinationName.equals("ingang") && */distances[3][x + posX][y + posY] < 1 /*|| distances[3][x + posX][y + posY] < 1*/)
+                    {
+                        visitors.remove(i);
+                        return;
+                    }
+                }catch (ArrayIndexOutOfBoundsException e)
+                {
+                    visitors.set(i, new VisitorObject(spriteBatch));
                     return;
                 }
             }
@@ -107,8 +118,15 @@ public class VisitorLogic extends JPanel implements ActionListener
                     visitor.setPosition(new Point2D.Double(visitor.getPosition().getX() + (dist - 32) * diff.getX(), visitor.getPosition().getY() + (dist - 32) * diff.getY()));
                     posX = (int) visitor.getPosition().getX() / 32;
                     posY = (int) visitor.getPosition().getY() / 32;
-                    if (distances[collisionCheckVisitor.getFavouriteStage()][posX][posY] > 1000)
-                        visitor.setPosition(oldPos);
+                    try
+                    {
+                        if (distances[collisionCheckVisitor.getFavouriteStage()][posX][posY] > 1000)
+                            visitor.setPosition(oldPos);
+                    }catch (ArrayIndexOutOfBoundsException e)
+                    {
+                        visitors.set(i, new VisitorObject(spriteBatch));
+                        return;
+                    }
                 }
             }
         }
