@@ -15,8 +15,8 @@ public class TableModel extends AbstractTableModel
 
     private String[] headerNames = {"Artist(s)", "Genre", "Popularity", "Podum", "Start Time", "End Time"};
     private List<Act> acts;
-    private Schedule schedules;
-    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+    private Schedule schedule;
+    private SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 
 
     public TableModel()
@@ -28,8 +28,6 @@ public class TableModel extends AbstractTableModel
     @Override
     public Object getValueAt(int row, int column)
     {
-
-
         switch (column)
         {
             case 0:
@@ -98,9 +96,9 @@ public class TableModel extends AbstractTableModel
     {
         try
         {
-            this.schedules = JSONManager.readFile();
+            this.schedule = JSONManager.readFile();
             System.out.println("Reading JSON for agenda");
-            this.acts = schedules.getActs();
+            this.acts = schedule.getActs();
         } catch (Exception e)
         {
             e.printStackTrace();
@@ -111,9 +109,9 @@ public class TableModel extends AbstractTableModel
     {
         try
         {
-            this.schedules = JSONManager.readFile();
-            this.schedules.getActs().remove(table.getSelectedRow());
-            JSONManager.writeToFile(schedules);
+            this.schedule = JSONManager.readFile();
+            this.schedule.getActs().remove(table.getSelectedRow());
+            JSONManager.writeToFile(schedule);
             JOptionPane.showMessageDialog(tablePanel, "Act deleted.");
         }
         catch (Exception e1)

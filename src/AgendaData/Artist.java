@@ -1,6 +1,11 @@
 
 package AgendaData;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+import java.io.IOException;
+
 /**
  * the logics behind the festival planner
  * @author Anastasia Hellemons,
@@ -10,13 +15,20 @@ package AgendaData;
 public class Artist
 {
     private String name;
-    private String photo;
+    private BufferedImage photo;
     private String genre;
 
-    public Artist(String name, String photo, String genre)
+    public Artist(String name, String photoPath, String genre)
     {
         this.name = name;
-        this.photo = photo;
+        try
+        {
+            this.photo = ImageIO.read(new FileInputStream(photoPath));
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
         this.genre = genre;
     }
     public Artist(){}
@@ -31,14 +43,21 @@ public class Artist
         return genre;
     }
 
-    public String getPhoto()
+    public BufferedImage getPhoto()
     {
         return photo;
     }
 
     public void changePhoto(String newPhotoPath)
     {
-        this.photo = newPhotoPath;
+        try
+        {
+            this.photo = ImageIO.read(new FileInputStream(newPhotoPath));
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 }
 

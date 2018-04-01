@@ -1,16 +1,16 @@
 package AgendaData;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class Schedule
 {
     private List<Act> acts;
+    private Set<Artist> artists;
 
     public Schedule()
     {
         this.acts = new ArrayList<>();
+        this.artists = new LinkedHashSet<>();
     }
 
     public void addAct(Act newAct)
@@ -20,6 +20,7 @@ public class Schedule
         Podium podium, newPodium;
 
         isEligable = true;
+        this.artists.addAll(newAct.getArtists());
         newStartTime = newAct.getStartTime();
         newEndTime = newAct.getEndTime();
         newPodium = newAct.getPodium();
@@ -76,9 +77,21 @@ public class Schedule
         }
     }
 
-    public void setActs(List<Act> acts){this.acts = acts;}
+    public void setActs(List<Act> acts)
+    {
+        this.acts = acts;
+    }
     public List<Act> getActs()
     {
-        return acts;
+        return this.acts;
+    }
+
+    public void setArtists(Set<Artist> artists)
+    {
+        this.artists = artists;
+    }
+    public Set<Artist> getArtists()
+    {
+        return this.artists;
     }
 }

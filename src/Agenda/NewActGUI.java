@@ -12,21 +12,23 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 
 public class NewActGUI extends JPanel
 {
-    private JTextField artistField = new JTextField();
+    private String[] artistText;
+    private JComboBox<String> artistField;
     private JTextField genreField = new JTextField();
     private JTextField popularityField = new JTextField();
     private String[] podiumText = {"Podium 1", "Podium 2", "Podium 3"};
-    private JComboBox<String> podiumField = new JComboBox(podiumText);
-
+    private JComboBox<String> podiumField = new JComboBox<>(podiumText);
 
     private JTextField startTimeField = new JTextField();
     private JTextField endTimeField = new JTextField();
 
     private JFrame frame;
 
+    private Schedule schedule;
     private int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
     private int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
 
@@ -36,7 +38,29 @@ public class NewActGUI extends JPanel
         frame = new JFrame();
         frame.setSize(400, 400);
         frame.setLocation((screenWidth / 2) - (frame.getWidth() / 2), (screenHeight / 2) - (frame.getHeight() / 2));
+
+
+        try
+        {
+            this.schedule = JSONManager.readFile();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        Iterator<Artist> artistsIterator = this.schedule.getArtists().iterator();
+        int index = 0;
+        while (artistsIterator.hasNext())
+        {
+            this.artistText[index] = artistsIterator.next().getName();
+            index++;
+        }
+
+        this.artistField = new JComboBox<>(artistText);
         buildPanel();
+
+
         frame.setContentPane(this);
         frame.setVisible(true);
     }
@@ -44,24 +68,18 @@ public class NewActGUI extends JPanel
     public void buildPanel()
     {
         JPanel panel = new JPanel(new GridLayout(6, 2, 0, 32));
-        JLabel artistLabel = new JLabel("        Artist(s):");
-        JLabel genreLabel = new JLabel("        Genre:");
-        JLabel popularityLabel = new JLabel("        Popularity: ");
-        JLabel podiumLabel = new JLabel("        Podium:");
-        JLabel startLabel = new JLabel("        Start Time:");
-        JLabel endLabel = new JLabel("        End Time: ");
 
-        panel.add(artistLabel);
+        panel.add(new JLabel("        Artist(s):"));
         panel.add(artistField);
-        panel.add(genreLabel);
+        panel.add(new JLabel("        Genre:"));
         panel.add(genreField);
-        panel.add(popularityLabel);
+        panel.add(new JLabel("        Popularity: "));
         panel.add(popularityField);
-        panel.add(podiumLabel);
+        panel.add(new JLabel("        Podium:"));
         panel.add(podiumField);
-        panel.add(startLabel);
+        panel.add(new JLabel("        Start Time:"));
         panel.add(startTimeField);
-        panel.add(endLabel);
+        panel.add(new JLabel("        End Time: "));
         panel.add(endTimeField);
 
         JButton saveButton = new JButton("Save Act");
@@ -82,10 +100,9 @@ public class NewActGUI extends JPanel
 
     public void saveInput() throws Exception
     {
-        Schedule schedule = JSONManager.readFile();
         ArrayList<Artist> artists = new ArrayList<>();
 
-        String artistInput = artistField.getText();
+        String artistInput = (String) artistField.getSelectedItem();
         String genreInput = genreField.getText();
         String popularityInput = popularityField.getText();
         String podiumInput = (String) podiumField.getSelectedItem();
@@ -96,13 +113,14 @@ public class NewActGUI extends JPanel
         {
             String[] multipleArtists = artistInput.split(", ");
             for(int i = 0; i < multipleArtists.length; i++)
-                artists.add(new Artist(multipleArtists[i], "", genreInput));
+                artists.add(new Artist(multipleArtists[i], "resources\\Schedules\\defaultpicture.png", genreInput));
         }
         else
         {
-            artists.add(new Artist(artistInput, "", genreInput));
+            artists.add(new Artist(artistInput, "resources\\Schedules\\defaultpicture.png", genreInput));
         }
         Podium podium = new Podium(podiumInput);
+
         try
         {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
