@@ -12,7 +12,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
+import java.util.Map;
 
 public class NewActGUI extends JPanel
 {
@@ -38,7 +38,6 @@ public class NewActGUI extends JPanel
         frame.setSize(400, 400);
         frame.setLocation((screenWidth / 2) - (frame.getWidth() / 2), (screenHeight / 2) - (frame.getHeight() / 2));
 
-
         try
         {
             this.schedule = JSONManager.readFile();
@@ -49,11 +48,10 @@ public class NewActGUI extends JPanel
         }
 
         String[] artistText = new String[this.schedule.getArtists().size()];
-        Iterator<Artist> artistsIterator = this.schedule.getArtists().iterator();
         int index = 0;
-        while (artistsIterator.hasNext())
+        for (Map.Entry<String, Artist> entry : this.schedule.getArtists().entrySet())
         {
-            artistText[index] = artistsIterator.next().getName();
+            artistText[index] = entry.getKey();
             index++;
         }
 

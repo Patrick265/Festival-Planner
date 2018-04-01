@@ -5,12 +5,12 @@ import java.util.*;
 public class Schedule
 {
     private List<Act> acts;
-    private Set<Artist> artists;
+    private Map<String, Artist> artistss;
 
     public Schedule()
     {
         this.acts = new ArrayList<>();
-        this.artists = new LinkedHashSet<>();
+        this.artistss = new LinkedHashMap<>();
     }
 
     public void addAct(Act newAct)
@@ -20,7 +20,8 @@ public class Schedule
         Podium podium, newPodium;
 
         isEligable = true;
-        this.artists.addAll(newAct.getArtists());
+        for (Artist artist : newAct.getArtists())
+            artistss.put(artist.getName(), artist);
         newStartTime = newAct.getStartTime();
         newEndTime = newAct.getEndTime();
         newPodium = newAct.getPodium();
@@ -73,7 +74,7 @@ public class Schedule
         }
         else
         {
-            throw new Error("Test");
+            throw new Error("Act not added");
         }
     }
 
@@ -86,12 +87,16 @@ public class Schedule
         return this.acts;
     }
 
-    public void setArtists(Set<Artist> artists)
+    public void addArtist(Artist artist)
     {
-        this.artists = artists;
+        this.artistss.put(artist.getName(), artist);
     }
-    public Set<Artist> getArtists()
+    public void deleteArtist(String artist)
     {
-        return this.artists;
+        this.artistss.remove(artist);
+    }
+    public Map<String, Artist> getArtists()
+    {
+        return this.artistss;
     }
 }
