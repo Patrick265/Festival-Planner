@@ -16,7 +16,6 @@ import java.util.Iterator;
 
 public class NewActGUI extends JPanel
 {
-    private String[] artistText;
     private JComboBox<String> artistField;
     private JTextField genreField = new JTextField();
     private JTextField popularityField = new JTextField();
@@ -49,11 +48,12 @@ public class NewActGUI extends JPanel
             e.printStackTrace();
         }
 
+        String[] artistText = new String[this.schedule.getArtists().size()];
         Iterator<Artist> artistsIterator = this.schedule.getArtists().iterator();
         int index = 0;
         while (artistsIterator.hasNext())
         {
-            this.artistText[index] = artistsIterator.next().getName();
+            artistText[index] = artistsIterator.next().getName();
             index++;
         }
 
