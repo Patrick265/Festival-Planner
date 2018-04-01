@@ -98,9 +98,10 @@ public class MapLoader
         return paths;
     }
 
-    public void draw(Graphics2D g2d)
+    public void draw(Graphics2D g2d,JPanel panel)
     {
         AffineTransform tx = new AffineTransform();
+
         for (int[] map : mapList)
         {
             int count = -1;
