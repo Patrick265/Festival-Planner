@@ -11,6 +11,7 @@ import javax.json.JsonObject;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -67,7 +68,7 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
 
         this.g2d.setTransform(this.camera.getTransform( this));
 
-        this.map.draw(g2d);
+        this.map.draw(g2d, this);
 
 
         this.animation.paintComponent(g2d);
@@ -89,6 +90,14 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
                 }
             }
         }
+
+        this.g2d.setTransform(AffineTransform.getTranslateInstance(0,0));
+        g2d.setFont(new Font("Arial", Font.PLAIN, 24));
+        g2d.setColor(Color.GREEN);
+        g2d.drawString("initX: " + camera.initX, 10,10);
+        g2d.drawString("X: " + camera.x, 10,35);
+        g2d.drawString("initY: " + camera.initY, 10,60);
+        g2d.drawString("Y: " + camera.y, 10,85);
     }
 
     @Override

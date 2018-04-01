@@ -1,9 +1,7 @@
 package Simulator;
 
-import Simulator.HUD.Info;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 
@@ -12,12 +10,11 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
 
     private JPanel panel;
     private MapLoader map;
-    private Info infoSim;
 
     private double zoomfactor = 0.05;
 
 
-    public double zoom = 1.25;
+    public double zoom = 1;
     public int y  = 0;
     public int initY = 0;
     public int x = 0;
@@ -26,7 +23,6 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
     Camera(JPanel panel, MapLoader map)
     {
         this.panel = panel;
-        this.infoSim = new Info(this);
         this.map = map;
         this.panel.addMouseListener(this);
         this.panel.addMouseMotionListener(this);
@@ -86,12 +82,15 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
     {
         if(SwingUtilities.isLeftMouseButton(e))
         {
-                int a = (this.initY - e.getY()) * -1;
-                int b = (this.initX - e.getX()) * -1;
-                this.y += a;
-                this.x += b;
-                this.initY = e.getY();
-                this.initX = e.getX();
+                if(x < panel.getWidth() || x < 0)
+                {
+                    int incrementX = (this.initX - e.getX()) * -1;
+                    int incrementY = (this.initY - e.getY()) * -1;
+                    this.y += incrementY;
+                    this.x += incrementX;
+                    this.initY = e.getY();
+                    this.initX = e.getX();
+                }
         }
     }
 
@@ -110,16 +109,11 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
         }
         if(e.getWheelRotation() > 0)
         {
-            if(this.zoom > 0.5)
+            if(this.zoom > 0.75)
             {
                 this.zoom -= zoomfactor;
             }
         }
         this.panel.repaint();
-    }
-
-    public double getZoom()
-    {
-        return zoom;
     }
 }
