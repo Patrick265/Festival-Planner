@@ -24,47 +24,54 @@ public class ArtistHandlerGUI extends JPanel
     public ArtistHandlerGUI(boolean deleting)
     {
         super(new BorderLayout());
-        frame = new JFrame();
-        frame.setSize(400, 150);
-        frame.setLocation((screenWidth / 2) - (frame.getWidth() / 2), (screenHeight / 2) - (frame.getHeight() / 2));
 
         if (deleting)
         {
+            frame = new JFrame("Delete act");
             frame.setSize(400, 110);
             this.deleting = true;
-            try
-            {
-                this.schedule = JSONManager.readFile();
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-
-            String[] artistText = new String[this.schedule.getArtists().size()];
-            int index = 0;
-            for (Map.Entry<String, Artist> entry : this.schedule.getArtists().entrySet())
-            {
-                artistText[index] = entry.getKey();
-                index++;
-            }
-
-            this.artistField = new JComboBox<>(artistText);
         }
+        else
+        {
+            frame = new JFrame("New Act");
+            frame.setSize(400, 150);
+        }
+
+        try
+        {
+            this.schedule = JSONManager.readFile();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        String[] artistText = new String[this.schedule.getArtists().size()];
+        int index = 0;
+        for (Map.Entry<String, Artist> entry : this.schedule.getArtists().entrySet())
+        {
+            artistText[index] = entry.getKey();
+            index++;
+        }
+
+        this.artistField = new JComboBox<>(artistText);
+
         buildPanel();
 
+        frame.setLocation((screenWidth / 2) - (frame.getWidth() / 2), (screenHeight / 2) - (frame.getHeight() / 2));
         frame.setContentPane(this);
+        frame.setResizable(false);
         frame.setVisible(true);
     }
 
-    public void buildPanel()
+    private void buildPanel()
     {
         JPanel panel;
         JButton saveButton;
         if (deleting)
         {
             panel = new JPanel(new GridLayout(1, 2, 0, 32));
-            panel.add(new JLabel("        Select artist you want to delete:"));
+            panel.add(new JLabel("  Select artist you want to delete:"));
             panel.add(artistField);
             saveButton = new JButton("Delete Act");
         }
@@ -93,24 +100,34 @@ public class ArtistHandlerGUI extends JPanel
         add(saveButton, BorderLayout.SOUTH);
     }
 
-    private void saveInput() //throws Exception
+    private void saveInput() throws Exception
     {
-//        String artistInput;
-//        String genreInput = null;
-//        if (deleting)
-//        {
-//            artistInput = (String) artistField.getSelectedItem();
-//            schedule.deleteArtist(artistInput);
-//        }
-//        else
-//        {
-//            artistInput = artistTextField.getText();
-//            genreInput = genreField.getText();
-//            Artist artist = new Artist(artistInput, "Festival-Planner\\Resources\\Schedules\\defaultpicture.png", genreInput);
-//            schedule.addArtist(artist);
-//        }
-//
-//        JSONManager.writeToFile(schedule);
-//        frame.dispose();
+        String artistInput;
+        String genreInput = null;
+        if (deleting)
+        {
+            artistInput = (String) artistField.getSelectedItem();
+            schedule.deleteArtist(artistInput);
+            JSONManager.writeToFile(schedule);
+            frame.dispose();
+            JOptionPane.showMessageDialog(frame, "Artist deleted!");
+        }
+        else
+        {
+            artistInput = artistTextField.getText();
+            genreInput = genreField.getText();
+            if (!artistInput.isEmpty() && !genreInput.isEmpty())
+            {
+                Artist artist = new Artist(artistInput, "Festival-Planner\\Resources\\Schedules\\defaultpicture.png", genreInput);
+                schedule.addArtist(artist);
+                JSONManager.writeToFile(schedule);
+                frame.dispose();
+                JOptionPane.showMessageDialog(frame, "Artist added!");
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(frame, "Artist and/or genre input was empty. Artist not added.");
+            }
+        }
     }
 }

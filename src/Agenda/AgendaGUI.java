@@ -30,7 +30,6 @@ public class AgendaGUI extends JFrame
 
     public AgendaGUI()
     {
-
         super("Agenda");
         this.mainPanel = new JPanel(new BorderLayout());
         this.tablePanel = new JPanel(new BorderLayout());
@@ -99,7 +98,6 @@ public class AgendaGUI extends JFrame
         this.deleteAct.addActionListener(e ->
         {
             tableModel.deleteAct(this.tablePanel, this.table);
-            updateTable();
         });
 
         this.deleteArtist.addActionListener(e -> new ArtistHandlerGUI(true));

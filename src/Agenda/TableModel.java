@@ -114,6 +114,7 @@ public class TableModel extends AbstractTableModel
             this.schedule = JSONManager.readFile();
             this.schedule.getActs().remove(table.getSelectedRow());
             JSONManager.writeToFile(schedule);
+            AgendaGUI.updateTable();
             JOptionPane.showMessageDialog(tablePanel, "Act deleted.");
         }
         catch (Exception e1)

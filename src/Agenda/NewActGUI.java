@@ -73,6 +73,7 @@ public class NewActGUI extends JPanel
 
 
         frame.setContentPane(this);
+        frame.setResizable(false);
         frame.setVisible(true);
     }
 
@@ -101,7 +102,8 @@ public class NewActGUI extends JPanel
             {
                 saveInput();
                 AgendaGUI.updateTable();
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 ex.printStackTrace();
             }
