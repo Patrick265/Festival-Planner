@@ -21,21 +21,24 @@ public class AgendaGUI extends JFrame
     private JPanel mainPanel;
     private JPanel tablePanel;
     private JPanel buttonPanel;
+
     private JButton addAct;
+    private JButton addArtist;
     private JButton deleteAct;
-    private String[] buttonText = {"Add Act", "Delete Act"};
+    private JButton deleteArtist;
+    private JButton editArtistData;
+    private String[] buttonText = {"Add Act", "Add Artist", "Delete Act", "Delete Artist", "Edit Artist Data"};
 
     public AgendaGUI()
     {
-
         super("Agenda");
-        super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.mainPanel = new JPanel(new BorderLayout());
         this.tablePanel = new JPanel(new BorderLayout());
         this.buttonPanel = new JPanel(new FlowLayout());
 
         tableModel = new TableModel();
         this.table = new JTable(this.tableModel);
+        this.table.getTableHeader().setReorderingAllowed(false);
         this.table.setFillsViewportHeight(true);
         this.table.addMouseListener(new MouseAdapter()
         {
@@ -73,27 +76,37 @@ public class AgendaGUI extends JFrame
     public void createButtons()
     {
         this.addAct = new JButton(buttonText[0]);
+        this.addArtist = new JButton(buttonText[1]);
+        this.deleteAct = new JButton(buttonText[2]);
+        this.deleteArtist = new JButton(buttonText[3]);
+        this.editArtistData = new JButton(buttonText[4]);
 
-        this.deleteAct = new JButton(buttonText[1]);
         this.buttonPanel.add(addAct);
         this.buttonPanel.add(deleteAct);
+        this.buttonPanel.add(addArtist);
+        this.buttonPanel.add(deleteArtist);
+        this.buttonPanel.add(this.editArtistData);
     }
 
     public void buttonListener()
     {
         this.addAct.addActionListener(e ->
         {
-            NewActGUI newActGUI = new NewActGUI();
+            new NewActGUI();
             tableModel.printActs();
             updateTable();
         });
 
+        this.addArtist.addActionListener(e -> new ArtistHandlerGUI(false));
+
         this.deleteAct.addActionListener(e ->
         {
             tableModel.deleteAct(this.tablePanel, this.table);
-            updateTable();
         });
 
+        this.deleteArtist.addActionListener(e -> new ArtistHandlerGUI(true));
+
+        this.editArtistData.addActionListener(e -> new EditDataArtist());
     }
 
     public static void updateTable()

@@ -1,16 +1,16 @@
 package AgendaData;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class Schedule
 {
     private List<Act> acts;
+    private Map<String, Artist> artists;
 
     public Schedule()
     {
         this.acts = new ArrayList<>();
+        this.artists = new LinkedHashMap<>();
     }
 
     public void addAct(Act newAct)
@@ -20,6 +20,8 @@ public class Schedule
         Podium podium, newPodium;
 
         isEligable = true;
+        for (Artist artist : newAct.getArtists())
+            artists.put(artist.getName(), artist);
         newStartTime = newAct.getStartTime();
         newEndTime = newAct.getEndTime();
         newPodium = newAct.getPodium();
@@ -72,13 +74,29 @@ public class Schedule
         }
         else
         {
-            throw new Error("Test");
+            throw new Error("Act not added");
         }
     }
 
-    public void setActs(List<Act> acts){this.acts = acts;}
+    public void setActs(List<Act> acts)
+    {
+        this.acts = acts;
+    }
     public List<Act> getActs()
     {
-        return acts;
+        return this.acts;
+    }
+
+    public void addArtist(Artist artist)
+    {
+        this.artists.put(artist.getName(), artist);
+    }
+    public void deleteArtist(String artist)
+    {
+        this.artists.remove(artist);
+    }
+    public Map<String, Artist> getArtists()
+    {
+        return this.artists;
     }
 }

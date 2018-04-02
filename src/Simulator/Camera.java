@@ -1,89 +1,128 @@
 package Simulator;
 
+
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
 
-/**
- * Created by johan on 15-2-2017.
- */
-public class Camera implements MouseListener, MouseMotionListener, MouseWheelListener {
-    Point2D centerPoint = new Point2D.Double(0,0);
-    double zoom = 1;
-    double rotation = 0;
+public class Camera implements MouseListener, MouseMotionListener, MouseWheelListener
+{
+
+    private JPanel panel;
+    private MapLoader map;
+
+    private double zoomfactor = 0.05;
 
 
-    Point2D lastMousePos;
-    JPanel panel;
-    Camera(JPanel panel)
+    public double zoom = 1;
+    public int y  = 0;
+    public int initY = 0;
+    public int x = 0;
+    public int initX = 0;
+
+    Camera(JPanel panel, MapLoader map)
     {
         this.panel = panel;
-        panel.addMouseListener(this);
-        panel.addMouseMotionListener(this);
-        panel.addMouseWheelListener(this);
+        this.map = map;
+        this.panel.addMouseListener(this);
+        this.panel.addMouseMotionListener(this);
+        this.panel.addMouseWheelListener(this);
     }
 
 
 
-    public AffineTransform getTransform(int windowWidth, int windowHeight)
+    public AffineTransform getTransform(JPanel panel)
     {
         AffineTransform tx = new AffineTransform();
-        tx.translate(windowWidth/2, windowHeight/2);
-        tx.scale(zoom, zoom);
-        tx.translate(centerPoint.getX(), centerPoint.getY());
-        tx.rotate(rotation);
+
+        //This is for centering to the center
+        double width = panel.getWidth();
+        double height = panel.getHeight();
+
+        double zoomWidth = width * this.zoom;
+        double zoomHeight = height * this.zoom;
+
+        double anchorx = (width - zoomWidth) / 2;
+        double anchory = (height - zoomHeight) / 2;
+
+
+        tx.translate(anchorx, anchory);
+        tx.scale(this.zoom, this.zoom);
+        tx.translate(this.x, this.y);
         return tx;
     }
 
-
+    @Override
+    public void mouseClicked(MouseEvent e) {    }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-        lastMousePos = e.getPoint();
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
-        if(SwingUtilities.isMiddleMouseButton(e))
+    public void mousePressed(MouseEvent e)
+    {
+        //This will reset the map to the standard position.
+        if (SwingUtilities.isMiddleMouseButton(e))
         {
-            centerPoint = new Point2D.Double(
-                    centerPoint.getX() - (lastMousePos.getX() - e.getX()) / zoom,
-                    centerPoint.getY() - (lastMousePos.getY() - e.getY()) / zoom
-            );
-            lastMousePos = e.getPoint();
-            panel.repaint();
+            this.x = 0;
+            this.y = 0;
+        }
+
+            this.initX = e.getX();
+            this.initY = e.getY();
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) { }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {    }
+
+    @Override
+    public void mouseDragged(MouseEvent e)
+    {
+        if(SwingUtilities.isLeftMouseButton(e))
+        {
+            int incrementX = (this.initX - e.getX()) * -1;
+            int incrementY = (this.initY - e.getY()) * -1;
+
+            this.y += incrementY;
+            this.x += incrementX;
+
+            if(this.x > -220 + 8.8*(this.zoom/zoomfactor))
+                this.x = 0;
+            if(this.x < -165)
+                this.x = -165;
+            if(this.y > -110 + 4.4*(this.zoom/zoomfactor))
+                this.y = 0;
+            if(this.y < -600)
+                this.y = -600;
+
+            this.initY = e.getY();
+            this.initX = e.getX();
         }
     }
 
     @Override
-    public void mouseMoved(MouseEvent e) {
-
-    }
+    public void mouseMoved(MouseEvent e) { }
 
     @Override
-    public void mouseWheelMoved(MouseWheelEvent e) {
-        zoom *= (1 - e.getWheelRotation()/25.0f);
-        panel.repaint();
+    public void mouseWheelMoved(MouseWheelEvent e)
+    {
+        if (e.getWheelRotation() < 0)
+        {
+            if (this.zoom < 2)
+            {
+                this.zoom += zoomfactor;
+            }
+        }
+        if(e.getWheelRotation() > 0)
+        {
+            if(this.zoom > 0.75)
+            {
+                this.zoom -= zoomfactor;
+            }
+        }
+        this.panel.repaint();
     }
 }

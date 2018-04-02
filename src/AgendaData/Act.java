@@ -88,8 +88,8 @@ public class Act implements Comparable<Act>
         for(int i = 0; i < size; i++ )
         {
             details +=  "Popularity: "  + popularity            + "\n"  +
-                        "StartTime: "   + startTime.getHours()  + ":"   + startTime.getMinutes()    + "\n" +
-                        "EndTime: "     + endTime.getHours()    + ":"   + endTime.getMinutes();
+                        "StartTime: "   + startTime.getHours()  + ":"   + ((startTime.getMinutes() % 60 == 0) ? startTime.getMinutes() + "0" : startTime.getMinutes())   + "\n" +
+                        "EndTime: "     + endTime.getHours()    + ":"   + ((endTime.getMinutes() % 60 == 0) ? endTime.getMinutes() + "0" : endTime.getMinutes()) + "\n";
             details +=  "Name: ";
 
             for (int artistindex = 0; artistindex < artists.size(); artistindex++)

@@ -1,8 +1,6 @@
-import AgendaData.Schedule;
 import Agenda.AgendaGUI;
 import FileIO.FileExplorer;
 import Simulator.MapFrame;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.io.FileInputStream;
@@ -15,13 +13,24 @@ import java.io.IOException;
 public class GUI
 {
     private JFrame frame;
-    private Schedule schedule;
+    private Timer timer;
+    private boolean event;
 
     public GUI()
     {
+        event = false;
+
         makeFrame();
-        schedule = new Schedule();
-        //testAgenda();
+//        try
+//        {
+//            schedule = JSONManager.readFile(); //new Schedule();
+//            //todo: update when schedule changes
+//        } catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+
+
     }
 
     /**
@@ -80,7 +89,6 @@ public class GUI
         viewAgenda.addActionListener(e ->
         {
             AgendaGUI agendaGUI = new AgendaGUI();
-            //AgendaPopUpGUI agendaPopUpGUI = new AgendaPopUpGUI();
         });
         menu.add(agenda);
 
@@ -125,5 +133,4 @@ public class GUI
     {
         new MapFrame(frame);
     }
-
 }

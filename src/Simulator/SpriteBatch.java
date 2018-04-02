@@ -22,6 +22,7 @@ public class SpriteBatch
     private void cutAllImages()
     {
         cutImages = new HashMap<>();
+
         try
         {
             for (String pathname : getImagePaths())
@@ -49,7 +50,6 @@ public class SpriteBatch
         for (int i = 0; files != null && i < files.length; i++)
         {
             imagePaths.add(files[i].getPath());
-            System.out.println(files[i].getPath());
         }
 
         return imagePaths;
