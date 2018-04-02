@@ -79,24 +79,26 @@ public class NewActGUI extends JPanel
 
     private void buildPanel()
     {
-        JPanel panel = new JPanel(new GridLayout(6, 2, 0, 32));
+        JPanel panel1 = new JPanel(new GridLayout(6, 2, 0, 32));
 
-        panel.add(new JLabel("        Artist(s):"));
-        panel.add(artistField);
-        panel.add(new JLabel("        Genre:"));
-        panel.add(genreField);
-        panel.add(new JLabel("        Popularity: "));
-        panel.add(popularityField);
-        panel.add(new JLabel("        Podium:"));
-        panel.add(podiumField);
-        panel.add(new JLabel("        Start Time:"));
+        panel1.add(new JLabel("        Artist(s):"));
+        panel1.add(artistField);
+        panel1.add(new JLabel("        Genre:"));
+        panel1.add(genreField);
+        panel1.add(new JLabel("        Popularity: "));
+        panel1.add(popularityField);
+        panel1.add(new JLabel("        Podium:"));
+        panel1.add(podiumField);
+        panel1.add(new JLabel("        Start Time:"));
         this.startTime.setSelectedIndex(29);
-        panel.add(startTime);
-        panel.add(new JLabel("        End Time: "));
+        panel1.add(startTime);
+        panel1.add(new JLabel("        End Time: "));
         this.endTime.setSelectedIndex(30);
-        panel.add(endTime);
+        panel1.add(endTime);
 
         JButton saveButton = new JButton("Save Act");
+        JButton cancelButton = new JButton("Cancel");
+
         saveButton.addActionListener(e -> {
             try
             {
@@ -108,9 +110,13 @@ public class NewActGUI extends JPanel
                 ex.printStackTrace();
             }
         });
+        cancelButton.addActionListener(e -> frame.dispose());
 
-        add(panel, BorderLayout.CENTER);
-        add(saveButton, BorderLayout.SOUTH);
+        JPanel panel2 = new JPanel(new GridLayout(1, 2));
+        panel2.add(saveButton);
+        panel2.add(cancelButton);
+        add(panel1, BorderLayout.CENTER);
+        add(panel2, BorderLayout.SOUTH);
     }
 
     private void saveInput() throws Exception

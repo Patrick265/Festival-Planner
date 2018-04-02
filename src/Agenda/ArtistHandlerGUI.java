@@ -66,24 +66,25 @@ public class ArtistHandlerGUI extends JPanel
 
     private void buildPanel()
     {
-        JPanel panel;
+        JPanel panel1;
         JButton saveButton;
         if (deleting)
         {
-            panel = new JPanel(new GridLayout(1, 2, 0, 32));
-            panel.add(new JLabel("  Select artist you want to delete:"));
-            panel.add(artistField);
+            panel1 = new JPanel(new GridLayout(1, 2, 0, 32));
+            panel1.add(new JLabel("  Select artist you want to delete:"));
+            panel1.add(artistField);
             saveButton = new JButton("Delete Act");
         }
         else
         {
-            panel = new JPanel(new GridLayout(2, 2, 0, 32));
-            panel.add(new JLabel("        Artist:"));
-            panel.add(artistTextField);
-            panel.add(new JLabel("        Genre:"));
-            panel.add(genreField);
+            panel1 = new JPanel(new GridLayout(2, 2, 0, 32));
+            panel1.add(new JLabel("        Artist:"));
+            panel1.add(artistTextField);
+            panel1.add(new JLabel("        Genre:"));
+            panel1.add(genreField);
             saveButton = new JButton("Save Act");
         }
+        JButton cancelButton = new JButton("Cancel");
 
         saveButton.addActionListener(e -> {
             try
@@ -95,9 +96,13 @@ public class ArtistHandlerGUI extends JPanel
                 ex.printStackTrace();
             }
         });
+        cancelButton.addActionListener(e -> frame.dispose());
 
-        add(panel, BorderLayout.CENTER);
-        add(saveButton, BorderLayout.SOUTH);
+        JPanel panel2 = new JPanel(new GridLayout(1, 2));
+        panel2.add(saveButton);
+        panel2.add(cancelButton);
+        add(panel1, BorderLayout.CENTER);
+        add(panel2, BorderLayout.SOUTH);
     }
 
     private void saveInput() throws Exception
