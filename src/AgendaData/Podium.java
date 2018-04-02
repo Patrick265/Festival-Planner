@@ -14,7 +14,10 @@ public class Podium
     {
        this.name = name;
     }
-    public Podium(){}
+    public Podium()
+    {
+
+    }
 
     public String getName() {return name;}
 

@@ -56,7 +56,7 @@ public class VisitorObject
 
         this.spriteBatch = spriteBatch;
 
-        this.favouriteStage = random.nextInt(5); // should be 0-4 (hopefully)
+        this.favouriteStage = random.nextInt(5);
 
         int x = random.nextInt(paths.length);
         this.imageNPC = this.spriteBatch.getCutImage(paths[x]);

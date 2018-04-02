@@ -1,4 +1,3 @@
-
 package AgendaData;
 
 /**
@@ -19,7 +18,20 @@ public class Artist
         this.photo = photo;
         this.genre = genre;
     }
-    public Artist(){}
+    public Artist()
+    {
+
+    }
+
+    public void setPhoto(String photo)
+    {
+        this.photo = photo;
+    }
+
+    public void setGenre(String genre)
+    {
+        this.genre = genre;
+    }
 
     public String getName()
     {

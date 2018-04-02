@@ -1,5 +1,6 @@
 package Simulator;
 
+import Agenda.AgendaGUI;
 import AgendaData.Act;
 import AgendaData.Schedule;
 import FileIO.JSONManager;
@@ -58,6 +59,8 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
         timer = 0;
         timeLine = new TimeLine(schedule.getActs());
         this.add(timeLine, BorderLayout.SOUTH);
+
+        super.addKeyListener(this);
         frame.setContentPane(this);
         addMouseListener(new Camera(this, this.map));
         addMouseMotionListener(new Camera(this, this.map));
@@ -238,16 +241,21 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
                 visitorObject.setFavouriteStage(3);
     }
 
+
     @Override
     public void keyTyped(KeyEvent e)
     {
-        
+
     }
 
     @Override
     public void keyPressed(KeyEvent e)
     {
 
+        if(e.isControlDown() && e.getKeyCode() == KeyEvent.VK_A)
+        {
+            AgendaGUI agenda = new AgendaGUI();
+        }
     }
 
     @Override
