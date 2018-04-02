@@ -29,6 +29,7 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
     private Graphics2D g2d;
     private MapLogica logic = new MapLogica(map.getTargets(), map.getPaths());
     private double matrix[][][] = logic.getDistances();
+    private static double curTime = 1.0;
 
     private int clickTarget = 0;
 
@@ -37,12 +38,14 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
     private Date currentTime;
     private VisitorLogic animation = new VisitorLogic(matrix, map.getPaths());
     private Camera camera;
-
+    private TimeLine timeLine;
 
     public MapFrame(JFrame frame)
     {
+        super(new BorderLayout());
         this.currentTime = new Date(2018, 1, 1, 9,50,0);
         this.camera = new Camera(this, this.map);
+
         try
         {
             schedule = JSONManager.readFile();
@@ -52,7 +55,8 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
             e.printStackTrace();
         }
         timer = 0;
-
+        timeLine = new TimeLine(schedule.getActs());
+        this.add(timeLine, BorderLayout.SOUTH);
         frame.setContentPane(this);
         addMouseListener(new Camera(this, this.map));
         addMouseMotionListener(new Camera(this, this.map));
@@ -90,7 +94,6 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
                 }
             }
         }
-
         //Everything after this will not be effected by the camera this will be useful for HUD
         this.g2d.setTransform(AffineTransform.getTranslateInstance(0,0));
     }
@@ -155,12 +158,14 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
         else
             currentTime.setMinutes(minutes + 1);
 
-        double curTime = currentTime.getHours() + (currentTime.getMinutes() / 100.0d);
-        System.out.println(curTime);
+        curTime = currentTime.getHours() + (currentTime.getMinutes() / 100.0d);
+        //System.out.println(curTime);
+
+        timeLine.update(curTime);
 
         if (currentTime.getMinutes() % 15 == 0)
         {
-            System.out.println("ding");
+            //System.out.println("ding");
             checkAct(curTime);
         }
     }
@@ -206,8 +211,7 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
         if(rndSize - 10 != lastTotalPopularity)
             for(VisitorObject visitor : animation.getVisitors())
             {
-                System.out.println("Nieuwe podia aangewezen");
-
+                //System.out.println("Nieuwe podia aangewezen");
                 int rndNum = rnd.nextInt(rndSize);
                 if(rndNum <= p1Pop)
                     visitor.setFavouriteStage(0);

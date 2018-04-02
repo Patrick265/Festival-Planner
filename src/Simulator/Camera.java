@@ -85,8 +85,19 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
         {
             int incrementX = (this.initX - e.getX()) * -1;
             int incrementY = (this.initY - e.getY()) * -1;
+
             this.y += incrementY;
             this.x += incrementX;
+
+            if(this.x > -220 + 8.8*(this.zoom/zoomfactor))
+                this.x = 0;
+            if(this.x < -165)
+                this.x = -165;
+            if(this.y > -110 + 4.4*(this.zoom/zoomfactor))
+                this.y = 0;
+            if(this.y < -600)
+                this.y = -600;
+
             this.initY = e.getY();
             this.initX = e.getX();
         }
