@@ -25,12 +25,12 @@ public class ArtistHandlerGUI extends JPanel
     {
         super(new BorderLayout());
         frame = new JFrame();
-        frame.setSize(200, 100);
+        frame.setSize(400, 150);
         frame.setLocation((screenWidth / 2) - (frame.getWidth() / 2), (screenHeight / 2) - (frame.getHeight() / 2));
 
         if (deleting)
         {
-            frame.setSize(100, 100);
+            frame.setSize(400, 110);
             this.deleting = true;
             try
             {
@@ -60,11 +60,13 @@ public class ArtistHandlerGUI extends JPanel
     public void buildPanel()
     {
         JPanel panel;
+        JButton saveButton;
         if (deleting)
         {
             panel = new JPanel(new GridLayout(1, 2, 0, 32));
             panel.add(new JLabel("        Select artist you want to delete:"));
             panel.add(artistField);
+            saveButton = new JButton("Delete Act");
         }
         else
         {
@@ -73,9 +75,9 @@ public class ArtistHandlerGUI extends JPanel
             panel.add(artistTextField);
             panel.add(new JLabel("        Genre:"));
             panel.add(genreField);
+            saveButton = new JButton("Save Act");
         }
 
-        JButton saveButton = new JButton("Save Act");
         saveButton.addActionListener(e -> {
             try
             {
@@ -91,24 +93,24 @@ public class ArtistHandlerGUI extends JPanel
         add(saveButton, BorderLayout.SOUTH);
     }
 
-    public void saveInput() throws Exception
+    private void saveInput() //throws Exception
     {
-        String artistInput;
-        String genreInput = null;
-        if (deleting)
-        {
-            artistInput = (String) artistField.getSelectedItem();
-            schedule.deleteArtist(artistInput);
-        }
-        else
-        {
-            artistInput = artistTextField.getText();
-            genreInput = genreField.getText();
-            Artist artist = new Artist(artistInput, "Festival-Planner\\Resources\\Schedules\\defaultpicture.png", genreInput);
-            schedule.addArtist(artist);
-        }
-
-        JSONManager.writeToFile(schedule);
-        frame.dispose();
+//        String artistInput;
+//        String genreInput = null;
+//        if (deleting)
+//        {
+//            artistInput = (String) artistField.getSelectedItem();
+//            schedule.deleteArtist(artistInput);
+//        }
+//        else
+//        {
+//            artistInput = artistTextField.getText();
+//            genreInput = genreField.getText();
+//            Artist artist = new Artist(artistInput, "Festival-Planner\\Resources\\Schedules\\defaultpicture.png", genreInput);
+//            schedule.addArtist(artist);
+//        }
+//
+//        JSONManager.writeToFile(schedule);
+//        frame.dispose();
     }
 }

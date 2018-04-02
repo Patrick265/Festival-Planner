@@ -18,7 +18,10 @@ public class Artist
         this.photo = photo;
         this.genre = genre;
     }
-    public Artist(){}
+    public Artist()
+    {
+
+    }
 
     public String getName()
     {

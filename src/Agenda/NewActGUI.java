@@ -46,14 +46,15 @@ public class NewActGUI extends JPanel
     public NewActGUI()
     {
         super(new BorderLayout());
-        frame = new JFrame("Add a Act");
+        frame = new JFrame("Add an Act");
         frame.setSize(400, 400);
         frame.setLocation((screenWidth / 2) - (frame.getWidth() / 2), (screenHeight / 2) - (frame.getHeight() / 2));
 
         try
         {
             this.schedule = JSONManager.readFile();
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
         }
@@ -75,7 +76,7 @@ public class NewActGUI extends JPanel
         frame.setVisible(true);
     }
 
-    public void buildPanel()
+    private void buildPanel()
     {
         JPanel panel = new JPanel(new GridLayout(6, 2, 0, 32));
 
@@ -110,7 +111,7 @@ public class NewActGUI extends JPanel
         add(saveButton, BorderLayout.SOUTH);
     }
 
-    public void saveInput() throws Exception
+    private void saveInput() throws Exception
     {
         ArrayList<Artist> artists = new ArrayList<>();
 
@@ -126,8 +127,8 @@ public class NewActGUI extends JPanel
         if(artistInput.contains(","))
         {
             String[] multipleArtists = artistInput.split(", ");
-            for(int i = 0; i < multipleArtists.length; i++)
-                artists.add(new Artist(multipleArtists[i], "Festival-Planner\\Resources\\Schedules\\defaultpicture.png", genreInput));
+            for (String artistName : multipleArtists)
+                artists.add(new Artist(artistName, "Festival-Planner\\Resources\\Schedules\\defaultpicture.png", genreInput));
         }
         else
         {

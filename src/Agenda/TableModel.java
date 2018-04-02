@@ -1,6 +1,7 @@
 package Agenda;
 
 import AgendaData.Act;
+import AgendaData.Artist;
 import AgendaData.Schedule;
 import FileIO.JSONManager;
 
@@ -9,6 +10,7 @@ import javax.swing.table.AbstractTableModel;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class TableModel extends AbstractTableModel
 {
@@ -124,13 +126,21 @@ public class TableModel extends AbstractTableModel
     {
         for(int i = 0; i < acts.size(); i++)
         {
-            System.out.print(acts.get(i).getArtists().get(0).getName());
+            System.out.println(acts.get(i).getArtists().get(0).getName());
         }
         System.out.println("\n");
     }
 
+    public Schedule getSchedule()
+    {
+        return schedule;
+    }
     public List getActs()
     {
         return acts;
+    }
+    public Map<String, Artist> getArtists()
+    {
+        return schedule.getArtists();
     }
 }

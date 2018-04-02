@@ -120,5 +120,48 @@
         "name": "Podium 3"
       }
     }
-  ]
+  ],
+  "artists":
+  {
+    "Vince Staples": {
+      "name": "Vince Staples",
+      "photo": "",
+      "genre": "HipHop"
+    },
+    "Mos Def": {
+      "name": "Mos Def",
+      "photo": "",
+      "genre": "HipHop"
+    },
+    "Tyler The Creator": {
+      "name": "Tyler The Creator",
+      "photo": "",
+      "genre": "HipHop"
+    },
+    "Three Days Grace": {
+      "name": "Three Days Grace",
+      "photo": "",
+      "genre": "Hard Rock"
+    },
+    "Sum 41": {
+      "name": "Sum 41",
+      "photo": "",
+      "genre": "Punk"
+    },
+    "Asking Alexandria": {
+      "name": "Asking Alexandria",
+      "photo": "",
+      "genre": "HardRock"
+    },
+    "Imagine Dragons": {
+      "name": "Imagine Dragons",
+      "photo": "",
+      "genre": "Pop/Rock"
+    },
+    "Ed Sheeran": {
+      "name": "Ed Sheeran",
+      "photo": "",
+      "genre": "Pop"
+    }
+  }
 }
