@@ -34,8 +34,6 @@ public class NewActGUI extends JPanel
                     "22:00", "22:15", "22:30", "22:45", "23:00", "23:15", "23:30", "23:45","24:00"};
     private JComboBox<String> startTime = new JComboBox <>(times);
     private JComboBox<String> endTime = new JComboBox <>(times);
-    private JTextField startTimeField = new JTextField();
-    private JTextField endTimeField = new JTextField();
 
     private JFrame frame;
 

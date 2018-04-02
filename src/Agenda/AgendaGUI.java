@@ -26,7 +26,8 @@ public class AgendaGUI extends JFrame
     private JButton addArtist;
     private JButton deleteAct;
     private JButton deleteArtist;
-    private String[] buttonText = {"Add Act", "Add Artist", "Delete Act", "Delete Artist"};
+    private JButton editArtistData;
+    private String[] buttonText = {"Add Act", "Add Artist", "Delete Act", "Delete Artist", "Edit Artist Data"};
 
     public AgendaGUI()
     {
@@ -37,6 +38,7 @@ public class AgendaGUI extends JFrame
 
         tableModel = new TableModel();
         this.table = new JTable(this.tableModel);
+        this.table.getTableHeader().setReorderingAllowed(false);
         this.table.setFillsViewportHeight(true);
         this.table.addMouseListener(new MouseAdapter()
         {
@@ -77,11 +79,13 @@ public class AgendaGUI extends JFrame
         this.addArtist = new JButton(buttonText[1]);
         this.deleteAct = new JButton(buttonText[2]);
         this.deleteArtist = new JButton(buttonText[3]);
+        this.editArtistData = new JButton(buttonText[4]);
 
         this.buttonPanel.add(addAct);
         this.buttonPanel.add(deleteAct);
         this.buttonPanel.add(addArtist);
         this.buttonPanel.add(deleteArtist);
+        this.buttonPanel.add(this.editArtistData);
     }
 
     public void buttonListener()
@@ -101,6 +105,8 @@ public class AgendaGUI extends JFrame
         });
 
         this.deleteArtist.addActionListener(e -> new ArtistHandlerGUI(true));
+
+        this.editArtistData.addActionListener(e -> new EditDataArtist());
     }
 
     public static void updateTable()

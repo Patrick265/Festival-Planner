@@ -61,10 +61,11 @@ public class TableModel extends AbstractTableModel
     }
 
 
+
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex)
     {
-        return true;
+        return false;
     }
 
     @Override
