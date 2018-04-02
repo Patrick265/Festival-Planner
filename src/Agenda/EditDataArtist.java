@@ -3,30 +3,29 @@ package Agenda;
 import AgendaData.Artist;
 import AgendaData.Schedule;
 import FileIO.JSONManager;
-import com.sun.scenario.effect.impl.sw.java.JSWBlend_COLOR_BURNPeer;
-
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Map;
 
-public class EditDataArtist
+public class EditDataArtist implements KeyListener
 {
     private JFrame frame;
     private JPanel mainPanel;
     private JPanel searchPanel;
     private JPanel infoPanel;
     private JPanel editButtonsPanel;
+    private TableModel model;
 
     private JTextField searchBar;
     private JButton search;
     private JButton editGenre;
-    private JButton editImage;
+
 
     private String artist;
     private JLabel genreLabel;
     private String genre;
-    private JLabel pathimageLabel;
-    private String pathImage;
 
 
     private Schedule schedule;
@@ -41,16 +40,14 @@ public class EditDataArtist
         this.searchPanel = new JPanel(new FlowLayout());
         this.infoPanel = new JPanel(new FlowLayout());
         this.editButtonsPanel = new JPanel(new FlowLayout());
+        this.model = new TableModel();
 
         fillSchedule();
         buildSearchPanel();
         buildEditButtons();
 
         this.genreLabel = new JLabel("Genre: ");
-        this.pathimageLabel = new JLabel("Path: ");
-
         this.infoPanel.add(this.genreLabel);
-        this.infoPanel.add(this.pathimageLabel);
 
         updateInfo();
         this.search.addActionListener(e ->
@@ -59,11 +56,13 @@ public class EditDataArtist
             updateInfo();
         });
 
+        this.mainPanel.setFocusable(true);
+        this.mainPanel.requestFocusInWindow();
         this.mainPanel.add(this.searchPanel, BorderLayout.NORTH);
         this.mainPanel.add(this.infoPanel, BorderLayout.CENTER);
         this.mainPanel.add(this.editButtonsPanel, BorderLayout.SOUTH);
         this.frame.setContentPane(this.mainPanel);
-        this.frame.setSize(400,400);
+        this.frame.setSize(400,200);
         this.frame.setLocation( (this.screenWidth / 2) - (this.frame.getWidth() / 2),
                                 (this.screenHeight / 2) - (this.frame.getWidth() / 2));
         this.frame.setResizable(false);
@@ -77,6 +76,7 @@ public class EditDataArtist
 
         this.searchBar.setFont(new Font("Arial", Font.PLAIN, 16));
         this.searchBar.setPreferredSize(new Dimension(300, 35));
+        this.searchBar.addKeyListener(this);
 
         this.search = new JButton("Search");
         this.search.setPreferredSize(new Dimension(75, 35));
@@ -89,10 +89,7 @@ public class EditDataArtist
         this.editGenre = new JButton("Edit Genre");
         this.editGenre.setPreferredSize(new Dimension(100,35));
         this.editGenre.addActionListener(e -> editGenre());
-        this.editImage = new JButton("Edit Image");
-        this.editImage.setPreferredSize(new Dimension(100,35));
         this.editButtonsPanel.add(editGenre);
-        this.editButtonsPanel.add(editImage);
     }
 
     private void editGenre()
@@ -108,7 +105,10 @@ public class EditDataArtist
 
         JButton saveButton = new JButton("Save");
         saveButton.setPreferredSize(new Dimension(100,35));
-        //saveButton.addActionListener(e ->);
+        saveButton.addActionListener(e -> {
+            writeToFileGenre(editGenre);
+            frame.dispose();
+        });
 
 
         JButton cancelButton = new JButton("Cancel");
@@ -129,11 +129,46 @@ public class EditDataArtist
         frame.setVisible(true);
     }
 
+    private void writeToFileGenre(JTextField genreField)
+    {
+        for (Map.Entry<String, Artist> entry : this.schedule.getArtists().entrySet())
+        {
+            if(this.artist.equals(entry.getValue().getName().toLowerCase()))
+            {
+                entry.getValue().setGenre(genreField.getText());
+                try
+                {
+                    JSONManager.writeToFile(this.schedule);
+                } catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+            this.search.doClick();
+        }
+
+        for(int i = 0; i < this.schedule.getActs().size(); i++)
+        {
+            if(this.schedule.getActs().get(i).getArtists().get(0).getName().toLowerCase().equals(this.artist))
+            {
+                this.schedule.getActs().get(i).getArtists().get(0).setGenre(genreField.getText());
+                try
+                {
+                    JSONManager.writeToFile(this.schedule);
+                } catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }
+        AgendaGUI.updateTable();
+    }
+
     private void fillSchedule()
     {
         try
         {
-            this.schedule = JSONManager.readFile();
+            this.schedule = this.model.getSchedule();
         } catch (Exception e)
         {
             e.printStackTrace();
@@ -148,7 +183,6 @@ public class EditDataArtist
             if(this.artist.equals(entry.getValue().getName().toLowerCase()))
             {
                 this.genre = entry.getValue().getGenre();
-                this.pathImage = entry.getValue().getPhoto();
             }
         }
     }
@@ -156,7 +190,22 @@ public class EditDataArtist
     private void updateInfo()
     {
         this.genreLabel.setText("Genre: " + this.genre);
-        this.pathimageLabel.setText("Path: " + this.pathImage);
+        this.genreLabel.setFont(new Font("Arial", Font.PLAIN, 20));
         this.infoPanel.repaint();
     }
+
+    @Override
+    public void keyTyped(KeyEvent e) { }
+
+    @Override
+    public void keyPressed(KeyEvent e)
+    {
+        if(e.getKeyCode() == KeyEvent.VK_ENTER)
+        {
+            this.search.doClick();
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) { }
 }

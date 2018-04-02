@@ -1,5 +1,6 @@
 package Simulator;
 
+import Agenda.AgendaGUI;
 import AgendaData.Act;
 import AgendaData.Schedule;
 import FileIO.JSONManager;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 
-public class MapFrame extends JPanel implements MouseListener, MouseMotionListener, ActionListener
+public class MapFrame extends JPanel implements MouseListener, MouseMotionListener, ActionListener, KeyListener
 {
     private MapLoader map = new MapLoader("/Map/FesivalPlannermap.json");
     private double scale = 1;
@@ -53,6 +54,7 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
         }
         timer = 0;
 
+        super.addKeyListener(this);
         frame.setContentPane(this);
         addMouseListener(new Camera(this, this.map));
         addMouseMotionListener(new Camera(this, this.map));
@@ -226,5 +228,28 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
                     visitor.setFavouriteStage(4);
             }
         lastTotalPopularity = p1Pop + p2Pop + p3Pop;
+    }
+
+
+    @Override
+    public void keyTyped(KeyEvent e)
+    {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e)
+    {
+
+        if(e.isControlDown() && e.getKeyCode() == KeyEvent.VK_A)
+        {
+            AgendaGUI agenda = new AgendaGUI();
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e)
+    {
+
     }
 }

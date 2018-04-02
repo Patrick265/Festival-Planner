@@ -23,6 +23,16 @@ public class Artist
 
     }
 
+    public void setPhoto(String photo)
+    {
+        this.photo = photo;
+    }
+
+    public void setGenre(String genre)
+    {
+        this.genre = genre;
+    }
+
     public String getName()
     {
         return name;
