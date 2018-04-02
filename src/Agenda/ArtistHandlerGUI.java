@@ -25,11 +25,12 @@ public class ArtistHandlerGUI extends JPanel
     {
         super(new BorderLayout());
         frame = new JFrame();
-        frame.setSize(400, 400);
+        frame.setSize(200, 100);
         frame.setLocation((screenWidth / 2) - (frame.getWidth() / 2), (screenHeight / 2) - (frame.getHeight() / 2));
 
         if (deleting)
         {
+            frame.setSize(100, 100);
             this.deleting = true;
             try
             {
@@ -62,7 +63,7 @@ public class ArtistHandlerGUI extends JPanel
         if (deleting)
         {
             panel = new JPanel(new GridLayout(1, 2, 0, 32));
-            panel.add(new JLabel("        Artist:"));
+            panel.add(new JLabel("        Select artist you want to delete:"));
             panel.add(artistField);
         }
         else
