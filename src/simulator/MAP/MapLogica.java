@@ -38,8 +38,6 @@ public class MapLogica
 
     public void reCalcDistance(JsonObject object, int target)
     {
-        System.out.println("reCalcDistance is called");
-
         posX = object.getInt("x");
         posY = object.getInt("y");
         width = object.getInt("width");
@@ -50,9 +48,6 @@ public class MapLogica
 
     private void calcDistance(int target)
     {
-        System.out.println("calcDistance is called");
-
-        int count = 0;
         Point2D source = new Point2D.Double((posX + width/2) / 32, (posY + height/2) / 32);
         for (int x = 0; x < 50; x++)
         {
@@ -60,7 +55,6 @@ public class MapLogica
             {
                 distances[target][x][y] = Integer.MAX_VALUE;
                 paths[x][y] = path[y][x];
-                count++;
             }
         }
         queue.offer(source);

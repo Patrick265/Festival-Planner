@@ -54,7 +54,7 @@ public class TimeLine extends JPanel implements MouseListener, MouseMotionListen
         g2.draw(box);
 
         Shape background = new Rectangle2D.Double(0, 0, 400, 210);
-        g2.setColor(new Color(50, 50, 50, 100));
+        g2.setColor(new Color(150, 150, 150, 125));
         g2.fill(background);
         g2.setColor(Color.BLACK);
 
@@ -128,7 +128,7 @@ public class TimeLine extends JPanel implements MouseListener, MouseMotionListen
     public void mouseClicked(MouseEvent e)
     {
         int count = 0;
-        for (int i = 0; i < areas.size(); i++)
+        for (int i = 0; i < areas.size()-1; i++)
         {
             Area area = areas.get(i);
             Point2D point = e.getPoint();

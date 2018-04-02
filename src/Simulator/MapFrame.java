@@ -43,7 +43,6 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
     public MapFrame(JFrame frame)
     {
         super(new BorderLayout());
-        this.currentTime = new Date(2018, 1, 1, 9,50,0);
         this.camera = new Camera(this, this.map);
 
         try
@@ -54,6 +53,8 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
         {
             e.printStackTrace();
         }
+        this.currentTime = new Date(2018, 1, 1, schedule.getActs().get(0).getStartTime().getHours()-1, schedule.getActs().get(0).getStartTime().getMinutes(), 0);
+//        this.currentTime = new Date(2018, 1, 1, 9,0,0);
         timer = 0;
         timeLine = new TimeLine(schedule.getActs());
         this.add(timeLine, BorderLayout.SOUTH);
@@ -163,7 +164,7 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
 
         timeLine.update(curTime);
 
-        if (currentTime.getMinutes() % 15 == 0)
+        if (currentTime.getMinutes() % 10 == 0)
         {
             //System.out.println("ding");
             checkAct(curTime);
@@ -179,7 +180,7 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
             double startTime = act.getStartTime().getHours() + (act.getStartTime().getMinutes() / 100.0d);
             double endTime = act.getEndTime().getHours() + (act.getEndTime().getMinutes() / 100.0d);
 
-            if (startTime <= curTime && endTime >= curTime)
+            if (startTime <= curTime && endTime > curTime)
             {
                 activeActs.add(act);
             }
@@ -205,6 +206,8 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
             }
         }
 
+        if(!activeActs.isEmpty() && currentTime.getMinutes() % 30 != 0)
+            return;
 
         int rndSize = 10 + p1Pop + p2Pop + p3Pop; // +5 per uitgang
         Random rnd = new Random();
@@ -225,6 +228,14 @@ public class MapFrame extends JPanel implements MouseListener, MouseMotionListen
                     visitor.setFavouriteStage(3);
             }
         lastTotalPopularity = p1Pop + p2Pop + p3Pop;
+
+        double endTime = schedule.getActs().get(schedule.getActs().size()-1).getEndTime().getHours() + (schedule.getActs().get(schedule.getActs().size()-1).getEndTime().getMinutes() / 100.0d);
+        if(activeActs.isEmpty() && curTime < endTime)
+            for(VisitorObject visitorObject : animation.getVisitors())
+                visitorObject.setFavouriteStage(rnd.nextInt(5));
+        if(activeActs.isEmpty() && curTime > endTime)
+            for(VisitorObject visitorObject : animation.getVisitors())
+                visitorObject.setFavouriteStage(3);
     }
 
     @Override
