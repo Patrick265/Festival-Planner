@@ -136,7 +136,7 @@ public class TimeLine extends JPanel implements MouseListener, MouseMotionListen
             {
                 showMessageDialog(null,
                         acts.get(i).printDetails(1)
-                        , "Test", JOptionPane.INFORMATION_MESSAGE);
+                        , "Act info", JOptionPane.INFORMATION_MESSAGE);
             }
         }
     }
